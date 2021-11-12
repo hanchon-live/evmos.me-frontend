@@ -12,8 +12,7 @@ const Wallet = () => {
             active="wallet"
             element={[
                 <EvmosHeader key="header"></EvmosHeader>,
-                // <WalletDetails key="wallet" />,
-                <Box className="data" h="full">
+                <Box h="full">
                     <ERC20Assets key="erc20"></ERC20Assets>,
                     <Aphoton key="aphoton"></Aphoton>,
                 </Box>,

@@ -4,7 +4,7 @@ import { BsFillKeyFill } from 'react-icons/bs';
 
 const AddressDetails = ({ wallet, walletEvmos, publicKey }: any) => {
     return (
-        <SimpleGrid columns={[1, 1, 2, 3]} mt={[2, 2, 4, 4]}>
+        <SimpleGrid columns={[1, 1, 1, 3]} mt={[2, 2, 4, 4]}>
             <Box
                 bg="teal.800"
                 p={3}

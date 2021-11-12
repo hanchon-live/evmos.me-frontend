@@ -11,10 +11,11 @@ const Template = (props: any) => {
                     <Sidebar active={props.active}></Sidebar>
                     <VStack
                         w="full"
-                        h="full"
+                        h="100vh"
                         overflowY="scroll"
                         spacing={0}
                         alignItems="center"
+                        className="data"
                     >
                         {props.element}
                     </VStack>

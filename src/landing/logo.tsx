@@ -5,7 +5,6 @@ import Metamask from './metamask';
 
 const Logo = () => {
     return (
-        // alignItems="flex-start"
         <VStack w="full" h="full" spacing={1} justify="center">
             <Center>
                 <Heading fontSize="6xl">Evmos.me</Heading>
