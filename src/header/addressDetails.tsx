@@ -1,13 +1,5 @@
-import {
-    Box,
-    Center,
-    Heading,
-    HStack,
-    SimpleGrid,
-    Text,
-    VStack,
-} from '@chakra-ui/layout';
-import { BiKey, BiWallet } from 'react-icons/bi';
+import { Box, Center, Heading, SimpleGrid, Text } from '@chakra-ui/layout';
+import { BiWallet } from 'react-icons/bi';
 import { BsFillKeyFill } from 'react-icons/bs';
 
 const AddressDetails = ({ wallet, walletEvmos, publicKey }: any) => {
