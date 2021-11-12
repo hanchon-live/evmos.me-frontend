@@ -16,28 +16,21 @@ import {
 import ERC20Item from '../tokens/erc20item';
 import EvmosHeader from '../header/evmosheader';
 
-const ERC20 = () => {
+const ERC20Assets = () => {
     return (
-        <>
-            {/* <Box w="full"> */}
-            <Box w="full" h="full" p={2} borderRadius="75px" bgColor="teal.700">
-                <Center>
-                    <Heading textShadow="5px 5px #234E52" color="white">
-                        ERC20 tokens
-                    </Heading>
-                </Center>
-                <Center>
-                    <Text textShadow="3px 3px #234E52">
-                        All the registered ERC20 tokens on Evmos.me
-                    </Text>
-                </Center>
+        <Box h="auto">
+            <Box w="full" p={5}>
+                <Heading size="lg" color="white" textAlign="left">
+                    ERC20 tokens:
+                </Heading>
+                <Text py={2}>All the registered ERC20 tokens on Evmos.me</Text>
             </Box>
             <SimpleGrid
                 mt={2}
                 columns={[1, 1, 2, 3, 4]}
                 columnGap={[0, 0, 3, 3, 3]}
                 rowGap={6}
-                w="full"
+                h="full"
             >
                 <ERC20Item />
                 <ERC20Item />
@@ -47,9 +40,8 @@ const ERC20 = () => {
                 <ERC20Item />
                 <ERC20Item />
             </SimpleGrid>
-            {/* // </Box> */}
-        </>
+        </Box>
     );
 };
 
-export default ERC20;
+export default ERC20Assets;

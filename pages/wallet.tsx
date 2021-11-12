@@ -1,3 +1,5 @@
+import { Box } from '@chakra-ui/layout';
+import ERC20Assets from '../src/assets/erc20Assets';
 import EvmosHeader from '../src/header/evmosheader';
 import Aphoton from '../src/sections/cosmos';
 import ERC20 from '../src/sections/erc20';
@@ -11,8 +13,10 @@ const Wallet = () => {
             element={[
                 <EvmosHeader key="header"></EvmosHeader>,
                 // <WalletDetails key="wallet" />,
-                <ERC20 key="erc20"></ERC20>,
-                <Aphoton key="aphoton"></Aphoton>,
+                <Box className="data" h="full">
+                    <ERC20Assets key="erc20"></ERC20Assets>,
+                    <Aphoton key="aphoton"></Aphoton>,
+                </Box>,
             ]}
         ></Template>
     );
