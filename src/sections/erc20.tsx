@@ -14,7 +14,7 @@ import {
     Grid,
 } from '@chakra-ui/layout';
 import ERC20Item from '../tokens/erc20item';
-import EvmosHeader from './evmosheader';
+import EvmosHeader from '../header/evmosheader';
 
 const ERC20 = () => {
     return (

@@ -1,6 +1,6 @@
 import Aphoton from '../src/sections/cosmos';
 import ERC20 from '../src/sections/erc20';
-import EvmosHeader from '../src/sections/evmosheader';
+import EvmosHeader from '../src/header/evmosheader';
 import Template from '../src/template/template';
 
 const Assets = () => {

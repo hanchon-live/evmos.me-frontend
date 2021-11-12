@@ -1,4 +1,4 @@
-import EvmosHeader from '../src/sections/evmosheader';
+import EvmosHeader from '../src/header/evmosheader';
 import WalletDetails from '../src/sections/walletdetails';
 import Template from '../src/template/template';
 

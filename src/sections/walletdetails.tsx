@@ -51,59 +51,7 @@ const WalletDetails = () => {
     return (
         <Box w="full" h="full" bg="teal.400">
             <Center>
-                <VStack>
-                    {/* Wallet buttons */}
-                    <Center m={2}>
-                        <SimpleGrid columns={[1, 1, 2]} mt={[0, 2, 4]}>
-                            {/* <GridItem> */}
-                            <Box mr={[0, 0, 5]} mb={[3, 3, 0]}>
-                                <Button
-                                    variant="primary"
-                                    onClick={async () => {
-                                        await connectMetamask();
-                                        updateWallets();
-                                    }}
-                                >
-                                    Connect with Metamask
-                                </Button>
-                            </Box>
-                            {/* </GridItem> */}
-                            {/* <GridItem> */}
-                            <Button
-                                variant="primary"
-                                onClick={async () => {
-                                    await connectMetamask();
-                                    updateWallets();
-                                }}
-                            >
-                                Connect with Keplr
-                            </Button>
-                            {/* </GridItem> */}
-                        </SimpleGrid>
-                    </Center>
-
-                    {/* Address details */}
-                    <Center m={2}>
-                        <Box borderRadius={10} p={10} bg="teal.700">
-                            <VStack spacing={3}>
-                                <Heading mb={2}>Address</Heading>
-                                <Text>Hex(Ethereum)</Text>{' '}
-                                <Text style={{ overflowWrap: 'anywhere' }}>
-                                    {wallet}
-                                </Text>
-                                <Text align="right">Bech32(Evmos)</Text>{' '}
-                                <Text style={{ overflowWrap: 'anywhere' }}>
-                                    {walletEvmos}
-                                </Text>
-                                <Text align="right">PublicKey</Text>{' '}
-                                <Text style={{ overflowWrap: 'anywhere' }}>
-                                    {' '}
-                                    {publicKey}
-                                </Text>
-                            </VStack>
-                        </Box>
-                    </Center>
-                </VStack>
+                <VStack>{/* Address details */}</VStack>
             </Center>
             {/*
       <Button onClick={async () => {
