@@ -12,60 +12,93 @@ import { BsFillKeyFill } from 'react-icons/bs';
 
 const AddressDetails = ({ wallet, walletEvmos, publicKey }: any) => {
     return (
-        <VStack spacing={3} alignItems="center" mx={5} mt={3}>
-            {/* <Heading size="md" mb={2}>Your current wallet</Heading> */}
-            <SimpleGrid columns={[1, 1, 2, 3]} mt={[0, 0, 4, 4]}>
-                <Box>
-                    <Heading size="xs" textAlign={['center', 'center', 'left']}>
-                        Hex(Ethereum)
-                    </Heading>
-                    <HStack>
-                        <BiWallet size="30px" />
-                        <Text
-                            style={{
-                                overflowWrap: 'anywhere',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            {wallet}
-                        </Text>
-                    </HStack>
-                </Box>
+        <SimpleGrid columns={[1, 1, 2, 3]} mt={[2, 2, 4, 4]}>
+            <Box
+                bg="teal.800"
+                p={3}
+                borderRadius="15px"
+                borderColor="teal.300"
+                border="2px"
+                m={2}
+            >
+                <Heading
+                    size="xs"
+                    style={{ fontWeight: 500 }}
+                    textAlign="center"
+                >
+                    Hex(Ethereum)
+                </Heading>
+                <Center>
+                    <BiWallet size="30px" />
+                    <Text
+                        ml={2}
+                        style={{
+                            overflowWrap: 'anywhere',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        {wallet}
+                    </Text>
+                </Center>
+            </Box>
 
-                <Box>
-                    <Heading size="xs" textAlign={['center', 'center', 'left']}>
-                        Bech32(Evmos)
-                    </Heading>
-                    <HStack>
-                        <BiWallet size="30px" />
-                        <Text
-                            style={{
-                                overflowWrap: 'anywhere',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            {walletEvmos}
-                        </Text>
-                    </HStack>
-                </Box>
-                <Box>
-                    <Heading size="xs" textAlign={['center', 'center', 'left']}>
-                        PublicKey
-                    </Heading>
-                    <HStack>
-                        <BsFillKeyFill size="30px" />
-                        <Text
-                            style={{
-                                overflowWrap: 'anywhere',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            {publicKey}
-                        </Text>
-                    </HStack>
-                </Box>
-            </SimpleGrid>
-        </VStack>
+            <Box
+                bg="teal.800"
+                p={3}
+                borderRadius="15px"
+                borderColor="teal.300"
+                border="2px"
+                m={2}
+            >
+                <Heading
+                    size="xs"
+                    style={{ fontWeight: 500 }}
+                    textAlign="center"
+                >
+                    Bech32(Evmos)
+                </Heading>
+                <Center>
+                    <BiWallet size="30px" />
+                    <Text
+                        ml={2}
+                        style={{
+                            overflowWrap: 'anywhere',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        {walletEvmos}
+                    </Text>
+                </Center>
+            </Box>
+            <Box
+                bg="teal.800"
+                p={3}
+                borderRadius="15px"
+                borderColor="teal.300"
+                border="2px"
+                m={2}
+            >
+                <Heading
+                    size="xs"
+                    style={{ fontWeight: 500 }}
+                    textAlign="center"
+                >
+                    PublicKey
+                </Heading>
+                <Center>
+                    <BsFillKeyFill size="30px" />
+                    <Text
+                        ml={2}
+                        style={{
+                            overflowWrap: 'anywhere',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        {publicKey}
+                    </Text>
+                </Center>
+            </Box>
+        </SimpleGrid>
     );
 };
 
