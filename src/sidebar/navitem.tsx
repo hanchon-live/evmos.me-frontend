@@ -20,7 +20,7 @@ const NavItem = ({ icon, title, active, description, link, onClick }: any) => {
             w="100%"
             // alightItems="center"
         >
-            <Menu placement="right" isOpen={isOpen}>
+            <Menu id={title} placement="right" isOpen={isOpen}>
                 <Link w="100%" textAlign="center" href={link} onClick={onClick}>
                     <Center>
                         <Circle

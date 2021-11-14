@@ -21,12 +21,13 @@ import { requestWallet } from '../landing/metamask';
 import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 import { unsetPubKey, unsetWallet } from '../utils/db';
 import { fireSuccess } from '../landing/alert';
+import { connectMetamask } from '../utils/metamask';
 
 export default function Sidebar(props: any) {
     const [metamask, setMetamask] = useState(false);
     useEffect(() => {
         async function fetchWallet() {
-            let a = await requestWallet();
+            let a = await connectMetamask();
             setMetamask(a != '');
         }
         fetchWallet();
@@ -87,7 +88,7 @@ export default function Sidebar(props: any) {
                     title={'Transactions'}
                     icon={AiOutlineSend}
                     description="Send cosmos transactions"
-                    link="/cosmos"
+                    link="/txns"
                     active={props.active === 'transactions' ? true : false}
                 />
                 <Divider mt={5} />

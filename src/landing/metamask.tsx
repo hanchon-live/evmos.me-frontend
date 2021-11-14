@@ -16,75 +16,75 @@ declare global {
     }
 }
 
-export async function requestPubKey() {
-    if (window.ethereum) {
-        let addr = getWallet();
-        if (addr === null) {
-            addr = await requestWallet();
-        }
-        let pubkey = getPubKey();
-        if (pubkey === null) {
-            let res = await window.ethereum.request({
-                method: 'eth_getEncryptionPublicKey',
-                params: [addr],
-            });
-            setPubKey(res);
-            return res;
-        }
-        return pubkey;
-    }
-    return null;
-}
+// export async function requestPubKey() {
+//     if (window.ethereum) {
+//         let addr = getWallet();
+//         if (addr === null) {
+//             addr = await requestWallet();
+//         }
+//         let pubkey = getPubKey();
+//         if (pubkey === null) {
+//             let res = await window.ethereum.request({
+//                 method: 'eth_getEncryptionPublicKey',
+//                 params: [addr],
+//             });
+//             setPubKey(res);
+//             return res;
+//         }
+//         return pubkey;
+//     }
+//     return null;
+// }
 
-export async function requestWallet() {
-    if (window.ethereum) {
-        let res = await window.ethereum.request({ method: 'eth_accounts' });
-        setWallet(res[0]);
-        return res[0];
-    }
-    return '';
-}
+// export async function requestWallet() {
+//     if (window.ethereum) {
+//         let res = await window.ethereum.request({ method: 'eth_accounts' });
+//         setWallet(res[0]);
+//         return res[0];
+//     }
+//     return '';
+// }
 
-async function initMetamask(isWaiting: CallableFunction) {
-    isWaiting(true);
+// async function initMetamask(isWaiting: CallableFunction) {
+//     isWaiting(true);
 
-    if (!window.ethereum) {
-        fireError(
-            'Error with Metamas',
-            'Please install the metamask extension'
-        );
-        isWaiting(false);
-        return;
-    }
-    // else {
-    //     if (window.keplr.experimentalSuggestChain) {
-    //         try {
-    //             await window.keplr.experimentalSuggestChain(chainConfig);
-    //         } catch (error) {
-    //             fireError('Error with Keplr', 'Failed to suggest the chain');
-    //             isWaiting(false)
-    //         }
-    //     } else {
-    //         fireError('Error with Keplr', 'Please use the recent version of keplr extension');
-    //         isWaiting(false)
-    //     }
-    // }
+//     if (!window.ethereum) {
+//         fireError(
+//             'Error with Metamas',
+//             'Please install the metamask extension'
+//         );
+//         isWaiting(false);
+//         return;
+//     }
+//     // else {
+//     //     if (window.keplr.experimentalSuggestChain) {
+//     //         try {
+//     //             await window.keplr.experimentalSuggestChain(chainConfig);
+//     //         } catch (error) {
+//     //             fireError('Error with Keplr', 'Failed to suggest the chain');
+//     //             isWaiting(false)
+//     //         }
+//     //     } else {
+//     //         fireError('Error with Keplr', 'Please use the recent version of keplr extension');
+//     //         isWaiting(false)
+//     //     }
+//     // }
 
-    if (window.ethereum) {
-        await window.ethereum.enable('0x2328');
-        // const offlineSigner = window.getOfflineSigner("0x2328");
-        // TODO: redirect
-        fireSuccess(
-            'Logged in with Metamask',
-            'You can now start using evmos.me!'
-        );
-        isWaiting(false);
-    } else {
-        return null;
-    }
+//     if (window.ethereum) {
+//         await window.ethereum.enable('0x2328');
+//         // const offlineSigner = window.getOfflineSigner("0x2328");
+//         // TODO: redirect
+//         fireSuccess(
+//             'Logged in with Metamask',
+//             'You can now start using evmos.me!'
+//         );
+//         isWaiting(false);
+//     } else {
+//         return null;
+//     }
 
-    isWaiting(false);
-}
+//     isWaiting(false);
+// }
 
 const Metamask = () => {
     const [waiting, isWaiting] = useState(false);

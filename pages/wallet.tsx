@@ -10,9 +10,9 @@ const Wallet = () => {
             active="wallet"
             element={[
                 <EvmosHeader key="header"></EvmosHeader>,
-                <Box h="full">
-                    <CosmosCoins key="aphoton"></CosmosCoins>
+                <Box h="full" key="walletbox">
                     <ERC20Assets key="erc20"></ERC20Assets>
+                    <CosmosCoins key="aphoton"></CosmosCoins>
                 </Box>,
             ]}
         ></Template>

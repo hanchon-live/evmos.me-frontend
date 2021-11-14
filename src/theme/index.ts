@@ -51,16 +51,16 @@ const theme = extendTheme(
                 variants: {
                     filled: {
                         field: {
-                            _focus: {
-                                borderColor: 'brand.50',
+                            backgroundColor: 'teal.500',
+                            fontWeight: 'bold',
+                            _hover: {
+                                backgroundColor: 'teal.300',
                             },
-                        },
-                    },
-                },
-                sizes: {
-                    md: {
-                        field: {
-                            borderRadius: 'none',
+                            _focus: {
+                                backgroundColor: 'teal.300',
+                                borderColor: 'teal.900',
+                                color: 'white',
+                            },
                         },
                     },
                 },
