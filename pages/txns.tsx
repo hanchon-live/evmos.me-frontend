@@ -11,7 +11,7 @@ import UndelegateAphotons from '../src/transactions/undelegateAphotons';
 const Assets = () => {
     return (
         <Template
-            active="assets"
+            active="transactions"
             element={[
                 <EvmosHeader key="header"></EvmosHeader>,
                 <Heading

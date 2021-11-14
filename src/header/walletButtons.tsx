@@ -1,8 +1,13 @@
 import { Button } from '@chakra-ui/button';
-import { Box, Center, SimpleGrid } from '@chakra-ui/layout';
+import { Box, Center, Flex, HStack, SimpleGrid } from '@chakra-ui/layout';
+import { useContext } from 'react';
+import { BiLogIn, BiLogOutCircle } from 'react-icons/bi';
 import { connectMetamask } from '../utils/metamask';
+import { store } from '../utils/state';
 
-const WalletButtons = ({ updater }: any) => {
+const WalletButtons = () => {
+    const globalState = useContext(store);
+
     return (
         <Center m={1}>
             <SimpleGrid columns={[1, 1, 2]} mt={[0, 2, 4]}>
@@ -10,22 +15,51 @@ const WalletButtons = ({ updater }: any) => {
                     <Button
                         variant="primary"
                         onClick={async () => {
-                            await connectMetamask();
-                            updater();
+                            await connectMetamask(globalState);
                         }}
+                        display={
+                            globalState.state.provider === 'metamask'
+                                ? 'none'
+                                : 'block'
+                        }
                     >
-                        Connect with Metamask
+                        <HStack>
+                            {globalState.state.provider === 'metamask' ? (
+                                <>
+                                    <Flex> Connected with Metamask</Flex>
+                                </>
+                            ) : (
+                                <>
+                                    <BiLogIn />
+                                    <Flex> Connect with Metamask</Flex>
+                                </>
+                            )}
+                        </HStack>
                     </Button>
                 </Box>
                 <Button
                     variant="primary"
                     onClick={async () => {
-                        await connectMetamask();
-                        updater();
-                        // updateWallets();
+                        await connectMetamask(globalState);
                     }}
+                    display={
+                        globalState.state.provider === 'keplr'
+                            ? 'none'
+                            : 'block'
+                    }
                 >
-                    Connect with Keplr
+                    <HStack>
+                        {globalState.state.provider === 'keplr' ? (
+                            <>
+                                <Flex>Connected with Keplr</Flex>
+                            </>
+                        ) : (
+                            <>
+                                <BiLogIn />
+                                <Flex>Connect with Keplr</Flex>
+                            </>
+                        )}
+                    </HStack>
                 </Button>
             </SimpleGrid>
         </Center>

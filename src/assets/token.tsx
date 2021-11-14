@@ -14,7 +14,11 @@ const Token = ({ Icon, name, balance, address }: any) => {
                     bgGradient="linear(to-br, teal.500, teal.600)"
                 >
                     <Grid
-                        templateRows="repeat(4, 5em)"
+                        templateRows={
+                            address === undefined
+                                ? 'repeat(3, 5em)'
+                                : 'repeat(4, 5em)'
+                        }
                         templateColumns="repeat(2)"
                     >
                         <GridItem rowSpan={1} colSpan={1}>
@@ -61,19 +65,28 @@ const Token = ({ Icon, name, balance, address }: any) => {
                                     fontSize="xs"
                                     textTransform="uppercase"
                                     textAlign="center"
+                                    pt={5}
                                 >
                                     &bull; Balance &bull;
                                     <Text
+                                        px={3}
                                         fontWeight="bold"
                                         fontSize="lg"
                                         color="white"
+                                        style={{ overflowWrap: 'anywhere' }}
                                     >
-                                        {balance} {name}
+                                        {balance}
                                     </Text>
+                                    <Text>{name}</Text>
                                 </Box>
                             </Center>
                         </GridItem>
-                        <GridItem rowSpan={1} colSpan={2} justifyItems="center">
+                        <GridItem
+                            display={address === undefined ? 'none' : 'block'}
+                            rowSpan={1}
+                            colSpan={2}
+                            justifyItems="center"
+                        >
                             <Center h="auto">
                                 <Box
                                     color="gray.200"
@@ -83,6 +96,7 @@ const Token = ({ Icon, name, balance, address }: any) => {
                                     textTransform="uppercase"
                                     textAlign="center"
                                     px={3}
+                                    pt={3}
                                 >
                                     &bull; Address &bull;
                                     <Text

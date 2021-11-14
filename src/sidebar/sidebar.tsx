@@ -11,7 +11,7 @@ import {
 import { IconButton } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FiDatabase, FiHome, FiMenu } from 'react-icons/fi';
 import { BiWallet } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
@@ -21,17 +21,18 @@ import { requestWallet } from '../landing/metamask';
 import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 import { unsetPubKey, unsetWallet } from '../utils/db';
 import { fireSuccess } from '../landing/alert';
-import { connectMetamask } from '../utils/metamask';
-
+import { connectMetamask, disconnectMetamask } from '../utils/metamask';
+import { store } from '../utils/state';
 export default function Sidebar(props: any) {
-    const [metamask, setMetamask] = useState(false);
-    useEffect(() => {
-        async function fetchWallet() {
-            let a = await connectMetamask();
-            setMetamask(a != '');
-        }
-        fetchWallet();
-    }, []);
+    const globalState = useContext(store);
+    // const [metamask, setMetamask] = useState(false);
+    // useEffect(() => {
+    //     async function fetchWallet() {
+    //         let a = await connectMetamask();
+    //         setMetamask(a != '');
+    //     }
+    //     fetchWallet();
+    // }, []);
     // const [navSize, changeNavSize] = useState("large")
     return (
         <Flex
@@ -77,14 +78,6 @@ export default function Sidebar(props: any) {
                 />
                 <Divider mt={5} />
                 <NavItem
-                    title={'Assets'}
-                    icon={BsCashCoin}
-                    description="Your assets details"
-                    link="/assets"
-                    active={props.active === 'assets' ? true : false}
-                />
-                <Divider mt={5} />
-                <NavItem
                     title={'Transactions'}
                     icon={AiOutlineSend}
                     description="Send cosmos transactions"
@@ -93,12 +86,19 @@ export default function Sidebar(props: any) {
                 />
                 <Divider mt={5} />
                 <NavItem
+                    title={'Assets'}
+                    icon={BsCashCoin}
+                    description="Your assets details"
+                    link="/assets"
+                    active={props.active === 'assets' ? true : false}
+                />
+                <Divider mt={5} />
+                <NavItem
                     title={'Logout'}
                     icon={AiOutlineLogout}
                     description="Logout from metamask"
                     onClick={() => {
-                        unsetPubKey();
-                        unsetWallet();
+                        disconnectMetamask(globalState);
                         fireSuccess(
                             'Logout',
                             'Your credentials were removed from the app.'
@@ -112,18 +112,18 @@ export default function Sidebar(props: any) {
                 <Divider display="none" />
                 <Flex mt={4} align="center">
                     <Image
-                        opacity={metamask === true ? '1' : '0.3'}
-                        src="./metamask-fox.svg"
+                        src={
+                            globalState.state.provider === 'metamask'
+                                ? './metamask-fox.svg'
+                                : globalState.state.provider === 'keplr'
+                                ? './keplr.png'
+                                : './newlogo.png'
+                        }
                         alt="metamask"
                         onClick={() => {
-                            alert('disconnect metamask');
+                            // alert('disconnect metamask');
                         }}
-                    >
-                        {/* <Flex flexDir="column" ml={4} display="none" > */}
-                        {/* <Heading as="h3" size="sm">Erc20</Heading> */}
-                        {/* <Text>Erc20 tokens</Text> */}
-                        {/* </Flex> */}
-                    </Image>
+                    ></Image>
                 </Flex>
             </Flex>
         </Flex>

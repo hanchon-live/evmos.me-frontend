@@ -1,8 +1,20 @@
 import { Heading, Text, SimpleGrid, Box } from '@chakra-ui/layout';
+import { useEffect, useState } from 'react';
 import { FaReact } from 'react-icons/fa';
+import { getAllBalances } from '../utils/backend';
+import { getWalletEth } from '../utils/db';
 import Token from './token';
 
 const CosmosCoins = () => {
+    const [coins, setCoins] = useState([]);
+    useEffect(() => {
+        async function readBalances() {
+            let temp = await getAllBalances(getWalletEth());
+            console.log(temp);
+            setCoins(temp.balances);
+        }
+        readBalances();
+    }, []);
     return (
         <Box h="auto">
             <Box w="full" p={5}>
@@ -18,12 +30,15 @@ const CosmosCoins = () => {
                 rowGap={6}
                 h="full"
             >
-                <Token
-                    Icon={FaReact}
-                    name="Photon"
-                    balance="10000"
-                    address="0X752E67BD2E22C3D327415D9DBC5F671214573642"
-                />
+                {coins.map((item) => (
+                    // <li key={item}>{item}</li>
+                    <Token
+                        Icon={FaReact}
+                        name={item.denom}
+                        balance={item.amount}
+                        key={item.denom}
+                    />
+                ))}
             </SimpleGrid>
         </Box>
     );
