@@ -1,15 +1,15 @@
 import { Heading, Text, SimpleGrid, Box } from '@chakra-ui/layout';
-import { FaEthereum } from 'react-icons/fa';
+import { FaReact } from 'react-icons/fa';
 import Token from './token';
 
-const ERC20Assets = () => {
+const CosmosCoins = () => {
     return (
         <Box h="auto">
             <Box w="full" p={5}>
                 <Heading size="lg" color="white" textAlign="left">
-                    ERC20 tokens:
+                    Cosmos Coins:
                 </Heading>
-                <Text py={2}>All the registered ERC20 tokens on Evmos.me</Text>
+                <Text py={2}>All the registered Cosmos Coins on Evmos.me</Text>
             </Box>
             <SimpleGrid
                 mt={2}
@@ -19,7 +19,7 @@ const ERC20Assets = () => {
                 h="full"
             >
                 <Token
-                    Icon={FaEthereum}
+                    Icon={FaReact}
                     name="Photon"
                     balance="10000"
                     address="0X752E67BD2E22C3D327415D9DBC5F671214573642"
@@ -29,4 +29,4 @@ const ERC20Assets = () => {
     );
 };
 
-export default ERC20Assets;
+export default CosmosCoins;
