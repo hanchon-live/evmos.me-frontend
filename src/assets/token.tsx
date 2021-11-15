@@ -21,6 +21,7 @@ import {
     ModalHeader,
     ModalOverlay,
 } from '@chakra-ui/modal';
+import { HStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { executeSendAphoton } from '../transactions/sendAphotons';
@@ -187,6 +188,7 @@ const Token = ({ Icon, name, balance, address }: any) => {
                         <FormControl>
                             <FormLabel>Destination Wallet:</FormLabel>
                             <Input
+                                variant="primary"
                                 placeholder="0x... / evmos1..."
                                 onChange={(e) => setDest(e.target.value)}
                             />
@@ -195,6 +197,7 @@ const Token = ({ Icon, name, balance, address }: any) => {
                         <FormControl mt={4}>
                             <FormLabel>Amount ({name})</FormLabel>
                             <Input
+                                variant="primary"
                                 placeholder="1000"
                                 onChange={(e) => setAmount(e.target.value)}
                             />
@@ -202,16 +205,21 @@ const Token = ({ Icon, name, balance, address }: any) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button
-                            variant="primary"
-                            onClick={() => {
-                                executeSendAphoton(dest, amount);
-                                onClose();
-                            }}
-                        >
-                            Send Coins <FiSend style={{ marginLeft: '5px' }} />
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
+                        <HStack>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    executeSendAphoton(dest, amount);
+                                    onClose();
+                                }}
+                            >
+                                Send Coins{' '}
+                                <FiSend style={{ marginLeft: '5px' }} />
+                            </Button>
+                            <Button variant="primary" onClick={onClose}>
+                                Cancel
+                            </Button>
+                        </HStack>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

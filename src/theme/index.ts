@@ -4,6 +4,7 @@ import {
     withDefaultColorScheme,
     withDefaultVariant,
 } from '@chakra-ui/react';
+import { blacken } from '@chakra-ui/theme-tools';
 
 const theme = extendTheme(
     {
@@ -60,6 +61,20 @@ const theme = extendTheme(
                                 backgroundColor: 'teal.300',
                                 borderColor: 'teal.900',
                                 color: 'white',
+                            },
+                        },
+                    },
+                    primary: {
+                        field: {
+                            color: 'black',
+                            backgroundColor: 'teal.100',
+                            fontWeight: 'bold',
+                            _hover: {
+                                backgroundColor: 'teal.300',
+                            },
+                            _focus: {
+                                backgroundColor: 'teal.300',
+                                borderColor: 'teal.900',
                             },
                         },
                     },

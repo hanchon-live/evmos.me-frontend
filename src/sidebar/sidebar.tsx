@@ -117,7 +117,7 @@ export default function Sidebar(props: any) {
                             globalState.state.provider === 'metamask'
                                 ? './metamask-fox.svg'
                                 : globalState.state.provider === 'keplr'
-                                ? './keplr.png'
+                                ? './keplr.svg'
                                 : './newlogo.png'
                         }
                         alt="metamask"
