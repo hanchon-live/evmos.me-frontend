@@ -1,4 +1,4 @@
-import { ethToEvmos } from '@hanchon/ethermint-address-converter';
+import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
 import { REACT_APP_BACKEND_URL } from './contants';
 import {
     getPubKey,
@@ -25,7 +25,53 @@ export async function getAllBalances(address: string) {
         body: JSON.stringify({ value: address }),
     });
     let resp = await pubresp.json();
-    console.log(resp);
+    return resp;
+}
+
+export async function getAllERC20Balances(address: string) {
+    if (address === null) {
+        return { balances: [] };
+    }
+    if (address.split('evmos1').length == 2) {
+        address = evmosToEth(address);
+    }
+    const pubresp = await fetch(
+        `${REACT_APP_BACKEND_URL}/get_all_erc20_balances/`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ value: address }),
+        }
+    );
+    let resp = await pubresp.json();
+    return resp;
+}
+
+export async function createERC20Transfer(
+    sender: string,
+    destination: string,
+    token: string,
+    amount: string
+) {
+    if (sender.split('evmos1').length == 2) {
+        sender = evmosToEth(sender);
+    }
+    if (destination.split('evmos1').length == 2) {
+        destination = evmosToEth(destination);
+    }
+    const pubresp = await fetch(
+        `${REACT_APP_BACKEND_URL}/create_erc20_transfer/`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sender, destination, token, amount }),
+        }
+    );
+    let resp = await pubresp.json();
     return resp;
 }
 

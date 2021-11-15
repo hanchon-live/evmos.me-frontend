@@ -24,9 +24,45 @@ import {
 import { HStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
+import { fireError, fireSuccess } from '../landing/alert';
 import { executeSendAphoton } from '../transactions/sendAphotons';
+import { createERC20Transfer } from '../utils/backend';
+import { getWalletEth, isMetamask } from '../utils/db';
 
-const Token = ({ Icon, name, balance, address }: any) => {
+export async function executeERC20Transfer(
+    contract: string,
+    dest: string,
+    amount: string
+) {
+    if (Number(amount) === NaN) {
+        fireError('Transfer', 'Invalid amount!');
+        return false;
+    }
+    let tx = await createERC20Transfer(getWalletEth(), dest, contract, amount);
+    if (isMetamask()) {
+        try {
+            let res = await window.ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [tx.tx],
+            });
+            return fireSuccess(
+                'Transfer',
+                `Transaction sent with hash: ${res}`
+            );
+        } catch (e) {
+            console.error(e);
+            fireError('Transfer', 'Metamask error on submitting transaction');
+        }
+    } else {
+        fireError(
+            'Transfer',
+            'ERC20 token transfers are only available on metamask!'
+        );
+        return false;
+    }
+}
+
+const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
@@ -112,7 +148,11 @@ const Token = ({ Icon, name, balance, address }: any) => {
                                         >
                                             {balance}
                                         </Text>
-                                        <Text>{name}</Text>
+                                        <Text>
+                                            {symbol !== undefined
+                                                ? symbol
+                                                : name}
+                                        </Text>
                                     </Box>
                                 </Center>
                             </GridItem>
@@ -209,7 +249,16 @@ const Token = ({ Icon, name, balance, address }: any) => {
                             <Button
                                 variant="primary"
                                 onClick={() => {
-                                    executeSendAphoton(dest, amount);
+                                    if (transfer == 'cosmos') {
+                                        executeSendAphoton(dest, amount);
+                                    }
+                                    if (transfer == 'erc20') {
+                                        executeERC20Transfer(
+                                            address,
+                                            dest,
+                                            amount
+                                        );
+                                    }
                                     onClose();
                                 }}
                             >

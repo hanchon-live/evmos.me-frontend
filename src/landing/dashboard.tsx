@@ -5,7 +5,7 @@ import { BsArrowRightCircle } from 'react-icons/bs';
 const Dashboard = () => {
     return (
         <div>
-            <Link href="/wallet" _hover={{ textDecor: 'none' }}>
+            <Link href="/cosmos" _hover={{ textDecor: 'none' }}>
                 <Button variant="primary">
                     Go to dashboard
                     <Box ml="2">

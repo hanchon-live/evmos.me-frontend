@@ -10,7 +10,6 @@ const CosmosCoins = () => {
     useEffect(() => {
         async function readBalances() {
             let temp = await getAllBalances(getWalletEth());
-            console.log(temp);
             setCoins(temp.balances);
         }
         readBalances();
@@ -18,14 +17,24 @@ const CosmosCoins = () => {
     return (
         <Box h="auto">
             <Box w="full" p={5}>
-                <Heading size="lg" color="white" textAlign="left">
-                    Cosmos Coins:
+                <Heading size="lg" color="white" textAlign="center">
+                    Cosmos Coins
                 </Heading>
-                <Text py={2}>All the registered Cosmos Coins on Evmos.me</Text>
+                <Text py={2} textAlign="center">
+                    All the registered Cosmos Coins on Evmos.me
+                </Text>
             </Box>
             <SimpleGrid
                 mt={2}
-                columns={[1, 1, 2, 3, 4]}
+                columns={
+                    coins.length == 1
+                        ? [1]
+                        : coins.length == 2
+                        ? [1, 1, 2, 2, 2]
+                        : coins.length == 3
+                        ? [1, 1, 2, 3, 3]
+                        : [1, 1, 2, 3, 4]
+                }
                 columnGap={[0, 0, 3, 3, 3]}
                 rowGap={6}
                 h="full"
@@ -37,7 +46,7 @@ const CosmosCoins = () => {
                         name={item.denom}
                         balance={item.amount}
                         key={item.denom}
-                        transfer={() => {}}
+                        transfer={'cosmos'}
                     />
                 ))}
             </SimpleGrid>

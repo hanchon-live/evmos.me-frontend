@@ -24,17 +24,9 @@ import { fireSuccess } from '../landing/alert';
 import { connectMetamask } from '../utils/metamask';
 import { store } from '../utils/state';
 import { disconnectWallet } from '../utils/wallet';
+import { FaEthereum, FaReact } from 'react-icons/fa';
 export default function Sidebar(props: any) {
     const globalState = useContext(store);
-    // const [metamask, setMetamask] = useState(false);
-    // useEffect(() => {
-    //     async function fetchWallet() {
-    //         let a = await connectMetamask();
-    //         setMetamask(a != '');
-    //     }
-    //     fetchWallet();
-    // }, []);
-    // const [navSize, changeNavSize] = useState("large")
     return (
         <Flex
             boxShadow="xl"
@@ -71,11 +63,19 @@ export default function Sidebar(props: any) {
                 <Divider mt={5} />
 
                 <NavItem
-                    title={'Wallet'}
-                    icon={BiWallet}
-                    description="Your wallet information"
-                    link="/wallet"
-                    active={props.active === 'wallet' ? true : false}
+                    title={'Cosmos'}
+                    icon={FaReact}
+                    description="Your cosmos coins"
+                    link="/cosmos"
+                    active={props.active === 'cosmos' ? true : false}
+                />
+                <Divider mt={5} />
+                <NavItem
+                    title={'ERC20'}
+                    icon={FaEthereum}
+                    description="Your ERC20 tokens"
+                    link="/erc20"
+                    active={props.active === 'erc20' ? true : false}
                 />
                 <Divider mt={5} />
                 <NavItem
@@ -87,17 +87,9 @@ export default function Sidebar(props: any) {
                 />
                 <Divider mt={5} />
                 <NavItem
-                    title={'Assets'}
-                    icon={BsCashCoin}
-                    description="Your assets details"
-                    link="/assets"
-                    active={props.active === 'assets' ? true : false}
-                />
-                <Divider mt={5} />
-                <NavItem
                     title={'Logout'}
                     icon={AiOutlineLogout}
-                    description="Logout from metamask"
+                    description="Disconnect your wallet"
                     onClick={() => {
                         disconnectWallet(globalState);
                         fireSuccess(

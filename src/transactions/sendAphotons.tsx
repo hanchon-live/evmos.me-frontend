@@ -17,7 +17,6 @@ import { fireError, fireSuccess } from '../landing/alert';
 import { signTransaction, callSendAphoton, broadcast } from '../utils/backend';
 
 export async function executeSendAphoton(dest: string, amount: string) {
-    console.log(dest);
     if (dest.split('evmos').length != 2) {
         if (dest.split('0x').length == 2) {
             dest = ethToEvmos(dest);

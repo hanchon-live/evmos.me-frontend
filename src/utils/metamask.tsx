@@ -26,7 +26,7 @@ export async function connectMetamask(state: any) {
             handleAccountsChanged(e, state)
         );
     } catch (e) {
-        console.log('could not connect' + e);
+        console.error('could not connect' + e);
     }
 }
 
