@@ -16,9 +16,10 @@ import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
 import { signTransaction, callSendAphoton, broadcast } from '../utils/backend';
 
-async function execute(dest: string, amount: string) {
+export async function executeSendAphoton(dest: string, amount: string) {
+    console.log(dest);
     if (dest.split('evmos').length != 2) {
-        if (dest.split('0x').length != 2) {
+        if (dest.split('0x').length == 2) {
             dest = ethToEvmos(dest);
         } else {
             fireError('Send Aphotons', 'Invalid destination!');
@@ -30,11 +31,15 @@ async function execute(dest: string, amount: string) {
         return false;
     }
     let res = await callSendAphoton(dest, amount);
-    let signature = await signTransaction(res.converted);
-    if (signature === null || signature === undefined) {
+    let signed = await signTransaction(res);
+    if (signed === null || signed === undefined) {
         return fireError('Send Aphotons', 'Could not sign the message');
     }
-    let result = await broadcast(res.authInfoBytes, res.bodyBytes, signature);
+    let result = await broadcast(
+        signed.authBytes,
+        signed.bodyBytes,
+        signed.signature
+    );
     if (result.res === true) {
         return fireSuccess(
             'Send Aphotons',
@@ -88,7 +93,7 @@ const SendAphotons = () => {
                             <Button
                                 variant="primary"
                                 onClick={() => {
-                                    execute(dest, amount);
+                                    executeSendAphoton(dest, amount);
                                 }}
                             >
                                 Send Coins{' '}

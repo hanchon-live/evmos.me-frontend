@@ -1,6 +1,7 @@
-import { Button } from '@chakra-ui/button';
-import { useState } from 'react';
-import { fireError, fireSuccess } from './alert';
+import { evmosToEth } from '@hanchon/ethermint-address-converter';
+import { fireError, fireSuccess } from '../landing/alert';
+import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
+import { reconnectWallet } from './wallet';
 
 const config = {
     RPC_URL: 'http://localhost:26657',
@@ -81,12 +82,9 @@ declare global {
     }
 }
 
-async function initKeplr(isWaiting: CallableFunction) {
-    isWaiting(true);
-
+export async function connectKeplr(state: any) {
     if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
         fireError('Error with Keplr', 'Please install keplr extension');
-        isWaiting(false);
         return;
     } else {
         if (window.keplr.experimentalSuggestChain) {
@@ -94,46 +92,68 @@ async function initKeplr(isWaiting: CallableFunction) {
                 await window.keplr.experimentalSuggestChain(chainConfig);
             } catch (error) {
                 fireError('Error with Keplr', 'Failed to suggest the chain');
-                isWaiting(false);
             }
         } else {
             fireError(
                 'Error with Keplr',
                 'Please use the recent version of keplr extension'
             );
-            isWaiting(false);
         }
     }
 
     if (window.keplr) {
         await window.keplr.enable(chainId);
         const offlineSigner = window.getOfflineSigner(chainId);
-        // TODO: redirect
         fireSuccess(
             'Logged in with Keplr',
             'You can now start using evmos.me!'
         );
-        isWaiting(false);
+        let wallets = await offlineSigner.getAccounts();
+        setKeplr();
+        setWalletEvmos(wallets[0].address);
+        setWalletEth(evmosToEth(wallets[0].address));
+        let pubkey = btoa(String.fromCharCode.apply(null, wallets[0].pubkey));
+        setPubKey(pubkey);
+        reconnectWallet(state);
     } else {
         return null;
     }
-
-    isWaiting(false);
 }
 
-const Keplr = () => {
-    const [waiting, isWaiting] = useState(false);
-    return (
-        <div>
-            <Button
-                variant="primary"
-                isLoading={waiting}
-                onClick={() => initKeplr(isWaiting)}
-            >
-                Log in with Keplr
-            </Button>
-        </div>
-    );
-};
+export async function signCosmosTransactionKeplr(wallet: string, res: any) {
+    await window.keplr.enable(res.chainId);
+    const offlineSigner = window.getOfflineSigner(res.chainId);
 
-export default Keplr;
+    let bodyBytes = new Uint8Array(
+        atob(res.bodyBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    let authInfoBytes = new Uint8Array(
+        atob(res.authInfoBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    let chainId = res.chainId;
+    let accountNumber = res.accountNumber;
+
+    let sign = await window.keplr.signDirect(chainId, wallet, {
+        bodyBytes,
+        authInfoBytes,
+        chainId,
+        accountNumber,
+    });
+
+    // TODO: use Buffer to parse this insteaf of btoa
+    return {
+        signature: sign.signature.signature,
+        authBytes: btoa(
+            String.fromCharCode.apply(null, sign.signed.authInfoBytes)
+        ),
+        bodyBytes: btoa(String.fromCharCode.apply(null, sign.signed.bodyBytes)),
+    };
+}

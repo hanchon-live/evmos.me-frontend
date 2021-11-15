@@ -1,7 +1,5 @@
-import { Button } from '@chakra-ui/button';
-import { Center, Divider, Heading, Text, VStack } from '@chakra-ui/layout';
-import Keplr from './keplr';
-import Metamask from './metamask';
+import { Center, Heading, Text, VStack } from '@chakra-ui/layout';
+import Dashboard from './dashboard';
 
 const Logo = () => {
     return (
@@ -13,8 +11,7 @@ const Logo = () => {
                 <Text fontSize="xl">Your all in one EVMOS wallet</Text>
             </Center>
             <Center py={10}>
-                {/* <Keplr></Keplr> */}
-                <Metamask></Metamask>
+                <Dashboard />
             </Center>
         </VStack>
     );

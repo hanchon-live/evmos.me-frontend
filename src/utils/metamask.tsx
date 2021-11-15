@@ -14,6 +14,7 @@ import {
     unsetWalletEvmos,
 } from './db';
 import { store } from './state';
+import { disconnectWallet } from './wallet';
 
 export async function connectMetamask(state: any) {
     try {
@@ -27,15 +28,6 @@ export async function connectMetamask(state: any) {
     } catch (e) {
         console.log('could not connect' + e);
     }
-}
-
-export function disconnectMetamask(state) {
-    unsetWalletEth();
-    unsetWalletEvmos();
-    unsetPubKey();
-    unsetProvider();
-    state.dispatch({ type: 'cleanup', payload: {} });
-    return true;
 }
 
 export async function signRandomMessage(wallet: string) {
@@ -55,11 +47,11 @@ export async function handleAccountsChanged(
     let account = getWalletEth();
     let pubkeyDb = getPubKey();
 
-    disconnectMetamask(state);
+    disconnectWallet(state);
     setMetamask();
     state.dispatch({ type: 'provider', payload: { provider: 'metamask' } });
     if (accounts.length === 0) {
-        disconnectMetamask(state);
+        disconnectWallet(state);
         location.reload();
         return;
     }
@@ -89,11 +81,15 @@ export async function handleAccountsChanged(
     setPubKey(pubkey);
 }
 
-export async function signCosmosTransaction(wallet: string, converted: string) {
+export async function signCosmosTransaction(wallet: string, data: any) {
     let signature = await window.ethereum.request({
         method: 'eth_sign',
-        params: [wallet, '0x' + converted],
+        params: [wallet, '0x' + data.converted],
     });
     let signBytes = fromHexString(signature.split('0x')[1]);
-    return Buffer.from(signBytes).toString('base64');
+    return {
+        signature: Buffer.from(signBytes).toString('base64'),
+        authBytes: data.authInfoBytes,
+        bodyBytes: data.bodyBytes,
+    };
 }

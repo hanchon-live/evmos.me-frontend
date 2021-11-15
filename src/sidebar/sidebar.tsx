@@ -21,8 +21,9 @@ import { requestWallet } from '../landing/metamask';
 import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 import { unsetPubKey, unsetWallet } from '../utils/db';
 import { fireSuccess } from '../landing/alert';
-import { connectMetamask, disconnectMetamask } from '../utils/metamask';
+import { connectMetamask } from '../utils/metamask';
 import { store } from '../utils/state';
+import { disconnectWallet } from '../utils/wallet';
 export default function Sidebar(props: any) {
     const globalState = useContext(store);
     // const [metamask, setMetamask] = useState(false);
@@ -98,7 +99,7 @@ export default function Sidebar(props: any) {
                     icon={AiOutlineLogout}
                     description="Logout from metamask"
                     onClick={() => {
-                        disconnectMetamask(globalState);
+                        disconnectWallet(globalState);
                         fireSuccess(
                             'Logout',
                             'Your credentials were removed from the app.'

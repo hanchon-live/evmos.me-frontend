@@ -7,6 +7,7 @@ import {
     isKeplr,
     isMetamask,
 } from './db';
+import { signCosmosTransactionKeplr } from './keplr';
 import { signCosmosTransaction } from './metamask';
 
 export async function getAllBalances(address: string) {
@@ -130,12 +131,20 @@ export async function broadcast(
     return resp;
 }
 
-export function signTransaction(data: string) {
-    let wallet = getWalletEth();
-    if (wallet === null) {
-        return null;
-    }
+export function signTransaction(data: any) {
     if (isMetamask()) {
+        let wallet = getWalletEth();
+        if (wallet === null) {
+            return null;
+        }
         return signCosmosTransaction(wallet, data);
+    }
+
+    if (isKeplr()) {
+        let wallet = getWalletEvmos();
+        if (wallet === null) {
+            return null;
+        }
+        return signCosmosTransactionKeplr(wallet, data);
     }
 }

@@ -17,6 +17,7 @@ const ERC20Assets = () => {
                 columnGap={[0, 0, 3, 3, 3]}
                 rowGap={6}
                 h="full"
+                justifyItems="flex-start"
             >
                 <Token
                     Icon={FaEthereum}

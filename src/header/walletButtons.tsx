@@ -2,6 +2,7 @@ import { Button } from '@chakra-ui/button';
 import { Box, Center, Flex, HStack, SimpleGrid } from '@chakra-ui/layout';
 import { useContext } from 'react';
 import { BiLogIn, BiLogOutCircle } from 'react-icons/bi';
+import { connectKeplr } from '../utils/keplr';
 import { connectMetamask } from '../utils/metamask';
 import { store } from '../utils/state';
 
@@ -17,11 +18,6 @@ const WalletButtons = () => {
                         onClick={async () => {
                             await connectMetamask(globalState);
                         }}
-                        display={
-                            globalState.state.provider === 'metamask'
-                                ? 'none'
-                                : 'block'
-                        }
                     >
                         <HStack>
                             {globalState.state.provider === 'metamask' ? (
@@ -40,13 +36,8 @@ const WalletButtons = () => {
                 <Button
                     variant="primary"
                     onClick={async () => {
-                        await connectMetamask(globalState);
+                        await connectKeplr(globalState);
                     }}
-                    display={
-                        globalState.state.provider === 'keplr'
-                            ? 'none'
-                            : 'block'
-                    }
                 >
                     <HStack>
                         {globalState.state.provider === 'keplr' ? (

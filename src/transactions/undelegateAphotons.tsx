@@ -26,11 +26,15 @@ async function execute(dest: string, amount: string) {
         return false;
     }
     let res = await delegateAphoton(dest, amount);
-    let signature = await signTransaction(res.converted);
-    if (signature === null || signature === undefined) {
+    let signed = await signTransaction(res);
+    if (signed === null || signed === undefined) {
         return fireError('Undelegate Aphotons', 'Could not sign the message');
     }
-    let result = await broadcast(res.authInfoBytes, res.bodyBytes, signature);
+    let result = await broadcast(
+        signed.authBytes,
+        signed.bodyBytes,
+        signed.signature
+    );
     if (result.res === true) {
         return fireSuccess(
             'Undelegate Aphotons',

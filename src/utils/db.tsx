@@ -1,7 +1,7 @@
-function getProvider() {
+export function getProvider() {
     return localStorage.getItem('provider');
 }
-function setProvider(provider: string) {
+export function setProvider(provider: string) {
     return localStorage.setItem('provider', provider);
 }
 

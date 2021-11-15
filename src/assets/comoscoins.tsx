@@ -29,14 +29,15 @@ const CosmosCoins = () => {
                 columnGap={[0, 0, 3, 3, 3]}
                 rowGap={6}
                 h="full"
+                justifyItems="flex-start"
             >
                 {coins.map((item) => (
-                    // <li key={item}>{item}</li>
                     <Token
                         Icon={FaReact}
                         name={item.denom}
                         balance={item.amount}
                         key={item.denom}
+                        transfer={() => {}}
                     />
                 ))}
             </SimpleGrid>
