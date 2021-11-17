@@ -1,3 +1,4 @@
+import { getAllBalances } from './backend';
 import {
     getProvider,
     getPubKey,
@@ -8,8 +9,9 @@ import {
     unsetWalletEth,
     unsetWalletEvmos,
 } from './db';
+import { BalanceCosmos, GlobalState } from './state';
 
-export function disconnectWallet(state) {
+export function disconnectWallet(state: GlobalState) {
     unsetWalletEth();
     unsetWalletEvmos();
     unsetPubKey();
@@ -18,7 +20,7 @@ export function disconnectWallet(state) {
     return true;
 }
 
-export function reconnectWallet(state) {
+export async function reconnectWallet(state: GlobalState) {
     let walletEth = getWalletEth();
     if (walletEth !== null) {
         let walletEvmos = getWalletEvmos();
@@ -33,5 +35,16 @@ export function reconnectWallet(state) {
         });
         state.dispatch({ type: 'pubkey', payload: { pubkey } });
         state.dispatch({ type: 'provider', payload: { provider } });
+        await queryBalances(state);
     }
+}
+
+export async function queryBalances(store: GlobalState) {
+    let wallet = getWalletEvmos();
+    let balance: BalanceCosmos[] = [];
+    if (wallet !== null) {
+        balance = await getAllBalances(wallet);
+        console.log(balance);
+    }
+    store.dispatch({ type: 'cosmosCoins', payload: balance });
 }

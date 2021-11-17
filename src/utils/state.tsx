@@ -1,16 +1,50 @@
 import React, { createContext, useReducer } from 'react';
+import internal from 'stream';
 
-const initialState = {
+interface Action {
+    type: string;
+    payload: any;
+}
+
+interface Balance {
+    denom: string;
+    amount: string;
+}
+export interface BalanceCosmos {
+    balances: Balance[];
+    pagination: {
+        total: string;
+        nextKey: string;
+    };
+}
+
+export interface GlobalState {
+    state: {
+        walletEvmos: string;
+        walletEth: string;
+        pubkey: string;
+        provider: string;
+        balanceCosmos: string;
+        balanceERC20: string;
+        aphoton: string;
+    };
+    dispatch: React.Dispatch<Action>;
+}
+
+const initialState: any = {
     walletEvmos: 'evmos1...',
     walletEth: '0x...',
     pubkey: 'At/+...',
     provider: '',
+    balanceCosmos: [],
+    balanceERC20: [],
+    aphoton: '0',
 };
 const store = createContext(initialState);
 const { Provider } = store;
 
 const StateProvider = ({ children }: any) => {
-    const [state, dispatch] = useReducer((state: any, action: any) => {
+    const [state, dispatch] = useReducer((state: any, action: Action) => {
         switch (action.type) {
             case 'wallet':
                 return {
@@ -27,6 +61,17 @@ const StateProvider = ({ children }: any) => {
             case 'update':
                 const newState = action.payload;
                 return newState;
+            case 'cosmosCoins':
+                let temp = action.payload.balances.filter((e: Balance) => {
+                    if (e.denom == 'aphoton') {
+                        return true;
+                    }
+                });
+                return {
+                    ...state,
+                    balanceCosmos: action.payload,
+                    aphoton: temp.length == 1 ? temp[0].amount : 0,
+                };
             default:
                 throw new Error();
         }

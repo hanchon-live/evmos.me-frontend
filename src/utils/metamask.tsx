@@ -1,5 +1,6 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
 import { fromHexString, signatureToPubkey } from '@hanchon/signature-to-pubkey';
+import { fireSuccess } from '../landing/alert';
 import { getAllBalances, getPublicKey } from './backend';
 import {
     getPubKey,
@@ -14,7 +15,16 @@ import {
     unsetWalletEvmos,
 } from './db';
 import { store } from './state';
-import { disconnectWallet } from './wallet';
+import { disconnectWallet, queryBalances } from './wallet';
+
+declare global {
+    interface Window {
+        getOfflineSignerOnlyAmino: any;
+        keplr: any;
+        getOfflineSigner: any;
+        ethereum: any;
+    }
+}
 
 export async function connectMetamask(state: any) {
     try {
@@ -69,6 +79,7 @@ export async function handleAccountsChanged(
         if (pubkeyDb !== null) {
             state.dispatch({ type: 'pubkey', payload: { pubkey: pubkeyDb } });
             setPubKey(pubkeyDb);
+            await queryBalances(state);
             return;
         }
     }
@@ -79,6 +90,9 @@ export async function handleAccountsChanged(
     }
     state.dispatch({ type: 'pubkey', payload: { pubkey } });
     setPubKey(pubkey);
+    await queryBalances(state);
+
+    fireSuccess('Logged in with Metamask', 'You can now start using evmos.me!');
 }
 
 export async function signCosmosTransaction(wallet: string, data: any) {

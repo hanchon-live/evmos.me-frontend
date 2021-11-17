@@ -114,7 +114,7 @@ export async function connectKeplr(state: any) {
         setWalletEth(evmosToEth(wallets[0].address));
         let pubkey = btoa(String.fromCharCode.apply(null, wallets[0].pubkey));
         setPubKey(pubkey);
-        reconnectWallet(state);
+        await reconnectWallet(state);
     } else {
         return null;
     }
