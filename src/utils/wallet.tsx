@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import { getAllBalances } from './backend';
 import {
     getProvider,
@@ -9,7 +10,7 @@ import {
     unsetWalletEth,
     unsetWalletEvmos,
 } from './db';
-import { BalanceCosmos, GlobalState } from './state';
+import { BalanceCosmos, GlobalState, store } from './state';
 
 export function disconnectWallet(state: GlobalState) {
     unsetWalletEth();
@@ -47,4 +48,12 @@ export async function queryBalances(store: GlobalState) {
         console.log(balance);
     }
     store.dispatch({ type: 'cosmosCoins', payload: balance });
+}
+
+export function WalletInitializer() {
+    const globalState = useContext(store);
+    useEffect(() => {
+        reconnectWallet(globalState);
+    }, []);
+    return <></>;
 }

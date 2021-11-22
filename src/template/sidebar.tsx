@@ -1,7 +1,5 @@
 import React, { ReactNode, useContext } from 'react';
 import {
-    IconButton,
-    Avatar,
     Box,
     CloseButton,
     Flex,
@@ -76,7 +74,11 @@ export default function SidebarWithHeader({
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Box
+            minH="100vh"
+            bg={useColorModeValue('gray.100', 'gray.900')}
+            id="sidebarmainbox"
+        >
             <SidebarContent
                 currentSection={section}
                 onClose={() => onClose}
@@ -92,7 +94,10 @@ export default function SidebarWithHeader({
                 size="full"
             >
                 <DrawerContent>
-                    <SidebarContent onClose={onClose} />
+                    <SidebarContent
+                        onClose={onClose}
+                        currentSection={section}
+                    />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
@@ -152,12 +157,13 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                 </HStack>
                 <CloseButton
                     id="closebutton"
+                    key="closebutton"
                     display={{ base: 'flex', md: 'none' }}
                     onClick={onClose}
                 />
             </Flex>
             <Flex h="90vh" direction="column">
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
                 <NavItem
@@ -170,7 +176,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Wallet'}
                 </NavItem>
 
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
 
@@ -206,7 +212,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'ERC20'}
                 </NavItem>
 
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
 
@@ -241,7 +247,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Validator'}
                 </NavItem>
 
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
 
@@ -276,7 +282,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Proposals'}
                 </NavItem>
 
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
 
@@ -295,7 +301,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Wallet'}
                 </NavItem>
 
-                <HStack mx={5}>
+                <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>
 
@@ -364,6 +370,11 @@ const NavItem = ({
                 borderRadius="lg"
                 role="group"
                 cursor="pointer"
+                color={
+                    '/' + currentselected == link
+                        ? 'white'
+                        : useColorModeValue('black', 'white')
+                }
                 bg={'/' + currentselected == link ? 'teal.500' : 'transparent'}
                 _hover={{
                     bg: 'teal.300',
@@ -408,6 +419,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             {...rest}
         >
             <Icon
+                id="mobilenavicon"
                 display={{ base: 'flex', md: 'none' }}
                 onClick={onOpen}
                 variant="outline"
@@ -416,6 +428,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             />
 
             <Text
+                id="mobilenavtext"
                 display={{ base: 'flex', md: 'none' }}
                 fontSize="2xl"
                 fontFamily="var(--chakra-fonts-heading)"
@@ -426,9 +439,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
             <HStack spacing={{ base: '0', md: '6' }} id="hstacksidebar">
                 <Flex alignItems={'center'} id="flexsidebar">
-                    <Menu id="menusidebar">
+                    <Menu id="menusidebar" key="menukey" isLazy>
                         <Button
-                            id="toggle"
+                            id="togglebutton"
                             key="buttontoggle"
                             mr={[2, 5, 10]}
                             onClick={toggleColorMode}
@@ -465,6 +478,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                     />
                                 </Box>
                                 <VStack
+                                    id="navbarvstack"
                                     display={{ base: 'none', md: 'flex' }}
                                     alignItems="flex-start"
                                     spacing="1px"
@@ -500,6 +514,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                         >
                             <MenuItem id="itemwallet">
                                 <Link
+                                    id="itemwalletlink"
                                     _hover={{ textDecor: 'none' }}
                                     href="/wallet"
                                 >
@@ -511,6 +526,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             </MenuItem>
                             <MenuItem id="mitemmetamask">
                                 <HStack
+                                    id="mitemmetamaskhstack"
                                     onClick={async () => {
                                         await connectMetamask(globalState);
                                     }}
@@ -521,6 +537,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             </MenuItem>
                             <MenuItem id="mitemmetakeplr">
                                 <HStack
+                                    id="mitemmetakeplrhstack"
                                     onClick={async () => {
                                         await connectKeplr(globalState);
                                     }}
@@ -532,6 +549,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             <MenuDivider />
                             <MenuItem id="mitemlogout">
                                 <HStack
+                                    id="mitemlogouthstack"
                                     onClick={() => {
                                         disconnectWallet(globalState);
                                         fireSuccess(

@@ -51,19 +51,22 @@ function WalletGrid() {
             name: 'Evmos',
             role: '(Bech32) Evmos encoded wallet',
             content: [<TextSpan content={globalState.state.walletEvmos} />],
-            avatar: './evmos-black.svg',
+            avatar: useColorModeValue('./evmos-black.svg', './evmos-white.svg'),
         },
         {
             name: 'Hex',
             role: '(0x) Ethereum encoded wallet',
             content: [<TextSpan content={globalState.state.walletEth} />],
-            avatar: './ethereum-1.svg',
+            avatar: useColorModeValue(
+                './ethereum-1.svg',
+                './ethereum-1-white.svg'
+            ),
         },
         {
             name: 'Public Key',
             role: '(Base64) Value used for signing the transactions',
             content: [<TextSpan content={globalState.state.pubkey} />],
-            avatar: './selfkey.svg',
+            avatar: useColorModeValue('./selfkey.svg', './selfkey-white.svg'),
         },
         {
             name: 'Balance',
@@ -71,7 +74,7 @@ function WalletGrid() {
             content: [
                 <TextSpan content={`${globalState.state.aphoton} Aphotons`} />,
             ],
-            avatar: './coins.png',
+            avatar: useColorModeValue('./coins.png', './coins-white.png'),
         },
     ];
     return (

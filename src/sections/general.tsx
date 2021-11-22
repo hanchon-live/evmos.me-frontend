@@ -61,15 +61,14 @@ export function GeneralCards(props: CardsProps) {
                 justifyContent={'space-between'}
                 w="full"
             >
-                <chakra.p
+                <chakra.div
                     fontFamily={'monospace'}
                     fontWeight={'medium'}
                     fontSize={['md', '2xl']}
                     pb={4}
-                    style={{ overflowWrap: 'anywhere' }}
                 >
                     {content}
-                </chakra.p>
+                </chakra.div>
                 <chakra.p
                     fontFamily={'Work Sans'}
                     fontWeight={'bold'}
@@ -131,15 +130,7 @@ export default function General({
                 >
                     {title}
                 </chakra.h1>
-                <chakra.h2
-                    margin={'auto'}
-                    width={'70%'}
-                    fontFamily={'Inter'}
-                    fontWeight={'medium'}
-                    color={useColorModeValue('gray.500', 'gray.400')}
-                >
-                    {subtitle}
-                </chakra.h2>
+                {subtitle}
             </Box>
             {content}
 

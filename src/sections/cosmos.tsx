@@ -73,8 +73,14 @@ function CosmosGrid() {
                             ]}
                             avatar={
                                 coin.denom == 'aphoton'
-                                    ? './evmos-black.svg'
-                                    : './coins.png'
+                                    ? useColorModeValue(
+                                          './evmos-black.svg',
+                                          './evmos-white.svg'
+                                      )
+                                    : useColorModeValue(
+                                          './coins.png',
+                                          './coins-white.png'
+                                      )
                             }
                         />
                     );
