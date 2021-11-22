@@ -10,7 +10,7 @@ const WalletPage = () => {
             section="wallet"
             element={[
                 <Box h="full" key="walletbox">
-                    <Wallet />
+                    <Wallet key="walletcomponent" />
                 </Box>,
             ]}
         ></Template>

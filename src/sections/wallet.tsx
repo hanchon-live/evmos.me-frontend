@@ -50,13 +50,23 @@ function WalletGrid() {
         {
             name: 'Evmos',
             role: '(Bech32) Evmos encoded wallet',
-            content: [<TextSpan content={globalState.state.walletEvmos} />],
+            content: [
+                <TextSpan
+                    content={globalState.state.walletEvmos}
+                    key="evmotext"
+                />,
+            ],
             avatar: useColorModeValue('./evmos-black.svg', './evmos-white.svg'),
         },
         {
             name: 'Hex',
             role: '(0x) Ethereum encoded wallet',
-            content: [<TextSpan content={globalState.state.walletEth} />],
+            content: [
+                <TextSpan
+                    content={globalState.state.walletEth}
+                    key="hextext"
+                />,
+            ],
             avatar: useColorModeValue(
                 './ethereum-1.svg',
                 './ethereum-1-white.svg'
@@ -65,14 +75,22 @@ function WalletGrid() {
         {
             name: 'Public Key',
             role: '(Base64) Value used for signing the transactions',
-            content: [<TextSpan content={globalState.state.pubkey} />],
+            content: [
+                <TextSpan
+                    content={globalState.state.pubkey}
+                    key="pubkeytext"
+                />,
+            ],
             avatar: useColorModeValue('./selfkey.svg', './selfkey-white.svg'),
         },
         {
             name: 'Balance',
             role: '(Aphotons) Current evmos coin balance',
             content: [
-                <TextSpan content={`${globalState.state.aphoton} Aphotons`} />,
+                <TextSpan
+                    content={`${globalState.state.aphoton} Aphotons`}
+                    key="balancetext"
+                />,
             ],
             avatar: useColorModeValue('./coins.png', './coins-white.png'),
         },
@@ -94,10 +112,10 @@ function WalletGrid() {
 export const Wallet = () => {
     return (
         <General
-            icon={[<WalletIconFooter />]}
+            icon={[<WalletIconFooter key="walletfooter" />]}
             title="Your Wallet Details"
-            subtitle={[<WalletSubtitle />]}
-            content={[<WalletGrid />]}
+            subtitle={[<WalletSubtitle key="walletsub" />]}
+            content={[<WalletGrid key="walletgrid" />]}
         ></General>
     );
 };

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useContext, useEffect } from 'react';
 import { getAllBalances } from './backend';
 import {
@@ -22,11 +24,11 @@ export function disconnectWallet(state: GlobalState) {
 }
 
 export async function reconnectWallet(state: GlobalState) {
-    let walletEth = getWalletEth();
+    const walletEth = getWalletEth();
     if (walletEth !== null) {
-        let walletEvmos = getWalletEvmos();
-        let pubkey = getPubKey();
-        let provider = getProvider();
+        const walletEvmos = getWalletEvmos();
+        const pubkey = getPubKey();
+        const provider = getProvider();
         state.dispatch({
             type: 'wallet',
             payload: {
@@ -41,11 +43,10 @@ export async function reconnectWallet(state: GlobalState) {
 }
 
 export async function queryBalances(store: GlobalState) {
-    let wallet = getWalletEvmos();
+    const wallet = getWalletEvmos();
     let balance: BalanceCosmos[] = [];
     if (wallet !== null) {
         balance = await getAllBalances(wallet);
-        console.log(balance);
     }
     store.dispatch({ type: 'cosmosCoins', payload: balance });
 }

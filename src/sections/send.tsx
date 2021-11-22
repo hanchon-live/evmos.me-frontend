@@ -73,9 +73,12 @@ function SendGrid() {
                     key={'send photons'}
                     name={'MsgSend'}
                     role={`Send cosmos coins to any address.`}
-                    content={[<MsgSend />]}
+                    content={[<MsgSend key="msgsendcontent" />]}
                     iconComponents={[
-                        <MessagesIcon icon={<AiOutlineSend size="xl" />} />,
+                        <MessagesIcon
+                            key="msgsendicon"
+                            icon={<AiOutlineSend size={'25'} />}
+                        />,
                     ]}
                 />
             </SimpleGrid>
@@ -87,9 +90,9 @@ export const TransactionsSendSection = () => {
     return (
         <General
             title="Cosmos Transactions"
-            subtitle={[<TransactionsSubtitle />]}
-            content={[<SendGrid />]}
-            icon={[<TransactionsIconFooter />]}
+            subtitle={[<TransactionsSubtitle key="sendsub" />]}
+            content={[<SendGrid key="sendgrid" />]}
+            icon={[<TransactionsIconFooter key="sendfooter" />]}
         ></General>
     );
 };

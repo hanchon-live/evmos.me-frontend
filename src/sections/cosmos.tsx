@@ -7,6 +7,7 @@ import { FaReact } from 'react-icons/fa';
 import TextSpan from '../theme/textSpan';
 import { store, Balance } from '../utils/state';
 import General, { GeneralCards } from './general';
+import { GlobalState } from '../utils/state';
 
 function CosmosSubtitle() {
     return (
@@ -47,8 +48,7 @@ function CosmosIconFooter() {
     );
 }
 
-function CosmosGrid() {
-    const globalState = useContext(store);
+function CosmosGrid({ globalState }: { globalState: GlobalState }) {
     return (
         <SimpleGrid
             columns={{
@@ -69,6 +69,7 @@ function CosmosGrid() {
                             content={[
                                 <TextSpan
                                     content={`${coin.amount} ${coin.denom}`}
+                                    key={`${coin.denom}key`}
                                 />,
                             ]}
                             avatar={
@@ -91,11 +92,12 @@ function CosmosGrid() {
 }
 
 export const CosmosSection = () => {
+    const globalState = useContext(store);
     return (
         <General
             title="Your Cosmos Coins"
             subtitle={[<CosmosSubtitle key="sub" />]}
-            content={[<CosmosGrid key="grid" />]}
+            content={[<CosmosGrid key="grid" globalState={globalState} />]}
             icon={[<CosmosIconFooter key="footer" />]}
         ></General>
     );

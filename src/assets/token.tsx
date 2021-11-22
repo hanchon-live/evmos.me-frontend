@@ -25,7 +25,6 @@ import { HStack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
-import { executeSendAphoton } from '../transactions/sendAphotons';
 import { createERC20Transfer } from '../utils/backend';
 import { getWalletEth, isMetamask } from '../utils/db';
 
