@@ -1,20 +1,12 @@
-import { Box } from '@chakra-ui/layout';
-import CosmosCoins from '../src/assets/comoscoins';
-import EvmosHeader from '../src/header/evmosheader';
+import { useContext } from 'react';
+import { CosmosSection } from '../src/sections/cosmos';
 import Template from '../src/template/template';
+import { store } from '../src/utils/state';
 
-const ERC20Page = () => {
+const Cosmos = () => {
     return (
-        <Template
-            active="cosmos"
-            element={[
-                <EvmosHeader key="header"></EvmosHeader>,
-                <Box h="full" key="walletbox">
-                    <CosmosCoins key="aphoton"></CosmosCoins>
-                </Box>,
-            ]}
-        ></Template>
+        <Template element={[<CosmosSection key="cosmos" />]} section="cosmos" />
     );
 };
 
-export default ERC20Page;
+export default Cosmos;

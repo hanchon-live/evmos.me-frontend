@@ -6,7 +6,7 @@ interface Action {
     payload: any;
 }
 
-interface Balance {
+export interface Balance {
     denom: string;
     amount: string;
 }
@@ -24,7 +24,7 @@ export interface GlobalState {
         walletEth: string;
         pubkey: string;
         provider: string;
-        balanceCosmos: string;
+        balanceCosmos: Balance[];
         balanceERC20: string;
         aphoton: string;
     };
@@ -69,7 +69,7 @@ const StateProvider = ({ children }: any) => {
                 });
                 return {
                     ...state,
-                    balanceCosmos: action.payload,
+                    balanceCosmos: action.payload.balances,
                     aphoton: temp.length == 1 ? temp[0].amount : 0,
                 };
             default:

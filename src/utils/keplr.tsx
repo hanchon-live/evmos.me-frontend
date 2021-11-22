@@ -9,7 +9,7 @@ const config = {
     EXPLORER_URL: 'https://evm.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',
-    CHAIN_ID: 'evmos_9000-1',
+    CHAIN_ID: 'evmos_9000-2',
     CHAIN_NAME: 'Evmos Testnet',
     COIN_DENOM: 'PHOTON',
     COIN_MINIMAL_DENOM: 'aphoton',

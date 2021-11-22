@@ -8,18 +8,12 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import NavHoverBox from './navhoverbox';
-import { template } from 'lodash';
 
 const NavItem = ({ icon, title, active, description, link, onClick }: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Flex
-            mt={30}
-            flexDir="column"
-            w="100%"
-            // alightItems="center"
-        >
+        <Flex mt={30} flexDir="column" w="100%" id={`flex${link}`}>
             <Menu id={title} placement="right" isOpen={isOpen}>
                 <Link w="100%" textAlign="center" href={link} onClick={onClick}>
                     <Center>
@@ -36,12 +30,14 @@ const NavItem = ({ icon, title, active, description, link, onClick }: any) => {
                             // backgroundColor={}
                         >
                             <Circle
+                                id="openclose"
                                 size="40px"
                                 backgroundColor={
                                     (active && 'teal.300') || 'teal.300'
                                 }
                             >
                                 <MenuButton
+                                    id="openclose"
                                     onMouseEnter={onOpen}
                                     onMouseLeave={onClose}
                                 >
@@ -58,6 +54,7 @@ const NavItem = ({ icon, title, active, description, link, onClick }: any) => {
                     </Center>
                 </Link>
                 <MenuList
+                    id={`menulist${link}`}
                     onMouseEnter={onOpen}
                     onMouseLeave={onClose}
                     py={0}

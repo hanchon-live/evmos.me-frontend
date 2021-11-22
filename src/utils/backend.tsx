@@ -1,4 +1,5 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
+import { memo } from 'react';
 import { REACT_APP_BACKEND_URL } from './contants';
 import {
     getPubKey,
@@ -90,12 +91,17 @@ export async function getPublicKey(address: string) {
     return resp.value;
 }
 
-export async function callSendAphoton(dest: string, amount: string) {
+export async function callSendAphoton(
+    dest: string,
+    amount: string,
+    denom: string,
+    memo: string
+) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
         algo = 'secp256k1';
     }
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/send_aphotons/`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/msg_send/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -108,6 +114,8 @@ export async function callSendAphoton(dest: string, amount: string) {
             },
             destination: dest,
             amount: amount,
+            denom: denom,
+            memo: memo,
         }),
     });
     let res = await response.json();
