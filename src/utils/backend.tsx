@@ -1,5 +1,5 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
-import { memo } from 'react';
+import { fireError, fireSuccess } from '../landing/alert';
 import { REACT_APP_BACKEND_URL } from './contants';
 import {
     getPubKey,
@@ -50,6 +50,30 @@ export async function getAllERC20Balances(address: string) {
     return resp;
 }
 
+export async function createERC20Contract(name: string, symbol: string) {
+    const pubresp = await fetch(
+        `${REACT_APP_BACKEND_URL}/deploy_erc_20_contract/`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                wallet: {
+                    address: getWalletEvmos(),
+                    algo: 'ethsecp256k1',
+                    pubkey: getPubKey(),
+                },
+                name: name,
+                symbol: symbol,
+                walletEth: getWalletEth(),
+            }),
+        }
+    );
+    let resp = await pubresp.json();
+    return resp;
+}
+
 export async function createERC20Transfer(
     sender: string,
     destination: string,
@@ -89,6 +113,31 @@ export async function getPublicKey(address: string) {
     });
     let resp = await pubresp.json();
     return resp.value;
+}
+
+export async function callDeployERC20(name: string, symbol: string) {
+    let tx = await createERC20Contract(name, symbol);
+    if (isMetamask()) {
+        try {
+            let res = await window.ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [tx.tx],
+            });
+            return fireSuccess(
+                'DeployERC20',
+                `Transaction sent with hash: ${res}`
+            );
+        } catch (e) {
+            console.error(e);
+            fireError(
+                'DeployERC20',
+                'Metamask error on submitting transaction'
+            );
+        }
+    } else {
+        fireError('DeployERC20', 'DeployERC20 is only available on metamask!');
+        return false;
+    }
 }
 
 export async function callSendAphoton(

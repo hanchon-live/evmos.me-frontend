@@ -52,7 +52,12 @@ import { GlobalState, store } from '../utils/state';
 import { connectKeplr } from '../utils/keplr';
 import { disconnectWallet } from '../utils/wallet';
 import { fireSuccess } from '../landing/alert';
-import { MdDarkMode, MdLightMode, MdOutlineSendToMobile } from 'react-icons/md';
+import {
+    MdDarkMode,
+    MdLightMode,
+    MdOutlineGeneratingTokens,
+    MdOutlineSendToMobile,
+} from 'react-icons/md';
 
 import { useColorMode } from '@chakra-ui/color-mode';
 import { Button } from '@chakra-ui/button';
@@ -234,6 +239,17 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'Send'}
+                </NavItem>
+
+                <NavItem
+                    id={'erc20'}
+                    ml={10}
+                    key={'erc20'}
+                    icon={MdOutlineGeneratingTokens}
+                    link={'/deployerc20'}
+                    currentselected={currentSection}
+                >
+                    {'ERC20'}
                 </NavItem>
 
                 <NavItem
