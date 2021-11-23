@@ -8,7 +8,7 @@ import { DeployErc20Section } from '../src/sections/deployerc20';
 const DeployErc20Page = () => {
     return (
         <Template
-            section="wallet"
+            section="deployerc20"
             element={[
                 <Box h="full" key="deployerc20box">
                     <DeployErc20Section key="deploypage" />

@@ -62,6 +62,7 @@ import {
 import { useColorMode } from '@chakra-ui/color-mode';
 import { Button } from '@chakra-ui/button';
 import { BsWallet2 } from 'react-icons/bs';
+import Footer from './footer';
 
 interface LinkItemProps {
     name: string;
@@ -107,9 +108,12 @@ export default function SidebarWithHeader({
             </Drawer>
             {/* mobilenav */}
             <MobileNav id="mobilenav" onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4">
-                {children}
-            </Box>
+            <VStack>
+                <Box ml={{ base: 0, md: 60 }} p="4">
+                    {children}
+                </Box>
+                <Footer />
+            </VStack>
         </Box>
     );
 }
@@ -381,7 +385,8 @@ const NavItem = ({
         >
             <Flex
                 align="center"
-                p="4"
+                px="4"
+                py="2"
                 mx="4"
                 borderRadius="lg"
                 role="group"
