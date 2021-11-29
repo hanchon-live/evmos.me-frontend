@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useContext, useEffect } from 'react';
-import { getAllBalances } from './backend';
+import { getAllBalances, getAllERC20Balances } from './backend';
 import {
     getProvider,
     getPubKey,
@@ -12,7 +12,7 @@ import {
     unsetWalletEth,
     unsetWalletEvmos,
 } from './db';
-import { BalanceCosmos, GlobalState, store } from './state';
+import { BalanceCosmos, GlobalState, store, BalanceERC20Item } from './state';
 
 export function disconnectWallet(state: GlobalState) {
     unsetWalletEth();
@@ -49,6 +49,14 @@ export async function queryBalances(store: GlobalState) {
         balance = await getAllBalances(wallet);
     }
     store.dispatch({ type: 'cosmosCoins', payload: balance });
+
+    const walletEth = getWalletEth();
+    let balanceERC20: BalanceERC20Item[] = [];
+    if (walletEth !== null) {
+        let resp = await getAllERC20Balances(walletEth);
+        balanceERC20 = resp.balances;
+    }
+    store.dispatch({ type: 'erc20Coins', payload: balanceERC20 });
 }
 
 export function WalletInitializer() {

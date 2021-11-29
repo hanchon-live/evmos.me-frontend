@@ -18,6 +18,13 @@ export interface BalanceCosmos {
     };
 }
 
+export interface BalanceERC20Item {
+    name: string;
+    symbol: string;
+    decimals: string;
+    balance: string;
+    address: string;
+}
 export interface GlobalState {
     state: {
         walletEvmos: string;
@@ -25,7 +32,7 @@ export interface GlobalState {
         pubkey: string;
         provider: string;
         balanceCosmos: Balance[];
-        balanceERC20: string;
+        balanceERC20: BalanceERC20Item[];
         aphoton: string;
     };
     dispatch: React.Dispatch<Action>;
@@ -71,6 +78,11 @@ const StateProvider = ({ children }: any) => {
                     ...state,
                     balanceCosmos: action.payload.balances,
                     aphoton: temp.length == 1 ? temp[0].amount : 0,
+                };
+            case 'erc20Coins':
+                return {
+                    ...state,
+                    balanceERC20: action.payload,
                 };
             default:
                 throw new Error();

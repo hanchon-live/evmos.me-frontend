@@ -20,10 +20,10 @@ import UndelegateAphotons from '../messages/undelegate';
 import TitleH2 from '../template/heading2';
 import Strong from '../template/strong';
 import RegisterERC20 from '../messages/registerERC20';
-import ConvertCoinProposal from '../messages/convertcosmoscoin';
-import RegisterCoin from '../messages/registercoin';
+import ConvertERC20 from '../messages/converterc20';
+import ConvertCoin from '../messages/convertcosmoscoin';
 
-function ProposalsSubtitle() {
+function ConvertCoinsSubtitle() {
     return (
         <TitleH2
             content={
@@ -69,10 +69,10 @@ function ProposalGrid() {
                 mx={'auto'}
             >
                 <GeneralCards
-                    key={'send photons'}
-                    name={'Register ERC20'}
-                    role={`Create a proposal to register your erc20.`}
-                    content={[<RegisterERC20 key="msgsendcontent" />]}
+                    key={'converterc20'}
+                    name={'Convert ERC20'}
+                    role={`Convert erc20 tokens to cosmos coins.`}
+                    content={[<ConvertERC20 key="msgsendcontent" />]}
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon"
@@ -82,10 +82,10 @@ function ProposalGrid() {
                 />
 
                 <GeneralCards
-                    key={'send photons'}
-                    name={'Register Coins'}
-                    role={`Create a proposal to register your cosmos coin.`}
-                    content={[<RegisterCoin key="rcproposal" />]}
+                    key={'convertcoins'}
+                    name={'Convert Coins'}
+                    role={`Convert ibc coins to erc20 tokens.`}
+                    content={[<ConvertCoin key="msgconvertcoinscontent" />]}
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon2"
@@ -98,13 +98,13 @@ function ProposalGrid() {
     );
 }
 
-export const ProposalsSections = () => {
+export const ConvertCoinsSections = () => {
     return (
         <General
             title="Cosmos Transactions"
-            subtitle={[<ProposalsSubtitle key="proposalssub" />]}
-            content={[<ProposalGrid key="proposalsgrid" />]}
-            icon={[<ProposalsIconFooter key="proposalsfooter" />]}
+            subtitle={[<ConvertCoinsSubtitle key="convertcoinssub" />]}
+            content={[<ProposalGrid key="convertcoinsgrid" />]}
+            icon={[<ProposalsIconFooter key="convertcoinsfooter" />]}
         ></General>
     );
 };

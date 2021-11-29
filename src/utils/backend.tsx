@@ -47,6 +47,7 @@ export async function getAllERC20Balances(address: string) {
         }
     );
     let resp = await pubresp.json();
+    console.log(resp);
     return resp;
 }
 
@@ -176,6 +177,152 @@ export async function callMintErc20(
     let res = await response.json();
     return res;
 }
+
+export async function callConvertCoin(
+    denom: string,
+    amount: string,
+    receiver: string,
+    sender: string,
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/convert_coin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            denom: denom,
+            amount: amount,
+            receiver: receiver,
+            sender: sender,
+            fee: fee,
+            gasLimit: gasLimit,
+        }),
+    });
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
+export async function callConvertErc20(
+    contract: string,
+    amount: string,
+    receiver: string,
+    sender: string,
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/convert_erc20`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            contract: contract,
+            amount: amount,
+            receiver: receiver,
+            sender: sender,
+            fee: fee,
+            gasLimit: gasLimit,
+        }),
+    });
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
+export async function callProposalRegisterCoin(
+    description: string,
+    base: string,
+    display: string,
+    name: string,
+    symbol: string,
+    dnName: string,
+    dnExponent: string,
+    dnAlias: string,
+    dn2Name: string,
+    dn2Exponent: string,
+
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(
+        `${REACT_APP_BACKEND_URL}/proposal_register_coin`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                wallet: {
+                    address: getWalletEvmos(),
+                    algo: algo,
+                    pubkey: getPubKey(),
+                },
+                description: description,
+                base: base,
+                display: display,
+                name: name,
+                symbol: symbol,
+                dnName: dnName,
+                dnExponent: dnExponent,
+                dnAlias: dnAlias,
+                dn2Name: dn2Name,
+                dn2Exponent: dn2Exponent,
+                fee: fee,
+                gasLimit: gasLimit,
+            }),
+        }
+    );
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
 export async function callProposalRegisterErc20(
     contract: string,
     fee: string,
