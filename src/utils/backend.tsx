@@ -50,7 +50,12 @@ export async function getAllERC20Balances(address: string) {
     return resp;
 }
 
-export async function createERC20Contract(name: string, symbol: string) {
+export async function createERC20Contract(
+    name: string,
+    symbol: string,
+    gas: string,
+    gasPrice: string
+) {
     const pubresp = await fetch(
         `${REACT_APP_BACKEND_URL}/deploy_erc_20_contract/`,
         {
@@ -67,6 +72,8 @@ export async function createERC20Contract(name: string, symbol: string) {
                 name: name,
                 symbol: symbol,
                 walletEth: getWalletEth(),
+                gas: gas,
+                gasPrice: gasPrice,
             }),
         }
     );
@@ -138,6 +145,75 @@ export async function callDeployERC20(name: string, symbol: string) {
         fireError('DeployERC20', 'DeployERC20 is only available on metamask!');
         return false;
     }
+}
+
+export async function callMintErc20(
+    contract: string,
+    destination: string,
+    amount: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/mint_erc20_coins`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            walletEth: getWalletEth(),
+            contract: contract,
+            destination: destination,
+            amount: amount,
+        }),
+    });
+    let res = await response.json();
+    return res;
+}
+export async function callProposalRegisterErc20(
+    contract: string,
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(
+        `${REACT_APP_BACKEND_URL}/proposal_register_erc20`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                wallet: {
+                    address: getWalletEvmos(),
+                    algo: algo,
+                    pubkey: getPubKey(),
+                },
+                contract: contract,
+                fee: fee,
+                gasLimit: gasLimit,
+            }),
+        }
+    );
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
 }
 
 export async function callSendAphoton(

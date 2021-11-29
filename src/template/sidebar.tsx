@@ -84,6 +84,7 @@ export default function SidebarWithHeader({
             minH="100vh"
             bg={useColorModeValue('gray.100', 'gray.900')}
             id="sidebarmainbox"
+            overflowY="hidden"
         >
             <SidebarContent
                 currentSection={section}
@@ -108,8 +109,8 @@ export default function SidebarWithHeader({
             </Drawer>
             {/* mobilenav */}
             <MobileNav id="mobilenav" onOpen={onOpen} />
-            <VStack>
-                <Box ml={{ base: 0, md: 60 }} p="4">
+            <VStack h="full">
+                <Box ml={{ base: 0, md: 60 }} p="4" minH="85vh">
                     {children}
                 </Box>
                 <Footer />
@@ -296,7 +297,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     ml={10}
                     key={'Proposals'}
                     icon={SiInternetarchive}
-                    link={'/irmproposals'}
+                    link={'/proposals'}
                     currentselected={currentSection}
                 >
                     {'Proposals'}
@@ -311,11 +312,11 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                 </NavTitle>
 
                 <NavItem
-                    id={'walletutils'}
+                    id={'walletutil'}
                     ml={10}
-                    key={'WalletUtils'}
+                    key={'WalletUtil'}
                     icon={BsWallet2}
-                    link={'/walletutils'}
+                    link={'/walletutil'}
                     currentselected={currentSection}
                 >
                     {'Wallet'}

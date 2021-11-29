@@ -22,33 +22,18 @@ import {
 } from '../utils/backend';
 import { getWalletEth, isMetamask } from '../utils/db';
 
-export async function executeDeployERC20(name: string, symbol: string) {
+export async function executeDeployERC20(
+    name: string,
+    symbol: string,
+    gas: string,
+    gasPrice: string
+) {
     if (name === '' || symbol === '') {
         fireError('DeployERC20', 'Invalid amount!');
         return false;
     }
 
-    let tx = await createERC20Contract(name, symbol);
-    // let signed = await signTransaction(res.tx);
-    // if (signed === null || signed === undefined) {
-    //     return fireError('DeployERC20', 'Could not sign the message');
-    // }
-    // let result = await broadcast(
-    //     signed.authBytes,
-    //     signed.bodyBytes,
-    //     signed.signature
-    // );
-    // if (result.res === true) {
-    //     return fireSuccess(
-    //         'DeployERC20',
-    //         `Transaction sent with hash: ${result.msg}`
-    //     );
-    // }
-    // return fireError(
-    //     'DeployERC20',
-    //     `Error sending the transaction: ${result.msg}`
-    // );
-    // let tx = await createERC20Transfer(getWalletEth(), dest, contract, amount);
+    let tx = await createERC20Contract(name, symbol, gas, gasPrice);
     if (isMetamask()) {
         try {
             let res = await window.ethereum.request({
@@ -75,6 +60,8 @@ export async function executeDeployERC20(name: string, symbol: string) {
 const DeployERC20Card = () => {
     const [name, setName] = useState('');
     const [symbol, setSymbol] = useState('');
+    const [gas, setGas] = useState('2100000000000');
+    const [gasPrice, setGasPrice] = useState('2');
     return (
         <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
             <Heading size="md">ERC20 Contract</Heading>
@@ -101,6 +88,27 @@ const DeployERC20Card = () => {
                     </FormControl>
                 </GridItem>
 
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gascontrol">
+                        <FormLabel id="gaslabel">Gas</FormLabel>
+                        <Input
+                            value="2100000000000"
+                            type="number"
+                            onChange={(e) => setGas(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gaspricecontrol">
+                        <FormLabel id="gaspricelabel">Gas Price</FormLabel>
+                        <Input
+                            value="2"
+                            type="number"
+                            onChange={(e) => setGasPrice(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
                 <GridItem colSpan={[1, 2]} h="full">
                     <Center w="full">
                         <FormControl id="buttonSendControl">
@@ -109,7 +117,12 @@ const DeployERC20Card = () => {
                                 bg="teal.300"
                                 color="white"
                                 onClick={() => {
-                                    executeDeployERC20(name, symbol);
+                                    executeDeployERC20(
+                                        name,
+                                        symbol,
+                                        gas,
+                                        gasPrice
+                                    );
                                 }}
                             >
                                 Deploy ERC20{' '}

@@ -8,35 +8,27 @@ import TextSpan from '../theme/textSpan';
 import { store, Balance } from '../utils/state';
 import General, { GeneralCards } from './general';
 import { GlobalState } from '../utils/state';
+import Strong from '../template/strong';
+import TitleH2 from '../template/heading2';
 
 function CosmosSubtitle() {
     return (
-        <chakra.h2
-            margin={'auto'}
-            width={'70%'}
-            fontFamily={'Inter'}
-            fontWeight={'medium'}
-            color={useColorModeValue('gray.500', 'gray.400')}
-        >
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                Cosmos Coins
-            </chakra.strong>
-            {' balances.'}
-            <br />
-            {'('}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                Aphotons
-            </chakra.strong>
-            {', '}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                IBC vouchers
-            </chakra.strong>
-            {', '}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                intrarelayer coins
-            </chakra.strong>
-            {')'}
-        </chakra.h2>
+        <TitleH2
+            content={
+                <>
+                    <Strong content={'Cosmos Coins'} />
+                    {' balances.'}
+                    <br />
+                    {'('}
+                    <Strong content={'Aphotons'} />
+                    {', '}
+                    <Strong content={'IBC vouchers'} />
+                    {', '}
+                    <Strong content={'intrarelayer coins'} />
+                    {')'}
+                </>
+            }
+        />
     );
 }
 

@@ -37,3 +37,11 @@
         background-position: 0%, 50%;
     }
 }
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}

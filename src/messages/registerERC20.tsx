@@ -14,31 +14,34 @@ import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
-import { signTransaction, callSendAphoton, broadcast } from '../utils/backend';
+import {
+    signTransaction,
+    callSendAphoton,
+    broadcast,
+    callProposalRegisterErc20,
+} from '../utils/backend';
 
-export async function executeMsgSend(
-    dest: string,
+export async function executeRegisterERC20(
+    contract: string,
     amount: string,
     denom: string,
-    memo: string
+    fee: string,
+    gasLimit: string
 ) {
-    if (dest.split('evmos').length != 2) {
-        if (dest.split('0x').length == 2) {
-            dest = ethToEvmos(dest);
-        } else {
-            fireError('Msg Send', 'Invalid destination!');
-            return false;
-        }
-    }
-    if (Number(amount) === NaN) {
-        fireError('Msg Send', 'Invalid amount!');
+    if (contract.split('0x').length != 2) {
+        fireError('Register ERC20', 'Invalid Contract!');
         return false;
     }
-    let res = await callSendAphoton(dest, amount, denom, memo);
+
+    if (Number(amount) === NaN) {
+        fireError('Register ERC20', 'Invalid amount!');
+        return false;
+    }
+    let res = await callProposalRegisterErc20(contract, fee, gasLimit);
 
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
-        return fireError('Msg Send', 'Could not sign the message');
+        return fireError('Register ERC20', 'Could not sign the message');
     }
     let result = await broadcast(
         signed.authBytes,
@@ -47,46 +50,50 @@ export async function executeMsgSend(
     );
     if (result.res === true) {
         return fireSuccess(
-            'Msg Send',
+            'Register ERC20',
             `Transaction sent with hash: ${result.msg}`
         );
     }
     return fireError(
-        'Msg Send',
+        'Register ERC20',
         `Error sending the transaction: ${result.msg}`
     );
 }
 
-const MsgSend = () => {
-    const [dest, setDest] = useState('');
-    const [amount, setAmount] = useState('');
+const RegisterERC20 = () => {
+    const [contract, setContract] = useState('');
+    const [amount, setAmount] = useState('2000000000000000000');
     const [denom, setDenom] = useState('aphoton');
-    const [memo, setMemo] = useState('');
+    const [fee, setFee] = useState('2');
+    const [gasLimit, setGasLimit] = useState('2100000000000');
     return (
         <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
-            <Heading size="md">Msg Send</Heading>
+            <Heading size="md">Register ERC20</Heading>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">
                 <GridItem colSpan={[1, 2]}>
                     <FormControl id="destSendControl">
-                        <FormLabel id="destSend">Destination</FormLabel>
+                        <FormLabel id="destSend">Contract address</FormLabel>
                         <Input
-                            placeholder="0x.. or evmos1..."
+                            placeholder="0x.."
                             type="text"
-                            onChange={(e) => setDest(e.target.value)}
+                            onChange={(e) => setContract(e.target.value)}
                         />
                     </FormControl>
                 </GridItem>
+
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="amountSendControl">
                         <FormLabel id="amountSend">Amount</FormLabel>
                         <Input
-                            placeholder="1000000000000000000"
+                            value="2000000000000000000"
+                            placeholder="2000000000000000000"
                             type="number"
                             onChange={(e) => setAmount(e.target.value)}
                         ></Input>
                     </FormControl>
                 </GridItem>
+
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="denomSendControl">
                         <FormLabel id="denomSend">Coin</FormLabel>
@@ -97,28 +104,46 @@ const MsgSend = () => {
                         ></Input>
                     </FormControl>
                 </GridItem>
-                <GridItem colSpan={[1, 2]}>
-                    <FormControl id="memoSendControl">
-                        <FormLabel id="memoSend">Memo</FormLabel>
+
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gascontrol">
+                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
                         <Input
-                            placeholder=""
-                            type="text"
-                            onChange={(e) => setMemo(e.target.value)}
-                        />
+                            placeholder="2100000000000"
+                            type="number"
+                            onChange={(e) => setGasLimit(e.target.value)}
+                        ></Input>
                     </FormControl>
                 </GridItem>
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gaspricecontrol">
+                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <Input
+                            value="20"
+                            type="number"
+                            onChange={(e) => setFee(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
                 <GridItem colSpan={[1, 2]} h="full">
                     <Center w="full">
-                        <FormControl id="buttonSendControl">
+                        <FormControl id="buttonRegisterERC20">
                             <Button
                                 w="full"
                                 bg="teal.300"
                                 color="white"
                                 onClick={() => {
-                                    executeMsgSend(dest, amount, denom, memo);
+                                    executeRegisterERC20(
+                                        contract,
+                                        amount,
+                                        denom,
+                                        fee,
+                                        gasLimit
+                                    );
                                 }}
                             >
-                                Send Coins{' '}
+                                Register ERC20{' '}
                                 <FiSend style={{ marginLeft: '5px' }} />
                             </Button>
                         </FormControl>
@@ -129,4 +154,4 @@ const MsgSend = () => {
     );
 };
 
-export default MsgSend;
+export default RegisterERC20;

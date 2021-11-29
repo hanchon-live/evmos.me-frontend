@@ -18,27 +18,26 @@ import MessagesIcon from '../messages/messagesIcon';
 import DelegateAphotons from '../messages/delegate';
 import UndelegateAphotons from '../messages/undelegate';
 import DeployERC20Card from '../messages/deployerc20';
+import Strong from '../template/strong';
+import TitleH2 from '../template/heading2';
+import MintERC20 from '../messages/mintERC20';
 
 function ERC20Subtitle() {
     return (
-        <chakra.h2
-            margin={'auto'}
-            width={'70%'}
-            fontFamily={'Inter'}
-            fontWeight={'medium'}
-            color={useColorModeValue('gray.500', 'gray.400')}
-        >
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                ERC20
-            </chakra.strong>
-            {' helper.'}
-            <br />
-            {'Deploy an ERC20 contract using '}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                Open Zeppelin - ERC20PresetMinterPauser
-            </chakra.strong>
-            {'.'}
-        </chakra.h2>
+        <TitleH2
+            content={
+                <>
+                    <Strong content={'ERC20'} />
+                    {' helper.'}
+                    <br />
+                    {'Deploy an ERC20 contract using '}
+                    <Strong
+                        content={'Open Zeppelin - ERC20PresetMinterPauser'}
+                    />
+                    {'.'}
+                </>
+            }
+        />
     );
 }
 
@@ -78,6 +77,19 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon"
+                            icon={<AiOutlineSend size={'25'} />}
+                        />,
+                    ]}
+                />
+
+                <GeneralCards
+                    key={'minterc20'}
+                    name={'Mint Coins'}
+                    role={'Mint coins on your ERC20 contract.'}
+                    content={[<MintERC20 key="minterc20cotent" />]}
+                    iconComponents={[
+                        <MessagesIcon
+                            key="msgmint"
                             icon={<AiOutlineSend size={'25'} />}
                         />,
                     ]}

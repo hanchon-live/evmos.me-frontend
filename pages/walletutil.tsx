@@ -1,18 +1,18 @@
 import { Box } from '@chakra-ui/layout';
 import Template from '../src/template/template';
-import { Wallet } from '../src/sections/wallet';
+import { WalletUtilsSection } from '../src/sections/walletutil';
 
-const WalletPage = () => {
+const WalletUtil = () => {
     return (
         <Template
-            section="wallet"
+            section="walletutil"
             element={[
                 <Box h="full" key="walletbox">
-                    <Wallet key="walletcomponent" />
+                    <WalletUtilsSection key="walletcomponent" />
                 </Box>,
             ]}
         ></Template>
     );
 };
 
-export default WalletPage;
+export default WalletUtil;

@@ -8,15 +8,17 @@ const Footer = () => {
             textAlign="right"
             bg={useColorModeValue('white', 'gray.900')}
             w="100%"
+            h="100%"
+            // minH="4vh"
             // p={0}
-            py={2}
+            py={3}
             px={2}
             borderTop="1px"
             borderTopColor={useColorModeValue('gray.200', 'gray.700')}
             // bg={useColorModeValue('gray.100', 'gray.900')}
             id="footerbox"
         >
-            <HStack justifyContent="end">
+            <HStack justifyContent="flex-end">
                 <span>#HackAtom2021 - Evmos.me - Hanchon </span>
                 <Link href="https://github.com/hanchon-live/evmos.me-frontend">
                     <FaGithub

@@ -19,17 +19,18 @@ import DelegateAphotons from '../messages/delegate';
 import UndelegateAphotons from '../messages/undelegate';
 import TitleH2 from '../template/heading2';
 import Strong from '../template/strong';
+import RegisterERC20 from '../messages/registerERC20';
 
-function TransactionsSubtitle() {
+function ProposalsSubtitle() {
     return (
         <TitleH2
             content={
                 <>
-                    <Strong content={'Message send'} />
-                    {'  transaction.'}
+                    <Strong content={'Register'} />
+                    {' and '}
+                    <Strong content={'Read'} />
                     <br />
-                    {'Send cosmos coins using any '}
-                    <Strong content={'wallet'} />
+                    {'Intrarealyer proposals'}
                     {'.'}
                 </>
             }
@@ -37,7 +38,7 @@ function TransactionsSubtitle() {
     );
 }
 
-export function TransactionsIconFooter() {
+export function ProposalsIconFooter() {
     return (
         <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={'teal.200'}>
             <MdOutlineSendToMobile fill={'currentColor'} size="40px" />
@@ -45,7 +46,7 @@ export function TransactionsIconFooter() {
     );
 }
 
-function SendGrid() {
+function ProposalGrid() {
     const globalState = useContext(store);
     return (
         <VStack w="full">
@@ -56,7 +57,7 @@ function SendGrid() {
                 fontWeight={'bold'}
                 color={useColorModeValue('gray.700', 'gray.50')}
             >
-                Send
+                Register
             </chakra.h1>
 
             <SimpleGrid
@@ -67,9 +68,9 @@ function SendGrid() {
             >
                 <GeneralCards
                     key={'send photons'}
-                    name={'MsgSend'}
-                    role={`Send cosmos coins to any address.`}
-                    content={[<MsgSend key="msgsendcontent" />]}
+                    name={'Register ERC20'}
+                    role={`Create a proposal to register your erc20.`}
+                    content={[<RegisterERC20 key="msgsendcontent" />]}
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon"
@@ -82,13 +83,13 @@ function SendGrid() {
     );
 }
 
-export const TransactionsSendSection = () => {
+export const ProposalsSections = () => {
     return (
         <General
             title="Cosmos Transactions"
-            subtitle={[<TransactionsSubtitle key="sendsub" />]}
-            content={[<SendGrid key="sendgrid" />]}
-            icon={[<TransactionsIconFooter key="sendfooter" />]}
+            subtitle={[<ProposalsSubtitle key="proposalssub" />]}
+            content={[<ProposalGrid key="proposalsgrid" />]}
+            icon={[<ProposalsIconFooter key="proposalsfooter" />]}
         ></General>
     );
 };

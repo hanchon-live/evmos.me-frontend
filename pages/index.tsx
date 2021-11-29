@@ -53,7 +53,10 @@ export default function CallToActionWithAnnotation() {
                             alignSelf={'center'}
                             position={'relative'}
                         >
-                            <Link href="/cosmos">
+                            <Link
+                                href="/cosmos"
+                                style={{ textDecoration: 'none' }}
+                            >
                                 <Button
                                     colorScheme={'green'}
                                     bg={'green.400'}

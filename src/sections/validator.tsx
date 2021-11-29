@@ -14,31 +14,25 @@ import MessagesIcon from '../messages/messagesIcon';
 import DelegateAphotons from '../messages/delegate';
 import UndelegateAphotons from '../messages/undelegate';
 import { TransactionsIconFooter } from './send';
+import TitleH2 from '../template/heading2';
+import Strong from '../template/strong';
 
 function TransactionsSubtitle() {
     return (
-        <chakra.h2
-            margin={'auto'}
-            width={'70%'}
-            fontFamily={'Inter'}
-            fontWeight={'medium'}
-            color={useColorModeValue('gray.500', 'gray.400')}
-        >
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                Validator
-            </chakra.strong>
-            {' transactions.'}
-            <br />
-            {''}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                Delegate
-            </chakra.strong>
-            {' and '}
-            <chakra.strong color={useColorModeValue('gray.700', 'gray.50')}>
-                undelegate
-            </chakra.strong>
-            {' your coins.'}
-        </chakra.h2>
+        <TitleH2
+            content={
+                <>
+                    <Strong content={'Validator'} />
+                    {' transactions.'}
+                    <br />
+                    {''}
+                    <Strong content={'Delegate'} />
+                    {' and '}
+                    <Strong content={'undelegate'} />
+                    {' your coins.'}
+                </>
+            }
+        />
     );
 }
 

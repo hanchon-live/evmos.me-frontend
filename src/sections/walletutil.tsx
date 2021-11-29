@@ -11,7 +11,7 @@ import TextSpan from '../theme/textSpan';
 import { store } from '../utils/state';
 import General, { GeneralCards } from './general';
 
-function WalletSubtitle() {
+function WalletUtilsSubtitle() {
     return (
         <TitleH2
             content={
@@ -103,12 +103,12 @@ function WalletGrid() {
     );
 }
 
-export const Wallet = () => {
+export const WalletUtilsSection = () => {
     return (
         <General
             icon={[<WalletIconFooter key="walletfooter" />]}
-            title="Your Wallet Details"
-            subtitle={[<WalletSubtitle key="walletsub" />]}
+            title="Wallet Utils"
+            subtitle={[<WalletUtilsSubtitle key="walletsub" />]}
             content={[<WalletGrid key="walletgrid" />]}
         ></General>
     );
