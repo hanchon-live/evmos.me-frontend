@@ -21,6 +21,7 @@ import DeployERC20Card from '../messages/deployerc20';
 import Strong from '../template/strong';
 import TitleH2 from '../template/heading2';
 import MintERC20 from '../messages/mintERC20';
+import TransferToken from '../tools/tokentransfer';
 
 function ERC20Subtitle() {
     return (
@@ -90,6 +91,18 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgmint"
+                            icon={<AiOutlineSend size={'25'} />}
+                        />,
+                    ]}
+                />
+                <GeneralCards
+                    key={'transfererc20'}
+                    name={'Transfer ERC20'}
+                    role={'Transfer your tokens to another wallet.'}
+                    content={[<TransferToken key="transfertokencontent" />]}
+                    iconComponents={[
+                        <MessagesIcon
+                            key="msgtt"
                             icon={<AiOutlineSend size={'25'} />}
                         />,
                     ]}

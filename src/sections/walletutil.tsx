@@ -4,10 +4,14 @@ import { Image } from '@chakra-ui/image';
 import { Flex, SimpleGrid } from '@chakra-ui/layout';
 import { chakra } from '@chakra-ui/system';
 import { useContext } from 'react';
+import { AiOutlineSend } from 'react-icons/ai';
 import { BsFillWalletFill } from 'react-icons/bs';
+import MessagesIcon from '../messages/messagesIcon';
 import TitleH2 from '../template/heading2';
 import Strong from '../template/strong';
 import TextSpan from '../theme/textSpan';
+import ConvertAddress from '../tools/convertaddress';
+import QueryERC20Balance from '../tools/queryerc20balance';
 import { store } from '../utils/state';
 import General, { GeneralCards } from './general';
 
@@ -40,55 +44,6 @@ function WalletIconFooter() {
 function WalletGrid() {
     const globalState = useContext(store);
 
-    const data = [
-        {
-            name: 'Evmos',
-            role: '(Bech32) Evmos encoded wallet',
-            content: [
-                <TextSpan
-                    content={globalState.state.walletEvmos}
-                    key="evmotext"
-                />,
-            ],
-            avatar: useColorModeValue('./evmos-black.svg', './evmos-white.svg'),
-        },
-        {
-            name: 'Hex',
-            role: '(0x) Ethereum encoded wallet',
-            content: [
-                <TextSpan
-                    content={globalState.state.walletEth}
-                    key="hextext"
-                />,
-            ],
-            avatar: useColorModeValue(
-                './ethereum-1.svg',
-                './ethereum-1-white.svg'
-            ),
-        },
-        {
-            name: 'Public Key',
-            role: '(Base64) Value used for signing the transactions',
-            content: [
-                <TextSpan
-                    content={globalState.state.pubkey}
-                    key="pubkeytext"
-                />,
-            ],
-            avatar: useColorModeValue('./selfkey.svg', './selfkey-white.svg'),
-        },
-        {
-            name: 'Balance',
-            role: '(Aphotons) Current evmos coin balance',
-            content: [
-                <TextSpan
-                    content={`${globalState.state.aphoton} Aphotons`}
-                    key="balancetext"
-                />,
-            ],
-            avatar: useColorModeValue('./coins.png', './coins-white.png'),
-        },
-    ];
     return (
         <SimpleGrid
             columns={{ base: 1, xl: 2 }}
@@ -96,9 +51,30 @@ function WalletGrid() {
             mt={16}
             mx={'auto'}
         >
-            {data.map((cardInfo, index) => (
-                <GeneralCards key={index} {...cardInfo} />
-            ))}
+            <GeneralCards
+                key={'convert address'}
+                name={'Convert address'}
+                role={`Converter between 0x and bech32(evmos1) addresses.`}
+                content={[<ConvertAddress key="convertAddress" />]}
+                iconComponents={[
+                    <MessagesIcon
+                        key="msgsendicon"
+                        icon={<AiOutlineSend size={'25'} />}
+                    />,
+                ]}
+            />
+            <GeneralCards
+                key={'geterc20balance'}
+                name={'Query ERC20 balance'}
+                role={`Query the token owned by a given address.`}
+                content={[<QueryERC20Balance key="queryerc20" />]}
+                iconComponents={[
+                    <MessagesIcon
+                        key="msgsendicon"
+                        icon={<AiOutlineSend size={'25'} />}
+                    />,
+                ]}
+            />
         </SimpleGrid>
     );
 }

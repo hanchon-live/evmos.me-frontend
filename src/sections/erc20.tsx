@@ -51,7 +51,7 @@ function ERC20Grid({ globalState }: { globalState: GlobalState }) {
                         <GeneralCards
                             key={index}
                             name={coin.name}
-                            role={`Current ${coin.name} balance.`}
+                            role={`Current ${coin.name} balance - ${coin.address}`}
                             content={[
                                 <TextSpan
                                     content={`${coin.balance} ${coin.symbol}`}

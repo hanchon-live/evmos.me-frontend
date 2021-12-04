@@ -22,6 +22,8 @@ import Strong from '../template/strong';
 import RegisterERC20 from '../messages/registerERC20';
 import ConvertCoinProposal from '../messages/convertcosmoscoin';
 import RegisterCoin from '../messages/registercoin';
+import ToggleToken from '../messages/toggletoken';
+import UpdateTokenPair from '../messages/update_toker_pair';
 
 function ProposalsSubtitle() {
     return (
@@ -89,6 +91,32 @@ function ProposalGrid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon2"
+                            icon={<AiOutlineSend size={'25'} />}
+                        />,
+                    ]}
+                />
+
+                <GeneralCards
+                    key={'tt'}
+                    name={'Toggle Tokens'}
+                    role={`Create a proposal to toggle an intrarelaayer token.`}
+                    content={[<ToggleToken key="ttproposal" />]}
+                    iconComponents={[
+                        <MessagesIcon
+                            key="msgsendicon3"
+                            icon={<AiOutlineSend size={'25'} />}
+                        />,
+                    ]}
+                />
+
+                <GeneralCards
+                    key={'up'}
+                    name={'Update Pairs'}
+                    role={`Create a proposal to update an erc20 contract address.`}
+                    content={[<UpdateTokenPair key="upproposal" />]}
+                    iconComponents={[
+                        <MessagesIcon
+                            key="msgsendicon4"
                             icon={<AiOutlineSend size={'25'} />}
                         />,
                     ]}

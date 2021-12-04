@@ -5,11 +5,20 @@ import { getAllBalances } from '../utils/backend';
 import { getWalletEth } from '../utils/db';
 import Token from './token';
 
+interface CosmosCoinsType {
+    denom: string;
+    amount: string;
+}
+
 const CosmosCoins = () => {
     const [coins, setCoins] = useState([]);
     useEffect(() => {
         async function readBalances() {
-            let temp = await getAllBalances(getWalletEth());
+            const wallet = getWalletEth();
+            if (wallet == null) {
+                return;
+            }
+            let temp = await getAllBalances(wallet);
             setCoins(temp.balances);
         }
         readBalances();
@@ -40,7 +49,7 @@ const CosmosCoins = () => {
                 h="full"
                 justifyItems="flex-start"
             >
-                {coins.map((item) => (
+                {coins.map((item: CosmosCoinsType) => (
                     <Token
                         Icon={FaReact}
                         name={item.denom}

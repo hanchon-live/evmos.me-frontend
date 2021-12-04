@@ -88,8 +88,8 @@ const ConvertCoin = () => {
     const [contract, setContract] = useState('');
     const [amount, setAmount] = useState('1');
     const [denom, setDenom] = useState('aphoton');
-    const [fee, setFee] = useState('2');
-    const [gasLimit, setGasLimit] = useState('2100000000000');
+    const [fee, setFee] = useState('1000');
+    const [gasLimit, setGasLimit] = useState('1000000');
     return (
         <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
             <Heading size="md">Convert Coin</Heading>
@@ -110,7 +110,6 @@ const ConvertCoin = () => {
                     <FormControl id="amountSendControl">
                         <FormLabel id="amountSend">Amount</FormLabel>
                         <Input
-                            value="1"
                             placeholder="1"
                             type="number"
                             onChange={(e) => setAmount(e.target.value)}
@@ -122,7 +121,7 @@ const ConvertCoin = () => {
                     <FormControl id="gascontrol">
                         <FormLabel id="gaslabel">Gas Limit</FormLabel>
                         <Input
-                            placeholder="200000"
+                            placeholder="1000000"
                             type="number"
                             onChange={(e) => setGasLimit(e.target.value)}
                         ></Input>
@@ -132,7 +131,7 @@ const ConvertCoin = () => {
                     <FormControl id="gaspricecontrol">
                         <FormLabel id="gaspricelabel">Fee</FormLabel>
                         <Input
-                            value="20"
+                            placeholder="1000"
                             type="number"
                             onChange={(e) => setFee(e.target.value)}
                         ></Input>

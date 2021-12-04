@@ -5,11 +5,21 @@ import { getAllERC20Balances } from '../utils/backend';
 import { getWalletEth } from '../utils/db';
 import Token from './token';
 
+interface ERC20AssetsResponse {
+    name: string;
+    balance: string;
+    address: string;
+    symbol: string;
+}
 const ERC20Assets = () => {
     const [coins, setCoins] = useState([]);
     useEffect(() => {
         async function readBalances() {
-            let temp = await getAllERC20Balances(getWalletEth());
+            const wallet = getWalletEth();
+            if (wallet == null) {
+                return;
+            }
+            let temp = await getAllERC20Balances(wallet);
             setCoins(temp.balances);
         }
         readBalances();
@@ -40,7 +50,7 @@ const ERC20Assets = () => {
                 h="full"
                 justifyItems="flex-start"
             >
-                {coins.map((item) => (
+                {coins.map((item: ERC20AssetsResponse) => (
                     <Token
                         Icon={FaEthereum}
                         name={item.name}

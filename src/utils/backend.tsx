@@ -123,30 +123,30 @@ export async function getPublicKey(address: string) {
     return resp.value;
 }
 
-export async function callDeployERC20(name: string, symbol: string) {
-    let tx = await createERC20Contract(name, symbol);
-    if (isMetamask()) {
-        try {
-            let res = await window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [tx.tx],
-            });
-            return fireSuccess(
-                'DeployERC20',
-                `Transaction sent with hash: ${res}`
-            );
-        } catch (e) {
-            console.error(e);
-            fireError(
-                'DeployERC20',
-                'Metamask error on submitting transaction'
-            );
-        }
-    } else {
-        fireError('DeployERC20', 'DeployERC20 is only available on metamask!');
-        return false;
-    }
-}
+// export async function callDeployERC20(name: string, symbol: string) {
+//     let tx = await createERC20Contract(name, symbol);
+//     if (isMetamask()) {
+//         try {
+//             let res = await window.ethereum.request({
+//                 method: 'eth_sendTransaction',
+//                 params: [tx.tx],
+//             });
+//             return fireSuccess(
+//                 'DeployERC20',
+//                 `Transaction sent with hash: ${res}`
+//             );
+//         } catch (e) {
+//             console.error(e);
+//             fireError(
+//                 'DeployERC20',
+//                 'Metamask error on submitting transaction'
+//             );
+//         }
+//     } else {
+//         fireError('DeployERC20', 'DeployERC20 is only available on metamask!');
+//         return false;
+//     }
+// }
 
 export async function callMintErc20(
     contract: string,
@@ -205,6 +205,82 @@ export async function callConvertCoin(
             amount: amount,
             receiver: receiver,
             sender: sender,
+            fee: fee,
+            gasLimit: gasLimit,
+        }),
+    });
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
+export async function callUpdateTokenPair(
+    token: string,
+    newToken: string,
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/update_token_pair`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            token: token,
+            newToken: newToken,
+            fee: fee,
+            gasLimit: gasLimit,
+        }),
+    });
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
+export async function callToggleToken(
+    token: string,
+    fee: string,
+    gasLimit: string
+) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/toggle_token`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            token: token,
             fee: fee,
             gasLimit: gasLimit,
         }),
@@ -360,6 +436,24 @@ export async function callProposalRegisterErc20(
             })
     );
     res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
+export async function callGetERC20Balance(contract: string, wallet: string) {
+    const response = await fetch(
+        `${REACT_APP_BACKEND_URL}/get_erc20_balance/`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contract,
+                wallet,
+            }),
+        }
+    );
+    let res = await response.json();
     return res;
 }
 

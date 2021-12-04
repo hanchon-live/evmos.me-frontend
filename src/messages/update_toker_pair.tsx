@@ -19,29 +19,34 @@ import {
     callSendAphoton,
     broadcast,
     callProposalRegisterErc20,
+    callConvertErc20,
+    callToggleToken,
+    callUpdateTokenPair,
 } from '../utils/backend';
+import { getWalletEth, getWalletEvmos } from '../utils/db';
 
-export async function executeRegisterERC20(
-    contract: string,
-    amount: string,
-    denom: string,
+export async function executeUpdateTokenPair(
+    token: string,
+    newToken: string,
     fee: string,
     gasLimit: string
 ) {
-    if (contract.split('0x').length != 2) {
-        fireError('Register ERC20', 'Invalid Contract!');
+    const myWallet = getWalletEvmos();
+    if (myWallet === null) {
+        fireError('Toggle Token', 'Invalid wallet!');
         return false;
     }
-
-    if (Number(amount) === NaN) {
-        fireError('Register ERC20', 'Invalid amount!');
+    const myWalletEth = getWalletEth();
+    console.log(myWalletEth);
+    if (myWalletEth === null) {
+        fireError('Toggle Token', 'Invalid wallet!');
         return false;
     }
-    let res = await callProposalRegisterErc20(contract, fee, gasLimit);
+    let res = await callUpdateTokenPair(token, newToken, fee, gasLimit);
 
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
-        return fireError('Register ERC20', 'Could not sign the message');
+        return fireError('Toggle Token', 'Could not sign the message');
     }
     let result = await broadcast(
         signed.authBytes,
@@ -50,58 +55,49 @@ export async function executeRegisterERC20(
     );
     if (result.res === true) {
         return fireSuccess(
-            'Register ERC20',
+            'Toggle Token',
             `Transaction sent with hash: ${result.msg}`
         );
     }
     return fireError(
-        'Register ERC20',
+        'Toggle Token',
         `Error sending the transaction: ${result.msg}`
     );
 }
 
-const RegisterERC20 = () => {
-    const [contract, setContract] = useState('');
-    const [amount, setAmount] = useState('2000000000000000000');
-    const [denom, setDenom] = useState('aphoton');
+const UpdateTokenPair = () => {
+    const [token, setToken] = useState('');
+    const [newToken, setNewToken] = useState('');
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('10000000');
     return (
         <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
-            <Heading size="md">Register ERC20</Heading>
+            <Heading size="md">Update Token Pair</Heading>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">
                 <GridItem colSpan={[1, 2]}>
                     <FormControl id="destSendControl">
-                        <FormLabel id="destSend">Contract address</FormLabel>
+                        <FormLabel id="destSend">
+                            Token (Contract Address)
+                        </FormLabel>
                         <Input
                             placeholder="0x.."
                             type="text"
-                            onChange={(e) => setContract(e.target.value)}
+                            onChange={(e) => setToken(e.target.value)}
                         />
                     </FormControl>
                 </GridItem>
 
-                <GridItem colSpan={[1, 1]}>
-                    <FormControl id="amountSendControl">
-                        <FormLabel id="amountSend">Amount</FormLabel>
+                <GridItem colSpan={[1, 2]}>
+                    <FormControl id="destSendControl2">
+                        <FormLabel id="destSend2">
+                            New Token (Contract Address)
+                        </FormLabel>
                         <Input
-                            value="2000000000000000000"
-                            placeholder="2000000000000000000"
-                            type="number"
-                            onChange={(e) => setAmount(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem>
-
-                <GridItem colSpan={[1, 1]}>
-                    <FormControl id="denomSendControl">
-                        <FormLabel id="denomSend">Coin</FormLabel>
-                        <Input
-                            value="aphoton"
+                            placeholder="0x.."
                             type="text"
-                            onChange={(e) => setDenom(e.target.value)}
-                        ></Input>
+                            onChange={(e) => setNewToken(e.target.value)}
+                        />
                     </FormControl>
                 </GridItem>
 
@@ -134,16 +130,15 @@ const RegisterERC20 = () => {
                                 bg="teal.300"
                                 color="white"
                                 onClick={() => {
-                                    executeRegisterERC20(
-                                        contract,
-                                        amount,
-                                        denom,
+                                    executeUpdateTokenPair(
+                                        token,
+                                        newToken,
                                         fee,
                                         gasLimit
                                     );
                                 }}
                             >
-                                Register ERC20{' '}
+                                Update Token Pair{' '}
                                 <FiSend style={{ marginLeft: '5px' }} />
                             </Button>
                         </FormControl>
@@ -154,4 +149,4 @@ const RegisterERC20 = () => {
     );
 };
 
-export default RegisterERC20;
+export default UpdateTokenPair;

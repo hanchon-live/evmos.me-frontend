@@ -37,7 +37,12 @@ export async function executeERC20Transfer(
         fireError('Transfer', 'Invalid amount!');
         return false;
     }
-    let tx = await createERC20Transfer(getWalletEth(), dest, contract, amount);
+    const walletEth = getWalletEth();
+    if (walletEth == null) {
+        fireError('Transfer', 'Wallet not set!');
+        return false;
+    }
+    let tx = await createERC20Transfer(walletEth, dest, contract, amount);
     if (isMetamask()) {
         try {
             let res = await window.ethereum.request({
@@ -249,7 +254,8 @@ const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
                                 variant="primary"
                                 onClick={() => {
                                     if (transfer == 'cosmos') {
-                                        executeSendAphoton(dest, amount);
+                                        // executeSendAphoton(dest, amount);
+                                        console.log('send');
                                     }
                                     if (transfer == 'erc20') {
                                         executeERC20Transfer(
