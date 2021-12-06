@@ -9,7 +9,7 @@ import {
     MdOutlineSendToMobile,
     MdScheduleSend,
 } from 'react-icons/md';
-import { FaReact } from 'react-icons/fa';
+import { FaEthereum, FaReact } from 'react-icons/fa';
 import MsgSend from '../messages/msgsend';
 import MyIcon from '../messages/messagesIcon';
 import { store, Balance } from '../utils/state';
@@ -22,17 +22,21 @@ import Strong from '../template/strong';
 import RegisterERC20 from '../messages/registerERC20';
 import ConvertERC20 from '../messages/converterc20';
 import ConvertCoin from '../messages/convertcosmoscoin';
+import { RiReactjsLine } from 'react-icons/ri';
+import { SiConvertio } from 'react-icons/si';
 
 function ConvertCoinsSubtitle() {
     return (
         <TitleH2
             content={
                 <>
-                    <Strong content={'Register'} />
+                    {'Convert '}
+                    <Strong content={'cosmos coins'} />
                     {' and '}
-                    <Strong content={'Read'} />
+                    <Strong content={'ERC20'} />
+                    {' tokens.'}
                     <br />
-                    {'Intrarealyer proposals'}
+                    {'Intrarelayer functions'}
                     {'.'}
                 </>
             }
@@ -43,7 +47,7 @@ function ConvertCoinsSubtitle() {
 export function ProposalsIconFooter() {
     return (
         <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={'teal.200'}>
-            <MdOutlineSendToMobile fill={'currentColor'} size="40px" />
+            <SiConvertio fill={'currentColor'} size="35px" />
         </Icon>
     );
 }
@@ -59,15 +63,10 @@ function ProposalGrid() {
                 fontWeight={'bold'}
                 color={useColorModeValue('gray.700', 'gray.50')}
             >
-                Register
+                Convert
             </chakra.h1>
 
-            <SimpleGrid
-                columns={{ base: 1 }}
-                spacing={'20'}
-                mt={16}
-                mx={'auto'}
-            >
+            <SimpleGrid columns={[1, 2]} spacing={'20'} mt={16} mx={'auto'}>
                 <GeneralCards
                     key={'converterc20'}
                     name={'Convert ERC20'}
@@ -76,7 +75,7 @@ function ProposalGrid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon"
-                            icon={<AiOutlineSend size={'25'} />}
+                            icon={<FaEthereum size={'24'} />}
                         />,
                     ]}
                 />
@@ -89,7 +88,7 @@ function ProposalGrid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon2"
-                            icon={<AiOutlineSend size={'25'} />}
+                            icon={<RiReactjsLine size={'25'} />}
                         />,
                     ]}
                 />

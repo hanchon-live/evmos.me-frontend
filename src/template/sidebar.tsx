@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 import {
     Box,
     CloseButton,
@@ -19,6 +19,7 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
+    Img,
 } from '@chakra-ui/react';
 import {
     FiHome,
@@ -63,6 +64,7 @@ import { useColorMode } from '@chakra-ui/color-mode';
 import { Button } from '@chakra-ui/button';
 import { BsWallet2 } from 'react-icons/bs';
 import Footer from './footer';
+import TextSpan from '../theme/textSpan';
 
 interface LinkItemProps {
     name: string;
@@ -254,7 +256,14 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     link={'/deployerc20'}
                     currentselected={currentSection}
                 >
-                    {'ERC20'}
+                    <HStack>
+                        <span>ERC20</span>
+                        <Img
+                            w="25px"
+                            key="metamaskimg"
+                            src="./metamask-fox.svg"
+                        />
+                    </HStack>
                 </NavItem>
 
                 <NavItem
@@ -326,6 +335,20 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     <Divider />
                 </HStack>
 
+                <NavItem
+                    id={'faq'}
+                    key={'FAQ'}
+                    icon={BsWallet2}
+                    link={'/faq'}
+                    currentselected={currentSection}
+                >
+                    {'FAQ'}
+                </NavItem>
+
+                <HStack mx={5} my={2}>
+                    <Divider />
+                </HStack>
+
                 <Spacer />
                 <NavItem
                     onClick={() => {
@@ -349,7 +372,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
     icon: IconType;
-    children: ReactText;
+    children: ReactText | ReactElement;
     currentselected?: string;
     link?: string;
 }

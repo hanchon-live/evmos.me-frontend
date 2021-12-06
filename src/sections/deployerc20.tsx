@@ -5,11 +5,14 @@ import { chakra } from '@chakra-ui/system';
 import { useContext } from 'react';
 import { AiOutlineSend, AiOutlineTransaction } from 'react-icons/ai';
 import {
+    MdOutlineGeneratingTokens,
     MdOutlineSendAndArchive,
     MdOutlineSendToMobile,
     MdScheduleSend,
 } from 'react-icons/md';
-import { FaReact } from 'react-icons/fa';
+import { GiAbstract022 } from 'react-icons/gi';
+import { TiArrowMoveOutline } from 'react-icons/ti';
+import { FaFileContract, FaReact } from 'react-icons/fa';
 import MsgSend from '../messages/msgsend';
 import MyIcon from '../messages/messagesIcon';
 import { store, Balance } from '../utils/state';
@@ -22,6 +25,8 @@ import Strong from '../template/strong';
 import TitleH2 from '../template/heading2';
 import MintERC20 from '../messages/mintERC20';
 import TransferToken from '../tools/tokentransfer';
+import { GrNewWindow } from 'react-icons/gr';
+import { BsFilePlus } from 'react-icons/bs';
 
 function ERC20Subtitle() {
     return (
@@ -45,7 +50,7 @@ function ERC20Subtitle() {
 export function TransactionsIconFooter() {
     return (
         <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={'teal.200'}>
-            <MdOutlineSendToMobile fill={'currentColor'} size="40px" />
+            <MdOutlineGeneratingTokens fill={'currentColor'} size="40px" />
         </Icon>
     );
 }
@@ -64,12 +69,7 @@ function DeployERC20Grid() {
                 Deployment
             </chakra.h1>
 
-            <SimpleGrid
-                columns={{ base: 1 }}
-                spacing={'20'}
-                mt={16}
-                mx={'auto'}
-            >
+            <SimpleGrid columns={[1, 2]} spacing={'20'} mt={16} mx={'auto'}>
                 <GeneralCards
                     key={'deploy erc20'}
                     name={'ERC20PresetMinterPauser'}
@@ -78,7 +78,7 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgsendicon"
-                            icon={<AiOutlineSend size={'25'} />}
+                            icon={<FaFileContract size={'25'} />}
                         />,
                     ]}
                 />
@@ -91,7 +91,7 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgmint"
-                            icon={<AiOutlineSend size={'25'} />}
+                            icon={<BsFilePlus size={'25'} />}
                         />,
                     ]}
                 />
@@ -103,7 +103,7 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgtt"
-                            icon={<AiOutlineSend size={'25'} />}
+                            icon={<TiArrowMoveOutline size={'25'} />}
                         />,
                     ]}
                 />

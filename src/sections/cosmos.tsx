@@ -1,6 +1,6 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Icon from '@chakra-ui/icon';
-import { SimpleGrid } from '@chakra-ui/layout';
+import { Center, SimpleGrid } from '@chakra-ui/layout';
 import { chakra } from '@chakra-ui/system';
 import { useContext } from 'react';
 import { FaReact } from 'react-icons/fa';
@@ -51,33 +51,47 @@ function CosmosGrid({ globalState }: { globalState: GlobalState }) {
             mt={16}
             mx={'auto'}
         >
-            {globalState.state.balanceCosmos.map(
-                (coin: Balance, index: number) => {
-                    return (
-                        <GeneralCards
-                            key={index}
-                            name={coin.denom}
-                            role={`Current ${coin.denom} balance.`}
-                            content={[
-                                <TextSpan
-                                    content={`${coin.amount} ${coin.denom}`}
-                                    key={`${coin.denom}key`}
-                                />,
-                            ]}
-                            avatar={
-                                coin.denom == 'aphoton'
-                                    ? useColorModeValue(
-                                          './evmos-black.svg',
-                                          './evmos-white.svg'
-                                      )
-                                    : useColorModeValue(
-                                          './coins.png',
-                                          './coins-white.png'
-                                      )
-                            }
-                        />
-                    );
-                }
+            {globalState.state.balanceCosmos.length > 0 ? (
+                globalState.state.balanceCosmos.map(
+                    (coin: Balance, index: number) => {
+                        return (
+                            <GeneralCards
+                                key={index}
+                                name={coin.denom}
+                                role={`Current ${coin.denom} balance.`}
+                                content={[
+                                    <TextSpan
+                                        content={`${coin.amount} ${coin.denom}`}
+                                        key={`${coin.denom}key`}
+                                    />,
+                                ]}
+                                avatar={
+                                    coin.denom == 'aphoton'
+                                        ? useColorModeValue(
+                                              './evmos-black.svg',
+                                              './evmos-white.svg'
+                                          )
+                                        : useColorModeValue(
+                                              './coins.png',
+                                              './coins-white.png'
+                                          )
+                                }
+                            />
+                        );
+                    }
+                )
+            ) : (
+                <GeneralCards
+                    key="no_balance"
+                    name="No balance"
+                    role={'There is no balance for this wallet.'}
+                    content={[
+                        <Center key="nobalancetext" textAlign="center">
+                            There is no balance for the current wallet, send
+                            coins or login with another one!
+                        </Center>,
+                    ]}
+                />
             )}
         </SimpleGrid>
     );

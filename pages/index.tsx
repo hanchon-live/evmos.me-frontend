@@ -54,7 +54,7 @@ export default function CallToActionWithAnnotation() {
                             position={'relative'}
                         >
                             <Link
-                                href="/cosmos"
+                                href="/wallet"
                                 style={{ textDecoration: 'none' }}
                             >
                                 <Button

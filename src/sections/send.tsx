@@ -19,6 +19,7 @@ import DelegateAphotons from '../messages/delegate';
 import UndelegateAphotons from '../messages/undelegate';
 import TitleH2 from '../template/heading2';
 import Strong from '../template/strong';
+import { RiSecurePaymentLine } from 'react-icons/ri';
 
 function TransactionsSubtitle() {
     return (
@@ -40,7 +41,7 @@ function TransactionsSubtitle() {
 export function TransactionsIconFooter() {
     return (
         <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={'teal.200'}>
-            <MdOutlineSendToMobile fill={'currentColor'} size="40px" />
+            <RiSecurePaymentLine fill={'currentColor'} size="40px" />
         </Icon>
     );
 }
