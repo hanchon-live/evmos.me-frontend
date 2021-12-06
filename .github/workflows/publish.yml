@@ -16,6 +16,7 @@ jobs:
             - name: Build and Push
               run: |
                   yarn install
+                  yarn build
                   yarn run export
                   cd out
                   echo "evmos.me" > CNAME
