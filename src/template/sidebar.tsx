@@ -174,7 +174,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     onClick={onClose}
                 />
             </Flex>
-            <Flex h="90vh" direction="column">
+            <Flex direction="column" id="sidebarflex" h="90vh" overflow="auto">
                 <HStack mx={5} my={2}>
                     <Divider />
                 </HStack>

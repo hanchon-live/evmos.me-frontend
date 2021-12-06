@@ -45,3 +45,12 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
+
+#sidebarflex {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#sidebarflex::-webkit-scrollbar {
+    display: none;
+}
