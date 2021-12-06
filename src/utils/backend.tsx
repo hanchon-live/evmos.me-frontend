@@ -57,6 +57,19 @@ export async function createERC20Contract(
     gas: string,
     gasPrice: string
 ) {
+    const body = JSON.stringify({
+        wallet: {
+            address: getWalletEvmos(),
+            algo: 'ethsecp256k1',
+            pubkey: getPubKey(),
+        },
+        name: name,
+        symbol: symbol,
+        walletEth: getWalletEth(),
+        gas: gas,
+        gasPrice: gasPrice,
+    });
+    console.log(body);
     const pubresp = await fetch(
         `${REACT_APP_BACKEND_URL}/deploy_erc_20_contract/`,
         {
@@ -64,18 +77,7 @@ export async function createERC20Contract(
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                wallet: {
-                    address: getWalletEvmos(),
-                    algo: 'ethsecp256k1',
-                    pubkey: getPubKey(),
-                },
-                name: name,
-                symbol: symbol,
-                walletEth: getWalletEth(),
-                gas: gas,
-                gasPrice: gasPrice,
-            }),
+            body: body,
         }
     );
     let resp = await pubresp.json();

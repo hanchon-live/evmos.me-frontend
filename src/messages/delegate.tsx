@@ -54,6 +54,7 @@ const DelegateAphotons = () => {
     return (
         <VStack
             w="full"
+            h="full"
             p={10}
             alignItems="flex-start"
             border="1px"

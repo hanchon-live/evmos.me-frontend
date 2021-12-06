@@ -34,6 +34,7 @@ export async function executeDeployERC20(
     }
 
     let tx = await createERC20Contract(name, symbol, gas, gasPrice);
+    console.log(tx);
     if (isMetamask()) {
         try {
             let res = await window.ethereum.request({
@@ -61,9 +62,15 @@ const DeployERC20Card = () => {
     const [name, setName] = useState('');
     const [symbol, setSymbol] = useState('');
     const [gas, setGas] = useState('2100000000000');
-    const [gasPrice, setGasPrice] = useState('2');
+    const [gasPrice, setGasPrice] = useState('20000000');
     return (
-        <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
+        <VStack
+            p={10}
+            alignItems="flex-start"
+            border="1px"
+            h="full"
+            borderRadius={25}
+        >
             <Heading size="md">ERC20 Contract</Heading>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">
@@ -92,7 +99,7 @@ const DeployERC20Card = () => {
                     <FormControl id="gascontrol">
                         <FormLabel id="gaslabel">Gas</FormLabel>
                         <Input
-                            value="2100000000000"
+                            placeholder="2100000000000"
                             type="number"
                             onChange={(e) => setGas(e.target.value)}
                         ></Input>
@@ -102,7 +109,7 @@ const DeployERC20Card = () => {
                     <FormControl id="gaspricecontrol">
                         <FormLabel id="gaspricelabel">Gas Price</FormLabel>
                         <Input
-                            value="2"
+                            placeholder="20000000"
                             type="number"
                             onChange={(e) => setGasPrice(e.target.value)}
                         ></Input>

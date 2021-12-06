@@ -18,6 +18,7 @@ export function GeneralCards(props: CardsProps) {
     const { name, role, content, avatar, iconComponents } = props;
     return (
         <Flex
+            h="fit-content"
             key="flex"
             minW={[10, 450, 500, 600, 400, 600]}
             boxShadow={'lg'}

@@ -19,7 +19,13 @@ import { signTransaction, callSendAphoton, broadcast } from '../utils/backend';
 const ConvertAddress = () => {
     const [result, setResult] = useState('');
     return (
-        <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
+        <VStack
+            p={10}
+            alignItems="flex-start"
+            border="1px"
+            h="full"
+            borderRadius={25}
+        >
             <Heading size="md">Address Converter</Heading>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">

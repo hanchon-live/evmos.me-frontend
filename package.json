@@ -6,7 +6,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "eslint": "eslint --fix"
+        "eslint": "eslint --fix",
+        "export": "next export"
     },
     "dependencies": {
         "@chakra-ui/icons": "^1.0.16",

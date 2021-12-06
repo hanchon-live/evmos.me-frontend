@@ -68,7 +68,13 @@ const ToggleToken = () => {
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('10000000');
     return (
-        <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
+        <VStack
+            p={10}
+            alignItems="flex-start"
+            border="1px"
+            h="full"
+            borderRadius={25}
+        >
             <Heading size="md">Toggle Token</Heading>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">

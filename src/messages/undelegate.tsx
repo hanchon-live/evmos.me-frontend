@@ -51,7 +51,13 @@ const UndelegateAphotons = () => {
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
     return (
-        <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
+        <VStack
+            p={10}
+            alignItems="flex-start"
+            border="1px"
+            h="full"
+            borderRadius={25}
+        >
             <Heading size="md">Undelegate aphotons</Heading>
             <Divider />
             <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
