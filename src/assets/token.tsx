@@ -31,7 +31,9 @@ import { getWalletEth, isMetamask } from '../utils/db';
 export async function executeERC20Transfer(
     contract: string,
     dest: string,
-    amount: string
+    amount: string,
+    gas: string,
+    gasPrice: string
 ) {
     if (Number(amount) === NaN) {
         fireError('Transfer', 'Invalid amount!');
@@ -70,6 +72,8 @@ const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
+    const [gas, setGas] = useState('21000000');
+    const [gasPrice, setGasPrice] = useState('1000');
 
     return (
         <>

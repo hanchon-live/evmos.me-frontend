@@ -26,8 +26,16 @@ import { isMetamask } from '../utils/db';
 export async function executeMintERC20(
     contract: string,
     destination: string,
-    amount: string
+    amount: string,
+    gas: string,
+    gasPrice: string
 ) {
+    if (gas == '') {
+        gas = '21000000';
+    }
+    if (gasPrice == '') {
+        gasPrice = '1000';
+    }
     if (contract.split('0x').length != 2) {
         fireError('Mint ERC20', 'Invalid Contract!');
         return false;
@@ -44,7 +52,7 @@ export async function executeMintERC20(
         fireError('Mint ERC20', 'Invalid amount!');
         return false;
     }
-    let tx = await callMintErc20(contract, destination, amount);
+    let tx = await callMintErc20(contract, destination, amount, gas, gasPrice);
 
     if (isMetamask()) {
         try {
@@ -70,6 +78,9 @@ const MintERC20 = () => {
     const [contract, setContract] = useState('');
     const [destination, setDestination] = useState('');
     const [amount, setAmount] = useState('');
+    const [gas, setGas] = useState('21000000');
+    const [gasPrice, setGasPrice] = useState('1000');
+
     return (
         <VStack
             p={10}
@@ -114,6 +125,29 @@ const MintERC20 = () => {
                     </FormControl>
                 </GridItem>
 
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gascontrol">
+                        <FormLabel id="gaslabel">Gas(Optional)</FormLabel>
+                        <Input
+                            placeholder="21000000"
+                            type="number"
+                            onChange={(e) => setGas(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gaspricecontrol">
+                        <FormLabel id="gaspricelabel">
+                            GasPrice(Optional)
+                        </FormLabel>
+                        <Input
+                            placeholder="1000"
+                            type="number"
+                            onChange={(e) => setGasPrice(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
                 <GridItem colSpan={[1, 2]} h="full">
                     <Center w="full">
                         <FormControl id="buttonRegisterERC20">
@@ -125,7 +159,9 @@ const MintERC20 = () => {
                                     executeMintERC20(
                                         contract,
                                         destination,
-                                        amount
+                                        amount,
+                                        gas,
+                                        gasPrice
                                     );
                                 }}
                             >

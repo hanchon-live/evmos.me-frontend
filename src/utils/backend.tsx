@@ -88,7 +88,9 @@ export async function createERC20Transfer(
     sender: string,
     destination: string,
     token: string,
-    amount: string
+    amount: string,
+    gas: string,
+    gasPrice: string
 ) {
     if (sender.split('evmos1').length == 2) {
         sender = evmosToEth(sender);
@@ -103,7 +105,14 @@ export async function createERC20Transfer(
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ sender, destination, token, amount }),
+            body: JSON.stringify({
+                sender,
+                destination,
+                token,
+                amount,
+                gas,
+                gasPrice,
+            }),
         }
     );
     let resp = await pubresp.json();
@@ -153,7 +162,9 @@ export async function getPublicKey(address: string) {
 export async function callMintErc20(
     contract: string,
     destination: string,
-    amount: string
+    amount: string,
+    gas: string,
+    gasPrice: string
 ) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
@@ -174,6 +185,8 @@ export async function callMintErc20(
             contract: contract,
             destination: destination,
             amount: amount,
+            gas: gas,
+            gasPrice: gasPrice,
         }),
     });
     let res = await response.json();

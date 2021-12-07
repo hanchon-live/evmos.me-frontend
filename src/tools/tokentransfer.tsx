@@ -26,8 +26,18 @@ import { getWalletEth, isMetamask } from '../utils/db';
 export async function executeERC20Transfer(
     contract: string,
     dest: string,
-    amount: string
+    amount: string,
+    gas: string,
+    gasPrice: string
 ) {
+    console.log(contract);
+    if (gas == '') {
+        gas = '21000000';
+    }
+    if (gasPrice == '') {
+        gasPrice = '10000';
+    }
+
     const wallet = getWalletEth();
     if (wallet == null) {
         fireError('Transfer', 'Invalid user wallet!');
@@ -38,7 +48,14 @@ export async function executeERC20Transfer(
         fireError('Transfer', 'Invalid amount!');
         return false;
     }
-    let tx = await createERC20Transfer(wallet, dest, contract, amount);
+    let tx = await createERC20Transfer(
+        wallet,
+        dest,
+        contract,
+        amount,
+        gas,
+        gasPrice
+    );
     if (isMetamask()) {
         try {
             let res = await window.ethereum.request({
@@ -66,6 +83,8 @@ const TransferToken = () => {
     const [contract, setContract] = useState('');
     const [destination, setDestination] = useState('');
     const [amount, setAmount] = useState('');
+    const [gas, setGas] = useState('21000000');
+    const [gasPrice, setGasPrice] = useState('10000');
     return (
         <VStack p={10} alignItems="flex-start" border="1px" borderRadius={25}>
             <Heading size="md">Transfer ERC20 Token</Heading>
@@ -103,7 +122,13 @@ const TransferToken = () => {
                                         .toLocaleLowerCase()
                                         .split('evmos1').length == 2
                                 ) {
-                                    setDestination(evmosToEth(e.target.value));
+                                    let wallet = '';
+                                    try {
+                                        wallet = evmosToEth(e.target.value);
+                                        setDestination(wallet);
+                                    } catch (e) {
+                                        setDestination('');
+                                    }
                                 } else {
                                     setDestination('');
                                 }
@@ -125,6 +150,29 @@ const TransferToken = () => {
                     </FormControl>
                 </GridItem>
 
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gascontrol">
+                        <FormLabel id="gaslabel">Gas(Optional)</FormLabel>
+                        <Input
+                            placeholder="21000000"
+                            type="number"
+                            onChange={(e) => setGas(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="gaspricecontrol">
+                        <FormLabel id="gaspricelabel">
+                            GasPrice(Optional)
+                        </FormLabel>
+                        <Input
+                            placeholder="10000"
+                            type="number"
+                            onChange={(e) => setGasPrice(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
                 <GridItem colSpan={[1, 2]} h="full">
                     <Center w="full">
                         <FormControl id="buttonSendControl">
@@ -136,7 +184,9 @@ const TransferToken = () => {
                                     executeERC20Transfer(
                                         contract,
                                         destination,
-                                        amount
+                                        amount,
+                                        gas,
+                                        gasPrice
                                     );
                                 }}
                             >
