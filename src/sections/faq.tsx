@@ -158,6 +158,10 @@ const FAQSection = () => {
                     }
                 />
                 <Text pt={3}>
+                    Add an animation to show that the webpage is waiting for a
+                    backend response.
+                </Text>
+                <Text>
                     List all the intrarelayer coins without the need to remember
                     the complete assigned name. Display the correct value for
                     the intrarelayer coins because the GRPC response list the
