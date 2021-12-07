@@ -69,7 +69,12 @@ function DeployERC20Grid() {
                 Deployment
             </chakra.h1>
 
-            <SimpleGrid columns={[1, 2]} spacing={'20'} mt={16} mx={'auto'}>
+            <SimpleGrid
+                columns={[1, 1, 1, 1, 2]}
+                spacing={'20'}
+                mt={16}
+                mx={'auto'}
+            >
                 <GeneralCards
                     key={'deploy erc20'}
                     name={'ERC20PresetMinterPauser'}
@@ -91,7 +96,7 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgmint"
-                            icon={<BsFilePlus size={'25'} />}
+                            icon={<BsFilePlus size={'24'} />}
                         />,
                     ]}
                 />
@@ -103,7 +108,7 @@ function DeployERC20Grid() {
                     iconComponents={[
                         <MessagesIcon
                             key="msgtt"
-                            icon={<TiArrowMoveOutline size={'25'} />}
+                            icon={<TiArrowMoveOutline size={'24'} />}
                         />,
                     ]}
                 />

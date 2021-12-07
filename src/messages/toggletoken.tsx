@@ -29,6 +29,13 @@ export async function executeToggleToken(
     fee: string,
     gasLimit: string
 ) {
+    if (fee == '') {
+        fee = '1000';
+    }
+    if (gasLimit == '') {
+        gasLimit = '1000000';
+    }
+
     const myWallet = getWalletEvmos();
     if (myWallet === null) {
         fireError('Toggle Token', 'Invalid wallet!');
@@ -93,7 +100,7 @@ const ToggleToken = () => {
 
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
+                        <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
                             placeholder="10000000"
                             type="number"
@@ -103,7 +110,7 @@ const ToggleToken = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
                             placeholder="1000"
                             type="number"

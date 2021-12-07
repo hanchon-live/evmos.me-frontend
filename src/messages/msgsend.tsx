@@ -22,6 +22,10 @@ export async function executeMsgSend(
     denom: string,
     memo: string
 ) {
+    if (denom == '') {
+        denom = 'aphoton';
+    }
+
     if (dest.split('evmos').length != 2) {
         if (dest.split('0x').length == 2) {
             dest = ethToEvmos(dest);
@@ -95,9 +99,9 @@ const MsgSend = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="denomSendControl">
-                        <FormLabel id="denomSend">Coin</FormLabel>
+                        <FormLabel id="denomSend">Coin(Optional)</FormLabel>
                         <Input
-                            value="aphoton"
+                            placeholder="aphoton"
                             type="text"
                             onChange={(e) => setDenom(e.target.value)}
                         ></Input>

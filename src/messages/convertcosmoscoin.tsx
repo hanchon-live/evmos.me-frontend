@@ -27,10 +27,15 @@ import { getWalletEth, getWalletEvmos } from '../utils/db';
 export async function executeConvertCoin(
     denom: string,
     amount: string,
-    // denom: string,
     fee: string,
     gasLimit: string
 ) {
+    if (fee == '') {
+        fee = '1000';
+    }
+    if (gasLimit == '') {
+        gasLimit = '1000000';
+    }
     const myWallet = getWalletEvmos();
     if (myWallet === null) {
         fireError('Convert Coin', 'Invalid wallet!');
@@ -87,7 +92,6 @@ export async function executeConvertCoin(
 const ConvertCoin = () => {
     const [contract, setContract] = useState('');
     const [amount, setAmount] = useState('1');
-    const [denom, setDenom] = useState('aphoton');
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('1000000');
     return (
@@ -125,7 +129,7 @@ const ConvertCoin = () => {
 
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
+                        <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
                             placeholder="1000000"
                             type="number"
@@ -135,7 +139,7 @@ const ConvertCoin = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
                             placeholder="1000"
                             type="number"
@@ -155,7 +159,6 @@ const ConvertCoin = () => {
                                     executeConvertCoin(
                                         contract,
                                         amount,
-                                        // denom,
                                         fee,
                                         gasLimit
                                     );

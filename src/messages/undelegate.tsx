@@ -13,7 +13,12 @@ import { Divider } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
-import { signTransaction, delegateAphoton, broadcast } from '../utils/backend';
+import {
+    signTransaction,
+    delegateAphoton,
+    broadcast,
+    undelegateAphoton,
+} from '../utils/backend';
 
 async function execute(dest: string, amount: string) {
     if (dest.split('evmosvaloper1').length != 2) {
@@ -25,7 +30,7 @@ async function execute(dest: string, amount: string) {
         fireError('Undelegate Aphotons', 'Invalid amount!');
         return false;
     }
-    let res = await delegateAphoton(dest, amount);
+    let res = await undelegateAphoton(dest, amount);
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
         return fireError('Undelegate Aphotons', 'Could not sign the message');

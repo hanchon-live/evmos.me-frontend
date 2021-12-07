@@ -30,6 +30,13 @@ export async function executeConvertERC20(
     fee: string,
     gasLimit: string
 ) {
+    if (fee == '') {
+        fee = '1000';
+    }
+    if (gasLimit == '') {
+        gasLimit = '1000000';
+    }
+
     if (contract.toLowerCase().split('0x').length != 2) {
         fireError('Convert ERC20', 'Invalid Contract!');
         return false;
@@ -82,10 +89,8 @@ export async function executeConvertERC20(
 
 const ConvertERC20 = () => {
     const [contract, setContract] = useState('');
-    const [amount, setAmount] = useState('1');
-    const [denom, setDenom] = useState('aphoton');
+    const [amount, setAmount] = useState('');
     const [fee, setFee] = useState('1000');
-    // const [gasLimit, setGasLimit] = useState('2100000000000');
     const [gasLimit, setGasLimit] = useState('1000000');
     return (
         <VStack
@@ -122,7 +127,7 @@ const ConvertERC20 = () => {
 
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
+                        <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
                             placeholder="1000000"
                             type="number"
@@ -132,9 +137,9 @@ const ConvertERC20 = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
-                            value="1000"
+                            placeholder="1000"
                             type="number"
                             onChange={(e) => setFee(e.target.value)}
                         ></Input>

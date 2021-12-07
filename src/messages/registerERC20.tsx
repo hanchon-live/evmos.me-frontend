@@ -23,20 +23,21 @@ import {
 
 export async function executeRegisterERC20(
     contract: string,
-    amount: string,
-    denom: string,
     fee: string,
     gasLimit: string
 ) {
+    if (fee == '') {
+        fee = '1000';
+    }
+    if (gasLimit == '') {
+        gasLimit = '1000000';
+    }
+
     if (contract.split('0x').length != 2) {
         fireError('Register ERC20', 'Invalid Contract!');
         return false;
     }
 
-    if (Number(amount) === NaN) {
-        fireError('Register ERC20', 'Invalid amount!');
-        return false;
-    }
     let res = await callProposalRegisterErc20(contract, fee, gasLimit);
 
     let signed = await signTransaction(res);
@@ -62,8 +63,6 @@ export async function executeRegisterERC20(
 
 const RegisterERC20 = () => {
     const [contract, setContract] = useState('');
-    const [amount, setAmount] = useState('2000000000000000000');
-    const [denom, setDenom] = useState('aphoton');
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('10000000');
     return (
@@ -89,31 +88,8 @@ const RegisterERC20 = () => {
                 </GridItem>
 
                 <GridItem colSpan={[1, 1]}>
-                    <FormControl id="amountSendControl">
-                        <FormLabel id="amountSend">Amount</FormLabel>
-                        <Input
-                            value="2000000000000000000"
-                            placeholder="2000000000000000000"
-                            type="number"
-                            onChange={(e) => setAmount(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem>
-
-                <GridItem colSpan={[1, 1]}>
-                    <FormControl id="denomSendControl">
-                        <FormLabel id="denomSend">Coin</FormLabel>
-                        <Input
-                            value="aphoton"
-                            type="text"
-                            onChange={(e) => setDenom(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem>
-
-                <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
+                        <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
                             placeholder="10000000"
                             type="number"
@@ -123,7 +99,7 @@ const RegisterERC20 = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
                             placeholder="1000"
                             type="number"
@@ -142,8 +118,6 @@ const RegisterERC20 = () => {
                                 onClick={() => {
                                     executeRegisterERC20(
                                         contract,
-                                        amount,
-                                        denom,
                                         fee,
                                         gasLimit
                                     );

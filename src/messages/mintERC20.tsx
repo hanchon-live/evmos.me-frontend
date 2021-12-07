@@ -29,19 +29,19 @@ export async function executeMintERC20(
     amount: string
 ) {
     if (contract.split('0x').length != 2) {
-        fireError('Register ERC20', 'Invalid Contract!');
+        fireError('Mint ERC20', 'Invalid Contract!');
         return false;
     }
 
     if (destination.split('evmos1').length == 2) {
         destination = evmosToEth(destination);
     } else if (destination.split('0x').length != 2) {
-        fireError('Register ERC20', 'Invalid Contract!');
+        fireError('Mint ERC20', 'Invalid Contract!');
         return false;
     }
 
     if (Number(amount) === NaN) {
-        fireError('Register ERC20', 'Invalid amount!');
+        fireError('Mint ERC20', 'Invalid amount!');
         return false;
     }
     let tx = await callMintErc20(contract, destination, amount);
@@ -69,10 +69,7 @@ export async function executeMintERC20(
 const MintERC20 = () => {
     const [contract, setContract] = useState('');
     const [destination, setDestination] = useState('');
-    const [amount, setAmount] = useState('2000000000000000000');
-    // const [denom, setDenom] = useState('aphoton');
-    // const [fee, setFee] = useState('2');
-    // const [gasLimit, setGasLimit] = useState('2100000000000');
+    const [amount, setAmount] = useState('');
     return (
         <VStack
             p={10}
@@ -116,38 +113,6 @@ const MintERC20 = () => {
                         ></Input>
                     </FormControl>
                 </GridItem>
-
-                {/* <GridItem colSpan={[1, 1]}>
-                    <FormControl id="denomSendControl">
-                        <FormLabel id="denomSend">Coin</FormLabel>
-                        <Input
-                            value="aphoton"
-                            type="text"
-                            onChange={(e) => setDenom(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem> */}
-
-                {/* <GridItem colSpan={[1, 1]}>
-                    <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
-                        <Input
-                            placeholder="2100000000000"
-                            type="number"
-                            onChange={(e) => setGasLimit(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem>
-                <GridItem colSpan={[1, 1]}>
-                    <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
-                        <Input
-                            value="20"
-                            type="number"
-                            onChange={(e) => setFee(e.target.value)}
-                        ></Input>
-                    </FormControl>
-                </GridItem> */}
 
                 <GridItem colSpan={[1, 2]} h="full">
                     <Center w="full">

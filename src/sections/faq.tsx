@@ -113,6 +113,76 @@ const FAQSection = () => {
                     using the Utils/Wallet section.
                 </Text>
             </VStack>
+
+            <VStack textAlign="left" alignItems="left" pt={10} px={10}>
+                <TitleH2
+                    content={
+                        <Heading key="q1" textAlign="center">
+                            Notes:
+                        </Heading>
+                    }
+                />
+                <Text pt={3}>
+                    Changing the fees and gas limit may result on your
+                    transaction running out of gas, the current values are not
+                    optimal but they work. If you have better gas/fees
+                    calculations feel free to reach out.
+                </Text>
+                <Text>
+                    This project was developed as part of the HackAtom2021, it
+                    can be improved and refined for mainnet usage but with the
+                    current state is meant to be only used on testnet.
+                </Text>
+                <Text>
+                    Any transaction sent to the network can not be reverted, use
+                    the app as your own risk.
+                </Text>
+                <Text>
+                    All the code is open source and can be found on{' '}
+                    <Link href="github.com/hanchon-live/evmos.me-frontend">
+                        Frontend Github
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="github.com/hanchon-live/evmos.me-backend">
+                        Backend Github
+                    </Link>
+                </Text>
+            </VStack>
+
+            <VStack textAlign="left" alignItems="left" pt={10} px={10}>
+                <TitleH2
+                    content={
+                        <Heading key="q1" textAlign="center">
+                            TODOs:
+                        </Heading>
+                    }
+                />
+                <Text pt={3}>
+                    List all the intrarelayer coins without the need to remember
+                    the complete assigned name. Display the correct value for
+                    the intrarelayer coins because the GRPC response list the
+                    balances, for example, as PHOTON, but it should be displayed
+                    as BALANCE/DECIMALS PHOTONS.
+                </Text>
+                <Text>
+                    List all the current active proposals and allow the user to
+                    vote using his wallet.
+                </Text>
+                <Text>
+                    List all the validator and simplify the delegate photons
+                    process.
+                </Text>
+                <Text>
+                    Read the ERC20 registered tokens from the gov proposals
+                    instead of manually adding the contract addresses.
+                </Text>
+                <Text>
+                    Add a display cosmos message info option for each message
+                    before signing it with Metamask. (This information is
+                    already displayed on Keplr when sending the same
+                    transaction)
+                </Text>
+            </VStack>
         </VStack>
     );
 };

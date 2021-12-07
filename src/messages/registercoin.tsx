@@ -37,15 +37,12 @@ export async function executeRegisterCoin(
     fee: string,
     gasLimit: string
 ) {
-    // if (contract.split('0x').length != 2) {
-    //     fireError('Register ERC20', 'Invalid Contract!');
-    //     return false;
-    // }
-
-    // if (Number(amount) === NaN) {
-    //     fireError('Register ERC20', 'Invalid amount!');
-    //     return false;
-    // }
+    if (fee == '') {
+        fee = '1000';
+    }
+    if (gasLimit == '') {
+        gasLimit = '1000000';
+    }
     let res = await callProposalRegisterCoin(
         description,
         base,
@@ -63,7 +60,7 @@ export async function executeRegisterCoin(
 
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
-        return fireError('Register ERC20', 'Could not sign the message');
+        return fireError('Register Coin', 'Could not sign the message');
     }
     let result = await broadcast(
         signed.authBytes,
@@ -72,12 +69,12 @@ export async function executeRegisterCoin(
     );
     if (result.res === true) {
         return fireSuccess(
-            'Register ERC20',
+            'Register Coin',
             `Transaction sent with hash: ${result.msg}`
         );
     }
     return fireError(
-        'Register ERC20',
+        'Register Coin',
         `Error sending the transaction: ${result.msg}`
     );
 }
@@ -234,7 +231,7 @@ const RegisterCoin = () => {
 
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
-                        <FormLabel id="gaslabel">Gas Limit</FormLabel>
+                        <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
                             placeholder="1000000"
                             type="number"
@@ -244,7 +241,7 @@ const RegisterCoin = () => {
                 </GridItem>
                 <GridItem colSpan={[1, 1]}>
                     <FormControl id="gaspricecontrol">
-                        <FormLabel id="gaspricelabel">Fee</FormLabel>
+                        <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
                             placeholder="1000"
                             type="number"

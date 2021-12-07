@@ -498,6 +498,38 @@ export async function callSendAphoton(
     return res;
 }
 
+export async function undelegateAphoton(dest: string, amount: string) {
+    let algo = 'ethsecp256k1';
+    if (isKeplr()) {
+        algo = 'secp256k1';
+    }
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/undelegate/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            wallet: {
+                address: getWalletEvmos(),
+                algo: algo,
+                pubkey: getPubKey(),
+            },
+            destination: dest,
+            amount: amount,
+        }),
+    });
+    let res = await response.json();
+    var signDoc = new Uint8Array(
+        atob(res.signBytes)
+            .split('')
+            .map(function (c) {
+                return c.charCodeAt(0);
+            })
+    );
+    res.converted = Buffer.from(signDoc).toString('hex');
+    return res;
+}
+
 export async function delegateAphoton(dest: string, amount: string) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {

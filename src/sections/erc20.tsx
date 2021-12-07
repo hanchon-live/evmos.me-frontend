@@ -1,6 +1,7 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Icon from '@chakra-ui/icon';
 import { Center, SimpleGrid } from '@chakra-ui/layout';
+import { Link } from '@chakra-ui/react';
 import { chakra } from '@chakra-ui/system';
 import { useContext } from 'react';
 import { FaEthereum, FaReact } from 'react-icons/fa';
@@ -20,6 +21,10 @@ function ERC20Subtitle() {
                     {' balances.'}
                     <br />
                     {'(All your ERC20 tokens registered on Evmos.me)'}
+                    <br />
+                    {'Read the '}
+                    <Link href="/faq">FAQ</Link>
+                    {' to know more about the tokens listed here.'}
                 </>
             }
         />
@@ -74,8 +79,15 @@ function ERC20Grid({ globalState }: { globalState: GlobalState }) {
                     role={'There is no balance for this wallet.'}
                     content={[
                         <Center key="nobalancetext" textAlign="center">
-                            There is no balance for the current wallet, send
-                            coins or login with another one!
+                            There are no tokens for the current wallet, send
+                            coins or login with another wallet!
+                        </Center>,
+                        <Center key="nobalancetext2" textAlign="center">
+                            <span>
+                                {'Read the '}
+                                <Link href="/faq">FAQ</Link>
+                                {' to know more about the tokens listed here.'}
+                            </span>
                         </Center>,
                     ]}
                 />

@@ -88,7 +88,7 @@ function CosmosGrid({ globalState }: { globalState: GlobalState }) {
                     content={[
                         <Center key="nobalancetext" textAlign="center">
                             There is no balance for the current wallet, send
-                            coins or login with another one!
+                            coins or login with another wallet!
                         </Center>,
                     ]}
                 />
