@@ -42,6 +42,27 @@ const FAQSection = () => {
                 <TitleH2
                     content={
                         <Heading key="q1" textAlign="center">
+                            Why is my transaction on a pending state?
+                        </Heading>
+                    }
+                />
+                <Text pt={3}>
+                    The gas and fees were calculated to work with most
+                    validators, but sometimes it can be too low.
+                </Text>
+                <Text>
+                    There's two ways to fix this, one is using metamask
+                    integrated button to hurry up the transaction. The other one
+                    is manually changing the fees value on the form (Make sure
+                    your transaction was dropped before resending to avoid
+                    double spends)
+                </Text>
+            </VStack>
+
+            <VStack textAlign="left" alignItems="left" pt={10} px={10}>
+                <TitleH2
+                    content={
+                        <Heading key="q1" textAlign="center">
                             Why can not I create and send ERC20 using the Keplr
                             wallet?
                         </Heading>
