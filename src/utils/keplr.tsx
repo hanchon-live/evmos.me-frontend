@@ -4,13 +4,13 @@ import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
 import { reconnectWallet } from './wallet';
 
 const config = {
-    RPC_URL: 'http://localhost:26657',
-    REST_URL: 'http://127.0.0.1:1317/',
-    EXPLORER_URL: 'https://evm.evmos.org/',
+    RPC_URL: 'https://cosmos.rpc.evmos.dev',
+    REST_URL: 'https://rest.rpc.evmos.dev',
+    EXPLORER_URL: 'https://explorer.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',
     CHAIN_ID: 'evmos_9000-2',
-    CHAIN_NAME: 'Evmos Testnet',
+    CHAIN_NAME: 'Evmos Testnet OM',
     COIN_DENOM: 'PHOTON',
     COIN_MINIMAL_DENOM: 'aphoton',
     COIN_DECIMALS: 18,
