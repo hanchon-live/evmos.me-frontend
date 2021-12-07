@@ -19,6 +19,7 @@ jobs:
                   yarn build
                   yarn run export
                   cd out
+                  touch .nojekyll
                   echo "evmos.me" > CNAME
                   git init
                   git config --global user.email "guillermo.paoletti@gmail.com"
