@@ -35,6 +35,12 @@ export async function executeERC20Transfer(
     gas: string,
     gasPrice: string
 ) {
+    if (gas == '') {
+        gas = '2100000000000';
+    }
+    if (gasPrice == '') {
+        gasPrice = '1000';
+    }
     if (Number(amount) === NaN) {
         fireError('Transfer', 'Invalid amount!');
         return false;
@@ -44,7 +50,14 @@ export async function executeERC20Transfer(
         fireError('Transfer', 'Wallet not set!');
         return false;
     }
-    let tx = await createERC20Transfer(walletEth, dest, contract, amount);
+    let tx = await createERC20Transfer(
+        walletEth,
+        dest,
+        contract,
+        amount,
+        gas,
+        gasPrice
+    );
     if (isMetamask()) {
         try {
             let res = await window.ethereum.request({
@@ -265,7 +278,9 @@ const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
                                         executeERC20Transfer(
                                             address,
                                             dest,
-                                            amount
+                                            amount,
+                                            '',
+                                            ''
                                         );
                                     }
                                     onClose();
