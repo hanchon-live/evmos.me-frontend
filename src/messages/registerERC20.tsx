@@ -24,8 +24,17 @@ import {
 export async function executeRegisterERC20(
     contract: string,
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+    proposalTitle: string,
+    proposalDescription: string
 ) {
+    if (proposalTitle == '' || proposalDescription == '') {
+        fireError(
+            'Proposal error',
+            'Proposal title and description must be filled'
+        );
+    }
+
     if (fee == '') {
         fee = '1000';
     }
@@ -38,7 +47,13 @@ export async function executeRegisterERC20(
         return false;
     }
 
-    let res = await callProposalRegisterErc20(contract, fee, gasLimit);
+    let res = await callProposalRegisterErc20(
+        contract,
+        fee,
+        gasLimit,
+        proposalTitle,
+        proposalDescription
+    );
 
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
@@ -65,6 +80,8 @@ const RegisterERC20 = () => {
     const [contract, setContract] = useState('');
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('10000000');
+    const [proposalTitle, setProposalTitle] = useState('');
+    const [proposalDescription, setProposalDescription] = useState('');
     return (
         <VStack
             p={10}
@@ -84,6 +101,30 @@ const RegisterERC20 = () => {
                             type="text"
                             onChange={(e) => setContract(e.target.value)}
                         />
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="ptitleform">
+                        <FormLabel id="ptitle">Title</FormLabel>
+                        <Input
+                            placeholder="Proposal Title"
+                            type="text"
+                            onChange={(e) => setProposalTitle(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="pdescpform">
+                        <FormLabel id="pdesc">Description</FormLabel>
+                        <Input
+                            placeholder="Proposal Description"
+                            type="text"
+                            onChange={(e) =>
+                                setProposalDescription(e.target.value)
+                            }
+                        ></Input>
                     </FormControl>
                 </GridItem>
 
@@ -119,7 +160,9 @@ const RegisterERC20 = () => {
                                     executeRegisterERC20(
                                         contract,
                                         fee,
-                                        gasLimit
+                                        gasLimit,
+                                        proposalTitle,
+                                        proposalDescription
                                     );
                                 }}
                             >

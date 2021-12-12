@@ -35,8 +35,18 @@ export async function executeRegisterCoin(
     dn2Exponent: string,
 
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+
+    proposalTitle: string,
+    proposalDescription: string
 ) {
+    if (proposalTitle == '' || proposalDescription == '') {
+        fireError(
+            'Proposal error',
+            'Proposal title and description must be filled'
+        );
+    }
+
     if (fee == '') {
         fee = '1000';
     }
@@ -55,7 +65,9 @@ export async function executeRegisterCoin(
         dn2Name,
         dn2Exponent,
         fee,
-        gasLimit
+        gasLimit,
+        proposalTitle,
+        proposalDescription
     );
 
     let signed = await signTransaction(res);
@@ -93,6 +105,9 @@ const RegisterCoin = () => {
 
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('1000000');
+
+    const [proposalTitle, setProposalTitle] = useState('');
+    const [proposalDescription, setProposalDescription] = useState('');
 
     return (
         <VStack
@@ -230,6 +245,30 @@ const RegisterCoin = () => {
                 </GridItem>
 
                 <GridItem colSpan={[1, 1]}>
+                    <FormControl id="ptitleform">
+                        <FormLabel id="ptitle">Title</FormLabel>
+                        <Input
+                            placeholder="Proposal Title"
+                            type="text"
+                            onChange={(e) => setProposalTitle(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="pdescpform">
+                        <FormLabel id="pdesc">Description</FormLabel>
+                        <Input
+                            placeholder="Proposal Description"
+                            type="text"
+                            onChange={(e) =>
+                                setProposalDescription(e.target.value)
+                            }
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
                         <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
@@ -270,7 +309,9 @@ const RegisterCoin = () => {
                                         dn2Name,
                                         dn2Exponent,
                                         fee,
-                                        gasLimit
+                                        gasLimit,
+                                        proposalTitle,
+                                        proposalDescription
                                     );
                                 }}
                             >

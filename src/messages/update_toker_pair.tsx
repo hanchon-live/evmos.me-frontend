@@ -29,8 +29,18 @@ export async function executeUpdateTokenPair(
     token: string,
     newToken: string,
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+
+    proposalTitle: string,
+    proposalDescription: string
 ) {
+    if (proposalTitle == '' || proposalDescription == '') {
+        fireError(
+            'Proposal error',
+            'Proposal title and description must be filled'
+        );
+    }
+
     if (fee == '') {
         fee = '1000';
     }
@@ -48,7 +58,14 @@ export async function executeUpdateTokenPair(
         fireError('Toggle Token', 'Invalid wallet!');
         return false;
     }
-    let res = await callUpdateTokenPair(token, newToken, fee, gasLimit);
+    let res = await callUpdateTokenPair(
+        token,
+        newToken,
+        fee,
+        gasLimit,
+        proposalTitle,
+        proposalDescription
+    );
 
     let signed = await signTransaction(res);
     if (signed === null || signed === undefined) {
@@ -76,6 +93,9 @@ const UpdateTokenPair = () => {
     const [newToken, setNewToken] = useState('');
     const [fee, setFee] = useState('1000');
     const [gasLimit, setGasLimit] = useState('10000000');
+
+    const [proposalTitle, setProposalTitle] = useState('');
+    const [proposalDescription, setProposalDescription] = useState('');
     return (
         <VStack
             p={10}
@@ -114,6 +134,30 @@ const UpdateTokenPair = () => {
                 </GridItem>
 
                 <GridItem colSpan={[1, 1]}>
+                    <FormControl id="ptitleform">
+                        <FormLabel id="ptitle">Title</FormLabel>
+                        <Input
+                            placeholder="Proposal Title"
+                            type="text"
+                            onChange={(e) => setProposalTitle(e.target.value)}
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
+                    <FormControl id="pdescpform">
+                        <FormLabel id="pdesc">Description</FormLabel>
+                        <Input
+                            placeholder="Proposal Description"
+                            type="text"
+                            onChange={(e) =>
+                                setProposalDescription(e.target.value)
+                            }
+                        ></Input>
+                    </FormControl>
+                </GridItem>
+
+                <GridItem colSpan={[1, 1]}>
                     <FormControl id="gascontrol">
                         <FormLabel id="gaslabel">GasLimit(Optional)</FormLabel>
                         <Input
@@ -146,7 +190,9 @@ const UpdateTokenPair = () => {
                                         token,
                                         newToken,
                                         fee,
-                                        gasLimit
+                                        gasLimit,
+                                        proposalTitle,
+                                        proposalDescription
                                     );
                                 }}
                             >

@@ -240,7 +240,9 @@ export async function callUpdateTokenPair(
     token: string,
     newToken: string,
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+    proposalTitle: string,
+    proposalDescription: string
 ) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
@@ -261,6 +263,8 @@ export async function callUpdateTokenPair(
             newToken: newToken,
             fee: fee,
             gasLimit: gasLimit,
+            proposalTitle: proposalTitle,
+            proposalDescription: proposalDescription,
         }),
     });
     let res = await response.json();
@@ -278,7 +282,9 @@ export async function callUpdateTokenPair(
 export async function callToggleToken(
     token: string,
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+    proposalTitle: string,
+    proposalDescription: string
 ) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
@@ -298,6 +304,8 @@ export async function callToggleToken(
             token: token,
             fee: fee,
             gasLimit: gasLimit,
+            proposalTitle: proposalTitle,
+            proposalDescription: proposalDescription,
         }),
     });
     let res = await response.json();
@@ -368,7 +376,10 @@ export async function callProposalRegisterCoin(
     dn2Exponent: string,
 
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+
+    proposalTitle: string,
+    proposalDescription: string
 ) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
@@ -399,6 +410,8 @@ export async function callProposalRegisterCoin(
                 dn2Exponent: dn2Exponent,
                 fee: fee,
                 gasLimit: gasLimit,
+                proposalTitle: proposalTitle,
+                proposalDescription: proposalDescription,
             }),
         }
     );
@@ -417,7 +430,9 @@ export async function callProposalRegisterCoin(
 export async function callProposalRegisterErc20(
     contract: string,
     fee: string,
-    gasLimit: string
+    gasLimit: string,
+    proposalTitle: string,
+    proposalDescription: string
 ) {
     let algo = 'ethsecp256k1';
     if (isKeplr()) {
@@ -439,6 +454,8 @@ export async function callProposalRegisterErc20(
                 contract: contract,
                 fee: fee,
                 gasLimit: gasLimit,
+                proposalTitle: proposalTitle,
+                proposalDescription: proposalDescription,
             }),
         }
     );
