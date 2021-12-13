@@ -13,6 +13,20 @@ const App = ({ Component, pageProps }: AppProps) => {
             <StateProvider>
                 <Head>
                     <title>Evmos.me</title>
+                    <script
+                        async
+                        src="https://www.googletagmanager.com/gtag/js?id=G-R0XLY4N34W"
+                    ></script>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments)};
+                        gtag('js', new Date());
+                        gtag('config', 'G-R0XLY4N34W');
+                        `,
+                        }}
+                    />
                 </Head>
                 <WalletInitializer />
                 <Component {...pageProps} />
