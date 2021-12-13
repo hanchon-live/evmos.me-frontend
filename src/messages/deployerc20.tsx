@@ -29,10 +29,10 @@ export async function executeDeployERC20(
     gasPrice: string
 ) {
     if (gas == '') {
-        gas = '2100000000000';
+        gas = '210000000000';
     }
     if (gasPrice == '') {
-        gasPrice = '1000';
+        gasPrice = '10000';
     }
     if (name === '' || symbol === '') {
         fireError('DeployERC20', 'Invalid amount!');
@@ -67,8 +67,8 @@ export async function executeDeployERC20(
 const DeployERC20Card = () => {
     const [name, setName] = useState('');
     const [symbol, setSymbol] = useState('');
-    const [gas, setGas] = useState('2100000000000');
-    const [gasPrice, setGasPrice] = useState('1000');
+    const [gas, setGas] = useState('210000000000');
+    const [gasPrice, setGasPrice] = useState('10000');
     return (
         <VStack
             p={10}
@@ -105,7 +105,7 @@ const DeployERC20Card = () => {
                     <FormControl id="gascontrol">
                         <FormLabel id="gaslabel">Gas(Optional)</FormLabel>
                         <Input
-                            placeholder="2100000000000"
+                            placeholder="210000000000"
                             type="number"
                             onChange={(e) => setGas(e.target.value)}
                         ></Input>
@@ -117,7 +117,7 @@ const DeployERC20Card = () => {
                             GasPrice(Optional)
                         </FormLabel>
                         <Input
-                            placeholder="1000"
+                            placeholder="10000"
                             type="number"
                             onChange={(e) => setGasPrice(e.target.value)}
                         ></Input>

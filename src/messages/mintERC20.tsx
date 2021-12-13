@@ -34,7 +34,7 @@ export async function executeMintERC20(
         gas = '21000000';
     }
     if (gasPrice == '') {
-        gasPrice = '1000';
+        gasPrice = '10000';
     }
     if (contract.split('0x').length != 2) {
         fireError('Mint ERC20', 'Invalid Contract!');
@@ -79,7 +79,7 @@ const MintERC20 = () => {
     const [destination, setDestination] = useState('');
     const [amount, setAmount] = useState('');
     const [gas, setGas] = useState('21000000');
-    const [gasPrice, setGasPrice] = useState('1000');
+    const [gasPrice, setGasPrice] = useState('10000');
 
     return (
         <VStack
@@ -118,7 +118,7 @@ const MintERC20 = () => {
                     <FormControl id="amountSendControl">
                         <FormLabel id="amountSend">Amount</FormLabel>
                         <Input
-                            placeholder="1000"
+                            placeholder="10000"
                             type="number"
                             onChange={(e) => setAmount(e.target.value)}
                         ></Input>
@@ -141,7 +141,7 @@ const MintERC20 = () => {
                             GasPrice(Optional)
                         </FormLabel>
                         <Input
-                            placeholder="1000"
+                            placeholder="10000"
                             type="number"
                             onChange={(e) => setGasPrice(e.target.value)}
                         ></Input>

@@ -40,7 +40,7 @@ export async function executeToggleToken(
     }
 
     if (fee == '') {
-        fee = '1000';
+        fee = '10000';
     }
     if (gasLimit == '') {
         gasLimit = '1000000';
@@ -88,7 +88,7 @@ export async function executeToggleToken(
 
 const ToggleToken = () => {
     const [token, setToken] = useState('');
-    const [fee, setFee] = useState('1000');
+    const [fee, setFee] = useState('10000');
     const [gasLimit, setGasLimit] = useState('10000000');
 
     const [proposalTitle, setProposalTitle] = useState('');
@@ -156,7 +156,7 @@ const ToggleToken = () => {
                     <FormControl id="gaspricecontrol">
                         <FormLabel id="gaspricelabel">Fee(Optional)</FormLabel>
                         <Input
-                            placeholder="1000"
+                            placeholder="10000"
                             type="number"
                             onChange={(e) => setFee(e.target.value)}
                         ></Input>

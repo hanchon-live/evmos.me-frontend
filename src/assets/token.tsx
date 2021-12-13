@@ -39,7 +39,7 @@ export async function executeERC20Transfer(
         gas = '2100000000000';
     }
     if (gasPrice == '') {
-        gasPrice = '1000';
+        gasPrice = '10000';
     }
     if (Number(amount) === NaN) {
         fireError('Transfer', 'Invalid amount!');
@@ -86,7 +86,7 @@ const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
     const [gas, setGas] = useState('21000000');
-    const [gasPrice, setGasPrice] = useState('1000');
+    const [gasPrice, setGasPrice] = useState('10000');
 
     return (
         <>
@@ -259,7 +259,7 @@ const Token = ({ Icon, name, balance, address, symbol, transfer }: any) => {
                             <FormLabel>Amount ({name})</FormLabel>
                             <Input
                                 variant="primary"
-                                placeholder="1000"
+                                placeholder="10000"
                                 onChange={(e) => setAmount(e.target.value)}
                             />
                         </FormControl>
