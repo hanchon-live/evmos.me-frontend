@@ -42,6 +42,26 @@ const FAQSection = () => {
                 <TitleH2
                     content={
                         <Heading key="q1" textAlign="center">
+                            Metamask wallet is not updating the balance
+                        </Heading>
+                    }
+                />
+                <Text pt={3}>
+                    This is a known issue after the network upgrade because the
+                    pokt's (ethereum rpc endpoint provider) nodes are not
+                    currently updated, it should be fixed in a couple of days.
+                </Text>
+                <Text>
+                    To use metamask in the meanwhile you can go to
+                    Settings/Networks/Evmos Testnet and change the rpc endpoint
+                    for the evmos public one: https://ethereum.rpc.evmos.dev/
+                </Text>
+            </VStack>
+
+            <VStack textAlign="left" alignItems="left" pt={10} px={10}>
+                <TitleH2
+                    content={
+                        <Heading key="q1" textAlign="center">
                             Why is my transaction on a pending state?
                         </Heading>
                     }
