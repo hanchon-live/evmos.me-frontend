@@ -496,10 +496,7 @@ export async function callSendAphoton(
     memo: string
 ) {
     let algo = 'ethsecp256k1';
-    if (isKeplr()) {
-        algo = 'secp256k1';
-    }
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/msg_send/`, {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/msg_send`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -525,6 +522,7 @@ export async function callSendAphoton(
             })
     );
     res.converted = Buffer.from(signDoc).toString('hex');
+    console.log(res);
     return res;
 }
 
@@ -557,6 +555,7 @@ export async function undelegateAphoton(dest: string, amount: string) {
             })
     );
     res.converted = Buffer.from(signDoc).toString('hex');
+    return null;
     return res;
 }
 

@@ -70,7 +70,7 @@ const StateProvider = ({ children }: any) => {
                 return newState;
             case 'cosmosCoins':
                 let temp = action.payload.balances.filter((e: Balance) => {
-                    if (e.denom == 'aphoton') {
+                    if (e.denom == 'aevmos') {
                         return true;
                     }
                 });

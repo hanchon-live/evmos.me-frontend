@@ -4,15 +4,15 @@ import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
 import { reconnectWallet } from './wallet';
 
 const config = {
-    RPC_URL: 'https://cosmos.rpc.evmos.dev',
-    REST_URL: 'https://rest.rpc.evmos.dev',
+    RPC_URL: 'http://localhost:26657',
+    REST_URL: 'http://127.0.0.1:1317',
     EXPLORER_URL: 'https://explorer.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',
     CHAIN_ID: 'evmos_9000-2',
     CHAIN_NAME: 'Evmos Testnet OM',
-    COIN_DENOM: 'PHOTON',
-    COIN_MINIMAL_DENOM: 'aphoton',
+    COIN_DENOM: 'EVMOS',
+    COIN_MINIMAL_DENOM: 'aevmos',
     COIN_DECIMALS: 18,
     PREFIX: 'evmos',
     COIN_TYPE: 118,
@@ -141,12 +141,17 @@ export async function signCosmosTransactionKeplr(wallet: string, res: any) {
     let chainId = res.chainId;
     let accountNumber = res.accountNumber;
 
-    let sign = await window.keplr.signDirect(chainId, wallet, {
-        bodyBytes,
-        authInfoBytes,
+    let sign = await window.keplr.signDirect(
         chainId,
-        accountNumber,
-    });
+        wallet,
+        {
+            bodyBytes,
+            authInfoBytes,
+            chainId,
+            accountNumber,
+        },
+        { isEthereum: true }
+    );
 
     // TODO: use Buffer to parse this insteaf of btoa
     return {
