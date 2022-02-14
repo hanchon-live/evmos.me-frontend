@@ -15,7 +15,7 @@ const config = {
     COIN_MINIMAL_DENOM: 'aevmos',
     COIN_DECIMALS: 18,
     PREFIX: 'evmos',
-    COIN_TYPE: 118,
+    COIN_TYPE: 60,
     GAS_PRICE_STEP_LOW: 0.005,
     GAS_PRICE_STEP_AVERAGE: 0.025,
     GAS_PRICE_STEP_HIGH: 0.04,
@@ -42,7 +42,7 @@ const chainConfig = {
         coinDecimals,
     },
     bip44: {
-        coinType: 118,
+        coinType: 60,
     },
     bech32Config: {
         bech32PrefixAccAddr: `${prefix}`,
@@ -66,12 +66,12 @@ const chainConfig = {
             coinDecimals,
         },
     ],
-    coinType: config.COIN_TYPE,
     gasPriceStep: {
         low: config.GAS_PRICE_STEP_LOW,
         average: config.GAS_PRICE_STEP_AVERAGE,
         high: config.GAS_PRICE_STEP_HIGH,
     },
+    coinType: 60,
 };
 
 declare global {
