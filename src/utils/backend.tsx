@@ -1,6 +1,12 @@
-import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
+import {
+    ethToEthermint,
+    evmosToEth,
+} from '@hanchon/ethermint-address-converter';
+import { GiConsoleController } from 'react-icons/gi';
 import { fireError, fireSuccess } from '../landing/alert';
 import { REACT_APP_BACKEND_URL } from './contants';
+import { ethers } from 'ethers';
+
 import {
     getPubKey,
     getWalletEth,
@@ -16,7 +22,7 @@ export async function getAllBalances(address: string) {
         return { balances: [] };
     }
     if (address.split('0x').length == 2) {
-        address = ethToEvmos(address);
+        address = ethToEthermint(address);
     }
     const pubresp = await fetch(`${REACT_APP_BACKEND_URL}/get_all_balances/`, {
         method: 'POST',
@@ -121,7 +127,7 @@ export async function createERC20Transfer(
 
 export async function getPublicKey(address: string) {
     if (address.split('0x').length == 2) {
-        address = ethToEvmos(address);
+        address = ethToEthermint(address);
     }
     const pubresp = await fetch(`${REACT_APP_BACKEND_URL}/get_pubkey/`, {
         method: 'POST',
@@ -513,17 +519,45 @@ export async function callSendAphoton(
             memo: memo,
         }),
     });
+    console.log(response);
     let res = await response.json();
-    var signDoc = new Uint8Array(
-        atob(res.signBytes)
-            .split('')
-            .map(function (c) {
-                return c.charCodeAt(0);
-            })
-    );
-    res.converted = Buffer.from(signDoc).toString('hex');
+    console.log('------------------------------------');
     console.log(res);
-    return res;
+    console.log(res.eip);
+
+    let culo = JSON.parse(res.eip);
+    console.log(culo);
+
+    // let temp = new Uint8Array(
+    //     atob(culo.message.msgs[0])
+    //         .split('')
+    //         .map(function (c) {
+    //             return c.charCodeAt(0);
+    //         })
+    // );
+
+    culo.message.msgs[0].value = atob(culo.message.msgs[0].value);
+
+    await window.ethereum.enable();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const myAccount = await signer.getAddress();
+    const signature = await signer.provider.send('eth_signTypedData_v4', [
+        myAccount,
+        JSON.stringify(culo),
+    ]);
+    console.log(signature);
+
+    // var signDoc = new Uint8Array(
+    //     atob(res.signBytes)
+    //         .split('')
+    //         .map(function (c) {
+    //             return c.charCodeAt(0);
+    //         })
+    // );
+    // res.converted = Buffer.from(signDoc).toString('hex');
+    // console.log(res);
+    // return res;
 }
 
 export async function undelegateAphoton(dest: string, amount: string) {

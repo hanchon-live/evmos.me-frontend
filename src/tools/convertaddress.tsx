@@ -10,7 +10,10 @@ import {
     VStack,
 } from '@chakra-ui/layout';
 import { Divider } from '@chakra-ui/react';
-import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
+import {
+    ethToEthermint,
+    evmosToEth,
+} from '@hanchon/ethermint-address-converter';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
@@ -41,7 +44,7 @@ const ConvertAddress = () => {
                                         .toLocaleLowerCase()
                                         .split('0x').length == 2
                                 ) {
-                                    setResult(ethToEvmos(e.target.value));
+                                    setResult(ethToEthermint(e.target.value));
                                 } else if (
                                     e.target.value
                                         .toLocaleLowerCase()

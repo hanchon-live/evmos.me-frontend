@@ -10,7 +10,10 @@ import {
     VStack,
 } from '@chakra-ui/layout';
 import { Divider } from '@chakra-ui/react';
-import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
+import {
+    ethToEthermint,
+    evmosToEth,
+} from '@hanchon/ethermint-address-converter';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';

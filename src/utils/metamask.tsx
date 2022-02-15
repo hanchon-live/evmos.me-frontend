@@ -1,4 +1,7 @@
-import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
+import {
+    ethToEthermint,
+    evmosToEth,
+} from '@hanchon/ethermint-address-converter';
 import { fromHexString, signatureToPubkey } from '@hanchon/signature-to-pubkey';
 import { fireSuccess } from '../landing/alert';
 import { getAllBalances, getPublicKey } from './backend';
@@ -70,11 +73,11 @@ export async function handleAccountsChanged(
         type: 'wallet',
         payload: {
             walletEth: accounts[0],
-            walletEvmos: ethToEvmos(accounts[0]),
+            walletEvmos: ethToEthermint(accounts[0]),
         },
     });
     setWalletEth(accounts[0]);
-    setWalletEvmos(ethToEvmos(accounts[0]));
+    setWalletEvmos(ethToEthermint(accounts[0]));
     if (account == getWalletEth()) {
         if (pubkeyDb !== null) {
             state.dispatch({ type: 'pubkey', payload: { pubkey: pubkeyDb } });
