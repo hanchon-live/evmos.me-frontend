@@ -4,8 +4,8 @@ import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
 import { reconnectWallet } from './wallet';
 
 const config = {
-    RPC_URL: 'http://localhost:26657',
-    REST_URL: 'http://127.0.0.1:1317',
+    RPC_URL: 'http://26657.evmos.me',
+    REST_URL: 'http://1317.evmos.me',
     EXPLORER_URL: 'https://explorer.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',

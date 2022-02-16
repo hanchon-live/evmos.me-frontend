@@ -548,6 +548,13 @@ export async function callSendAphoton(
     ]);
     console.log(signature);
 
+    let result = await broadcast(
+        res.authInfoBytes,
+        res.bodyBytes,
+        res.eip,
+        signature
+    );
+
     // var signDoc = new Uint8Array(
     //     atob(res.signBytes)
     //         .split('')
@@ -628,13 +635,16 @@ export async function delegateAphoton(dest: string, amount: string) {
 export async function broadcast(
     authInfo: string,
     bodyBytes: string,
+    eip: string,
     signature: string
 ) {
     let body = JSON.stringify({
         signature: signature,
         authBytes: authInfo,
+        eip: eip,
         bodyBytes: bodyBytes,
     });
+    console.log(body);
 
     const response = await fetch(`${REACT_APP_BACKEND_URL}/broadcast/`, {
         method: 'POST',
