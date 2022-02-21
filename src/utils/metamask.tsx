@@ -42,7 +42,6 @@ export async function connectMetamask(state: any) {
         console.error('could not connect' + e);
     }
 }
-
 export async function signRandomMessage(wallet: string) {
     const randomMsg =
         '0000000000000000000000000000000000000000000000000000000000000000';
@@ -50,7 +49,12 @@ export async function signRandomMessage(wallet: string) {
         method: 'eth_sign',
         params: [wallet, `0x${randomMsg}`],
     });
-    return signatureToPubkey(signature, Buffer.from(fromHexString(randomMsg)));
+    let hashWihPrefix = randomMsg;
+    // let hashWihPrefix = "66687AADF862BD776" + "C8FC18B8E9F8E20089" + "714856EE233B3902A5" + "91D0D5F2925"
+    return signatureToPubkey(
+        signature,
+        Buffer.from(fromHexString(hashWihPrefix))
+    );
 }
 
 export async function handleAccountsChanged(

@@ -525,28 +525,101 @@ export async function callSendAphoton(
     console.log(res);
     console.log(res.eip);
 
-    let culo = JSON.parse(res.eip);
-    console.log(culo);
+    let messageValue = JSON.parse(res.eip);
+    console.log(messageValue);
 
     // let temp = new Uint8Array(
-    //     atob(culo.message.msgs[0])
+    //     atob(messageValue.message.msgs[0])
     //         .split('')
     //         .map(function (c) {
     //             return c.charCodeAt(0);
     //         })
     // );
 
-    culo.message.msgs[0].value = atob(culo.message.msgs[0].value);
+    function Utf8ArrayToStr(array) {
+        var out, i, len, c;
+        var char2, char3;
+
+        out = '';
+        len = array.length;
+        i = 0;
+        while (i < len) {
+            c = array[i++];
+            switch (c >> 4) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    // 0xxxxxxx
+                    out += String.fromCharCode(c);
+                    break;
+                case 12:
+                case 13:
+                    // 110x xxxx   10xx xxxx
+                    char2 = array[i++];
+                    out += String.fromCharCode(
+                        ((c & 0x1f) << 6) | (char2 & 0x3f)
+                    );
+                    break;
+                case 14:
+                    // 1110 xxxx  10xx xxxx  10xx xxxx
+                    char2 = array[i++];
+                    char3 = array[i++];
+                    out += String.fromCharCode(
+                        ((c & 0x0f) << 12) |
+                            ((char2 & 0x3f) << 6) |
+                            ((char3 & 0x3f) << 0)
+                    );
+                    break;
+            }
+        }
+
+        return out;
+    }
+    function str2ab(str) {
+        var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+        var bufView = new Uint16Array(buf);
+        for (var i = 0, strLen = str.length; i < strLen; i++) {
+            bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
+    }
+
+    // When sending aming values
+    messageValue.message.msgs[0] = JSON.parse(
+        Utf8ArrayToStr(new Uint8Array(messageValue.message.msgs[0]))
+    );
+    console.log(messageValue.message.msgs);
+    console.log(str2ab(messageValue.message.msgs[0].value));
+
+    // []uint8 len: 66, cap: 80, [25,1,43,154,205,116,175,198,194,137,179,28,184,121,135,246,70,7,176,27,150,103,176,20,69,112,98,17,231,215,144,150,239,77,180,142,97,219,172,17,237,109,23,63,193,131,35,228,112,254,136,160,147,187,20,79,128,182,97,191,126,235,16,126,167,66]
+    // messageValue.message.msgs[0].value = atob(messageValue.message.msgs[0].value);
+
+    console.log('JSON.stringify(messageValue)');
+    console.log(JSON.stringify(messageValue));
+    console.log('JSON.stringify(messageValue)--- end');
 
     await window.ethereum.enable();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const myAccount = await signer.getAddress();
-    const signature = await signer.provider.send('eth_signTypedData_v4', [
+    let signature = await signer.provider.send('eth_signTypedData_v4', [
         myAccount,
-        JSON.stringify(culo),
+        JSON.stringify(messageValue),
     ]);
     console.log(signature);
+
+    // signature = "0x4f07917ea8089e513c64b511aafac21ae4aebcb0a1cfac439a037ed55f27ec31236f8d1b0d48415e9d1985ac5ed6164404f42f1c947b5df45c662c374376c3aa1b"
+
+    // let validate = await signer.provider.send('eth_recoverTypedSignature_V4', [
+    //     JSON.stringify(messageValue),
+    //     signature,
+    // ]);
+    // console.log(validate)
 
     let result = await broadcast(
         res.authInfoBytes,

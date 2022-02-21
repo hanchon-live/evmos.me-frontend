@@ -4,21 +4,24 @@ import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
 import { reconnectWallet } from './wallet';
 
 const config = {
+    // RPC_URL: 'https://evmos-archive-testnet.api.bdnodes.net:26657',
+    // REST_URL: 'https://evmos-archive-testnet.api.bdnodes.net:1317',
     RPC_URL: 'http://26657.evmos.me',
     REST_URL: 'http://1317.evmos.me',
+
     EXPLORER_URL: 'https://explorer.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',
-    CHAIN_ID: 'evmos_9000-2',
+    CHAIN_ID: 'evmos_9000-1',
     CHAIN_NAME: 'Evmos Testnet OM',
     COIN_DENOM: 'EVMOS',
     COIN_MINIMAL_DENOM: 'aevmos',
     COIN_DECIMALS: 18,
     PREFIX: 'evmos',
     COIN_TYPE: 60,
-    GAS_PRICE_STEP_LOW: 0.005,
-    GAS_PRICE_STEP_AVERAGE: 0.025,
-    GAS_PRICE_STEP_HIGH: 0.04,
+    GAS_PRICE_STEP_LOW: 0.05,
+    GAS_PRICE_STEP_AVERAGE: 0.25,
+    GAS_PRICE_STEP_HIGH: 0.4,
 };
 
 const REST_URL = config.REST_URL;
