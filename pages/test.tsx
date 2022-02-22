@@ -299,12 +299,53 @@ async function test2() {
         )
     );
 }
+import { fromHexString, signatureToPubkey } from '@hanchon/signature-to-pubkey';
+import {
+    bufferToHex,
+    bufferToInt,
+    ecrecover,
+    fromUtf8,
+    hashPersonalMessage,
+    pubToAddress,
+    toBuffer,
+} from 'ethereumjs-util';
+
+function test123() {
+    // console.log(fromUtf8('generate_pubkey'))
+    // let a = fromUtf8('generate_pubkey')
+    // let digest = fromUtf8('"\x19Ethereum Signed Message:\n"') + a.length + a
+
+    let msg = hashPersonalMessage(toBuffer(fromUtf8('generate_pubkey')));
+    let message = Buffer.from([
+        50, 215, 18, 245, 169, 63, 252, 16, 225, 169, 71, 95, 254, 165, 146,
+        216, 40, 162, 115, 78, 147, 125, 80, 182, 25, 69, 136, 250, 65, 200, 94,
+        178,
+    ]);
+
+    console.log(msg);
+    console.log(msg);
+    let sig =
+        '0x3ec9e5c59d9d6727e42ce2af67bb36c11a342f2877e2c15c49dec3015769efb86432a0c843a10c0b0d8b86b6e73a4a7ae8ba749a9d7d37ab7e6a88d26cac7b0f1c';
+    const r = toBuffer(sig.slice(0, 66));
+    const s = toBuffer('0x' + sig.slice(66, 130));
+    const v = bufferToInt(toBuffer('0x' + sig.slice(130, 132)));
+
+    const pub = ecrecover(msg, v, r, s);
+    console.log(Buffer.from(pub).toString('base64'));
+    const addr = pubToAddress(pub);
+    console.log(addr);
+    console.log(bufferToHex(addr));
+
+    // // recoverPublicKey(arrayify(digest), signature)
+    let b = signatureToPubkey(sig, message);
+    console.log(b);
+}
 
 const test = () => {
     return (
         <div>
             {/* <Button onClick={async () => await testTx()}> test</Button > */}
-            <Button onClick={async () => await test2()}> test2</Button>
+            <Button onClick={async () => await test123()}> test2</Button>
         </div>
     );
 };

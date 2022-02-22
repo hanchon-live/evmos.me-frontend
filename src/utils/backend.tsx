@@ -590,11 +590,28 @@ export async function callSendAphoton(
     }
 
     // When sending aming values
-    messageValue.message.msgs[0] = JSON.parse(
-        Utf8ArrayToStr(new Uint8Array(messageValue.message.msgs[0]))
-    );
-    console.log(messageValue.message.msgs);
-    console.log(str2ab(messageValue.message.msgs[0].value));
+    let test = [
+        123, 34, 116, 121, 112, 101, 34, 58, 34, 99, 111, 115, 109, 111, 115,
+        45, 115, 100, 107, 47, 77, 115, 103, 83, 101, 110, 100, 34, 44, 34, 118,
+        97, 108, 117, 101, 34, 58, 123, 34, 97, 109, 111, 117, 110, 116, 34, 58,
+        91, 123, 34, 97, 109, 111, 117, 110, 116, 34, 58, 34, 49, 34, 44, 34,
+        100, 101, 110, 111, 109, 34, 58, 34, 97, 112, 104, 111, 116, 111, 110,
+        34, 125, 93, 44, 34, 102, 114, 111, 109, 95, 97, 100, 100, 114, 101,
+        115, 115, 34, 58, 34, 101, 116, 104, 109, 49, 116, 102, 101, 103, 102,
+        53, 48, 110, 53, 120, 108, 48, 104, 100, 53, 99, 120, 102, 122, 106, 99,
+        97, 51, 121, 108, 115, 102, 112, 103, 48, 102, 110, 101, 100, 53, 103,
+        113, 109, 34, 44, 34, 116, 111, 95, 97, 100, 100, 114, 101, 115, 115,
+        34, 58, 34, 101, 116, 104, 109, 49, 116, 102, 101, 103, 102, 53, 48,
+        110, 53, 120, 108, 48, 104, 100, 53, 99, 120, 102, 122, 106, 99, 97, 51,
+        121, 108, 115, 102, 112, 103, 48, 102, 110, 101, 100, 53, 103, 113, 109,
+        34, 125, 125,
+    ];
+    console.log(JSON.stringify(JSON.parse(Utf8ArrayToStr(test))));
+    // messageValue.message.msgs[0] = JSON.parse(
+    //     Utf8ArrayToStr(new Uint8Array(messageValue.message.msgs[0]))
+    // );
+    // console.log(messageValue.message.msgs);
+    // console.log(str2ab(messageValue.message.msgs[0].value));
 
     // []uint8 len: 66, cap: 80, [25,1,43,154,205,116,175,198,194,137,179,28,184,121,135,246,70,7,176,27,150,103,176,20,69,112,98,17,231,215,144,150,239,77,180,142,97,219,172,17,237,109,23,63,193,131,35,228,112,254,136,160,147,187,20,79,128,182,97,191,126,235,16,126,167,66]
     // messageValue.message.msgs[0].value = atob(messageValue.message.msgs[0].value);
@@ -627,6 +644,9 @@ export async function callSendAphoton(
         res.eip,
         signature
     );
+    console.log(result);
+
+    fireSuccess('TxSent', 'tx hash' + result.msg);
 
     // var signDoc = new Uint8Array(
     //     atob(res.signBytes)

@@ -43,18 +43,18 @@ export async function connectMetamask(state: any) {
     }
 }
 export async function signRandomMessage(wallet: string) {
-    const randomMsg =
-        '0000000000000000000000000000000000000000000000000000000000000000';
     let signature = await window.ethereum.request({
-        method: 'eth_sign',
-        params: [wallet, `0x${randomMsg}`],
+        method: 'personal_sign',
+        params: [wallet, 'generate_pubkey'],
     });
-    let hashWihPrefix = randomMsg;
+    let message = Buffer.from([
+        50, 215, 18, 245, 169, 63, 252, 16, 225, 169, 71, 95, 254, 165, 146,
+        216, 40, 162, 115, 78, 147, 125, 80, 182, 25, 69, 136, 250, 65, 200, 94,
+        178,
+    ]);
+
     // let hashWihPrefix = "66687AADF862BD776" + "C8FC18B8E9F8E20089" + "714856EE233B3902A5" + "91D0D5F2925"
-    return signatureToPubkey(
-        signature,
-        Buffer.from(fromHexString(hashWihPrefix))
-    );
+    return signatureToPubkey(signature, message);
 }
 
 export async function handleAccountsChanged(
