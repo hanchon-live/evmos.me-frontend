@@ -17,6 +17,27 @@ import {
 import { signCosmosTransactionKeplr } from './keplr';
 import { signCosmosTransaction } from './metamask';
 
+import {
+    createEIP712,
+    generateFee,
+    generateMessage,
+    generateTypes,
+    createMsgSend,
+    msgSendTypes,
+} from '@tharsis/evmosjs/packages/eip712';
+
+import {
+    createMsgSend as protoMsgSend,
+    createBody,
+    createFee,
+    createSignerInfo,
+    createAuthInfo,
+    createSigDoc,
+    createTransaction,
+    LEGACY_AMINO,
+} from '@tharsis/evmosjs/packages/proto';
+import { Keccak } from 'sha3';
+
 export async function getAllBalances(address: string) {
     if (address === null) {
         return { balances: [] };
@@ -619,6 +640,111 @@ export async function callSendAphoton(
     console.log('JSON.stringify(messageValue)');
     console.log(JSON.stringify(messageValue));
     console.log('JSON.stringify(messageValue)--- end');
+
+    let fee = generateFee(
+        '20',
+        'aphoton',
+        '200000',
+        'ethm1tfegf50n5xl0hd5cxfzjca3ylsfpg0fned5gqm'
+    );
+    let types = generateTypes(msgSendTypes);
+    let msg = createMsgSend(
+        '1',
+        'aphoton',
+        'ethm1tfegf50n5xl0hd5cxfzjca3ylsfpg0fned5gqm',
+        'ethm1tfegf50n5xl0hd5cxfzjca3ylsfpg0fned5gqm'
+    );
+    let messages = generateMessage('9', '1', 'ethermint_9000-1', '', fee, msg);
+    let complete = createEIP712(types, 9000, messages);
+
+    console.log(complete);
+    console.log(JSON.stringify(complete));
+    console.log(JSON.stringify(messageValue) == JSON.stringify(complete));
+
+    console.log('-------------');
+    // import {
+    //     createMsgSend as protoMsgSend,
+    //     createBody,
+    //     createFee,
+    //     createSignerInfo,
+    //     createAuthInfo,
+    //     createSigDoc,
+    //     createTransaction,
+    // } from '@tharsis/evmosjs/packages/proto'
+
+    let msg2 = protoMsgSend(
+        'ethm1tfegf50n5xl0hd5cxfzjca3ylsfpg0fned5gqm',
+        'ethm1tfegf50n5xl0hd5cxfzjca3ylsfpg0fned5gqm',
+        '1',
+        'aphoton'
+    );
+    let tx = createTransaction(
+        msg2,
+        '',
+        '20',
+        'aphoton',
+        200000,
+        'ethsecp256',
+        'AgTw+4v0daIrxsNSW4FcQ+IoingPseFwHO1DnssyoOqZ',
+        1,
+        9,
+        '',
+        LEGACY_AMINO
+    );
+
+    // const body = createBody(msg2, '')
+    // const feeMessage = createFee('20', 'aphoton', 200000)
+    // const pubKeyDecoded = Buffer.from('AgTw+4v0daIrxsNSW4FcQ+IoingPseFwHO1DnssyoOqZ', 'base64')
+
+    // console.log("body.serializeBinary()")
+    // console.log(body.toObject())
+    // console.log(body.serializeBinary())
+
+    // const signInfo = createSignerInfo(
+    //     'ethsecp256',
+    //     new Uint8Array(pubKeyDecoded),
+    //     1,
+    //     127,
+    // )
+
+    // console.log("signInfo.serializeBinary()")
+    // console.log(LEGACY_AMINO)
+    // console.log(signInfo.toObject())
+    // console.log(signInfo.serializeBinary())
+
+    // const authInfo = createAuthInfo(signInfo, feeMessage)
+
+    // console.log("authInfo.serializeBinary()")
+    // console.log(authInfo.toObject())
+    // console.log(authInfo.serializeBinary())
+
+    // const signDoc = createSigDoc(
+    //     body.serializeBinary(),
+    //     authInfo.serializeBinary(),
+    //     'ethermint_9000-1',
+    //     9,
+    // )
+
+    // console.log("signDoc.serializeBinary()")
+    // console.log(signDoc.toObject())
+    // console.log(signDoc.serializeBinary())
+
+    // const hash = new Keccak(256)
+    // hash.update(Buffer.from(signDoc.serializeBinary()))
+    // const toSign = hash.digest('binary')
+
+    // const resqwe: any = {
+    //     bodyBytes: Buffer.from(body.serializeBinary()).toString('base64'),
+    //     authInfoBytes: Buffer.from(authInfo.serializeBinary()).toString('base64'),
+    //     chianid: '9000',
+    //     number: 9,
+    //     signBytes: toSign.toString('base64'),
+    // }
+    // console.log(resqwe)
+
+    console.log('-------tx-------');
+    console.log(tx);
+    console.log(tx.bodyBytes == res.bodyBytes);
 
     await window.ethereum.enable();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
