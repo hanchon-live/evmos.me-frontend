@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import internal from 'stream';
-import { ethToEthermint } from '@hanchon/ethermint-address-converter';
+import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 
 interface Action {
     type: string;
@@ -58,7 +58,7 @@ const StateProvider = ({ children }: any) => {
                 return {
                     ...state,
                     walletEth: action.payload.walletEth,
-                    walletEvmos: ethToEthermint(action.payload.walletEth),
+                    walletEvmos: ethToEvmos(action.payload.walletEth),
                 };
             case 'pubkey':
                 return { ...state, pubkey: action.payload.pubkey };

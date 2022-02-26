@@ -278,9 +278,9 @@ import {
     SignTypedDataVersion,
     TypedDataUtils,
 } from '@metamask/eth-sig-util';
-import { ethToEthermint } from '@hanchon/ethermint-address-converter';
+import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 async function test2() {
-    console.log(ethToEthermint('0x5A7284d1f3A1BeFbB69832452C7624fC12143D33'));
+    console.log(ethToEvmos('0x5A7284d1f3A1BeFbB69832452C7624fC12143D33'));
     let a = signTypedData({
         privateKey: Buffer.from(
             '642e65d3ac953fab6264aa119bed90321af8a8998417bb01d6b973b2fef7bbe4',

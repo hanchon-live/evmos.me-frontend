@@ -10,7 +10,7 @@ import {
     VStack,
 } from '@chakra-ui/layout';
 import { Divider } from '@chakra-ui/react';
-import { ethToEthermint } from '@hanchon/ethermint-address-converter';
+import { ethToEvmos } from '@hanchon/ethermint-address-converter';
 import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
@@ -33,7 +33,7 @@ export async function executeMsgSend(
 
     if (dest.split('evmos').length != 2) {
         if (dest.split('0x').length == 2) {
-            dest = ethToEthermint(dest);
+            dest = ethToEvmos(dest);
         } else {
             fireError('Msg Send', 'Invalid destination!');
             return false;
