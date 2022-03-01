@@ -1,7 +1,7 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
 import { GiConsoleController } from 'react-icons/gi';
 import { fireError, fireSuccess } from '../landing/alert';
-import { REACT_APP_BACKEND_URL } from './contants';
+import { REACT_APP_BACKEND_URL, REACT_APP_NODE_URL } from './contants';
 import { ethers } from 'ethers';
 
 import {
@@ -515,10 +515,6 @@ export async function callGetERC20Balance(contract: string, wallet: string) {
 import {
     createMsgSend as protoMsgSend,
     createBody,
-    createFee,
-    createSignerInfo,
-    createAuthInfo,
-    createSigDoc,
     createTransaction,
     LEGACY_AMINO,
     createWeb3Extension,
@@ -555,7 +551,6 @@ export async function callSendAphoton(
     const get = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        // body: `{ "tx_bytes": [${txRaw.message.serializeBinary().toString()}], "mode": "BROADCAST_MODE_SYNC" }`
     };
 
     let addr = await fetch(

@@ -213,7 +213,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Cosmos'}
                 </NavItem>
 
-                <NavItem
+                {/* <NavItem
                     id={'erc20'}
                     ml={10}
                     key={'ERC20'}
@@ -222,7 +222,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'ERC20'}
-                </NavItem>
+                </NavItem> */}
 
                 <HStack mx={5} my={2}>
                     <Divider />

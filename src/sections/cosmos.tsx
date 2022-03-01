@@ -20,11 +20,11 @@ function CosmosSubtitle() {
                     {' balances.'}
                     <br />
                     {'('}
-                    <Strong content={'Aphotons'} />
+                    <Strong content={'Aevmos'} />
                     {', '}
-                    <Strong content={'IBC vouchers'} />
+                    <Strong content={'IBC'} />
                     {', '}
-                    <Strong content={'intrarelayer coins'} />
+                    <Strong content={"evmos' ERC20 coins"} />
                     {')'}
                 </>
             }
@@ -66,7 +66,7 @@ function CosmosGrid({ globalState }: { globalState: GlobalState }) {
                                     />,
                                 ]}
                                 avatar={
-                                    coin.denom == 'aphoton'
+                                    coin.denom == 'aevmos'
                                         ? useColorModeValue(
                                               './evmos-black.svg',
                                               './evmos-white.svg'
@@ -87,8 +87,8 @@ function CosmosGrid({ globalState }: { globalState: GlobalState }) {
                     role={'There is no balance for this wallet.'}
                     content={[
                         <Center key="nobalancetext" textAlign="center">
-                            There is no balance for the current wallet, send
-                            coins or login with another wallet!
+                            This wallet has not coins! Send coins or login with
+                            another wallet!
                         </Center>,
                     ]}
                 />

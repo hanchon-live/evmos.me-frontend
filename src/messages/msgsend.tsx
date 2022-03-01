@@ -20,6 +20,19 @@ import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { listen } from '@ledgerhq/logs';
 import AppEth from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';
+import { createMsgSendTransaction } from '../utils/transactions/msgSend';
+import { getWalletEth, isMetamask } from '../utils/db';
+
+import { broadcastEndpoint } from '@tharsis/provider';
+import {
+    createTxRawEIP712,
+    signatureToWeb3Extension,
+} from '@tharsis/transactions';
+import { evmosToEth } from '@tharsis/address-converter';
+import { getAccount } from '../utils/blockchain/account';
+import { chain } from '../utils/blockchain/chain';
+import { TxSentAlert } from '../alerts/alerts';
+import { broadcastEIP712Transaction } from '../utils/blockchain/broadcast';
 
 export async function executeMsgSend(
     dest: string,
@@ -43,7 +56,38 @@ export async function executeMsgSend(
         fireError('Msg Send', 'Invalid amount!');
         return false;
     }
-    let res = await callSendAphoton(dest, amount, denom, memo);
+
+    const sender = await getAccount();
+    if (sender == null) {
+        return;
+    }
+
+    // TODO: set fee here
+    let res = await createMsgSendTransaction(
+        dest,
+        amount,
+        denom,
+        memo,
+        sender,
+        chain
+    );
+
+    // TODO: abstract this as metamask signing
+    if (isMetamask()) {
+        const ethWallet = getWalletEth();
+        if (ethWallet == null) {
+            return;
+        }
+        let signature = await window.ethereum.request({
+            method: 'eth_signTypedData_v4',
+            params: [ethWallet, JSON.stringify(res.eipToSign)],
+        });
+        console.log('signature');
+        console.log(signature);
+
+        await broadcastEIP712Transaction(chain, sender, signature, res);
+        return;
+    }
 
     // let signed = await signTransaction(res);
     // if (signed === null || signed === undefined) {

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { useContext, useEffect } from 'react';
-import { getAllBalances, getAllERC20Balances } from './backend';
+import { getAllERC20Balances } from './backend';
+import { getAllBalances } from './blockchain/balances';
 import {
     getProvider,
     getPubKey,
