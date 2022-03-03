@@ -1492,51 +1492,52 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.9.tgz#1168db664faab4c3bb82c76124b393970e80bf89"
   integrity sha512-yk9Xj/3bUxyz3azMXW8qigLqXWEr2R0h9G7PVnnmjNQdlZLN+aESqCTnVN7ubtYUIQfW32/v8+AXsbpL1ryI1A==
 
-"@tharsis/address-converter@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@tharsis/address-converter/-/address-converter-0.1.5.tgz#47fec23f40e330df6de5745247744b757d2515d7"
-  integrity sha512-93io6VTXfk+ZQtdUo6tAFSmgdPZYqMuNj4M0BxvuuewVqEa7abuXGAqB+y55qZ1LOmhI5bR3DQlh+zzbgVbxag==
+"@tharsis/address-converter@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@tharsis/address-converter/-/address-converter-0.1.6.tgz#cd8c693a6efcccf145d4f36982bac5c44922b32a"
+  integrity sha512-VeaE5PBD5GUNlmv9n0nLkoPqXaduKwmmd+bL2Zt0tLUsg8FOjq7fqF0yNQuJzFKTilTsKS7iNA5TE4QpmJ/xQA==
   dependencies:
     bech32 "^2.0.0"
     crypto-addr-codec "^0.1.7"
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/eip712@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@tharsis/eip712/-/eip712-0.1.5.tgz#0dc10753d6807c49a5719a3e77f0f6f28327632e"
-  integrity sha512-QliKd3YlxaJtGGxXPMioXJbKpUcFgqASj7K5UJJgWdWTC3GYl91WfCanqOWg9pRWl1kVMNDuhkGAiJF7pgQsuw==
+"@tharsis/eip712@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@tharsis/eip712/-/eip712-0.1.7.tgz#b2718e0a24cceea7f5c415bf6c6655b50e5f00d2"
+  integrity sha512-tW1ZfGnFIiBywbg9sBpcJkbSRcdW44SV8iB4tqrp2mHoaDifJwYR8TK8jEeTT7wIoxW6ZPpa9BQMKQDsCsbYZg==
   dependencies:
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/proto@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@tharsis/proto/-/proto-0.1.5.tgz#72265be11d20611f8fade80d5c59f9c36d234897"
-  integrity sha512-bey4RuEQYv5AlBQecAc9SIHzeXfB2PDHRmhqYcXcufjrQeBcuaHKjMDJVMatwmCR8hO7S6zCJT67fa6DtOAeZg==
+"@tharsis/proto@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@tharsis/proto/-/proto-0.1.8.tgz#35e7bd2897e1644ae437828855d33c4547d4eee0"
+  integrity sha512-hNrsutbDwQB0z3m2TToXciLNwf8uRacOYKo25GcO/c/PuI17dO82B6vVMs0zyafdDl+YpMOwU87/cNKvUFtw7A==
   dependencies:
     "@types/google-protobuf" "^3.15.5"
+    "@types/node" "^17.0.21"
     google-protobuf "^3.19.4"
     link-module-alias "^1.2.0"
     sha3 "^2.1.4"
     shx "^0.3.4"
 
-"@tharsis/provider@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@tharsis/provider/-/provider-0.1.5.tgz#869e8974e4cec09b1789c6f9c44b766f072852bd"
-  integrity sha512-fCJmC/N4s5cEfzO7Cs1sPPiI5JeBoUyOA4GJpPIC+vPIlvZJulxKNI1iiIb3YMl21UGzHjzkj63owF+hwhccPQ==
+"@tharsis/provider@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@tharsis/provider/-/provider-0.1.7.tgz#cc5e63f6b27ee3b800ae99203100fa1ee9c40c06"
+  integrity sha512-OMvW3QA5oXlWYOSneR6EYQR6AFJ+tKoWIPZHhhDNbARItbZouryEIXHuTFC1IVIRwxiR+A9/dJPsDNl9Bszd2w==
   dependencies:
     "@types/node" "^17.0.21"
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/transactions@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@tharsis/transactions/-/transactions-0.1.0.tgz#0c3a9ce5d239d62a813dd93f749789feb28d36cf"
-  integrity sha512-i9OdVWtTAZSV/wo6OQ0AxARu3pAhx905K00Jj3CgxDzsJTn+3m4ofROICOv2HGTAkZ62LRfgi32IsZyfCYdSxQ==
+"@tharsis/transactions@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@tharsis/transactions/-/transactions-0.1.4.tgz#142ecece7fb97b6d55eedfb2b937900f04109c9d"
+  integrity sha512-mpPR77XHVefX4Dwas2NQ/T8jlXOLIRKx8YysiT7dyR8d5B08y1SzdAHpNP4pVOqpqRA4A/PELPNEdYZQCrDhWg==
   dependencies:
-    "@tharsis/eip712" "^0.1.5"
-    "@tharsis/proto" "^0.1.5"
+    "@tharsis/eip712" "^0.1.7"
+    "@tharsis/proto" "^0.1.8"
     "@types/node" "^17.0.21"
     link-module-alias "^1.2.0"
     shx "^0.3.4"
