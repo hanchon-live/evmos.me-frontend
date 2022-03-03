@@ -20,14 +20,16 @@ export async function evmosPubKey(address: string) {
         console.error(e);
         return null;
     }
-
     if ('account' in resp) {
         if ('base_account' in resp.account) {
             if ('pub_key' in resp.account.base_account) {
-                return resp.account.base_account.pub_key.key;
+                if (resp.account.base_account.pub_key !== null) {
+                    return resp.account.base_account.pub_key.key;
+                }
             }
         }
     }
+
     return '';
 }
 
