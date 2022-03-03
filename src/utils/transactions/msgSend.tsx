@@ -1,3 +1,4 @@
+import { Fee } from '@tharsis/transactions';
 import { Chain, createMessageSend, Sender } from '@tharsis/transactions';
 
 export async function createMsgSendTransaction(
@@ -6,14 +7,9 @@ export async function createMsgSendTransaction(
     denom: string,
     memo: string,
     sender: Sender,
-    chain: Chain
+    chain: Chain,
+    fee: Fee
 ) {
-    const fee = {
-        amount: '20',
-        denom: 'aevmos',
-        gas: '200000',
-    };
-
     const params = {
         destinationAddress: dest,
         amount: amount,

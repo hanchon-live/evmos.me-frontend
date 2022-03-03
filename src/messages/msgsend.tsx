@@ -21,7 +21,7 @@ import { listen } from '@ledgerhq/logs';
 import AppEth from '@ledgerhq/hw-app-eth';
 import Transport from '@ledgerhq/hw-transport';
 import { createMsgSendTransaction } from '../utils/transactions/msgSend';
-import { getWalletEth, isMetamask } from '../utils/db';
+import { getWalletEth, isKeplr, isMetamask } from '../utils/db';
 
 import { broadcastEndpoint } from '@tharsis/provider';
 import {
@@ -32,16 +32,42 @@ import { evmosToEth } from '@tharsis/address-converter';
 import { getAccount } from '../utils/blockchain/account';
 import { chain } from '../utils/blockchain/chain';
 import { TxSentAlert } from '../alerts/alerts';
-import { broadcastEIP712Transaction } from '../utils/blockchain/broadcast';
+import {
+    broadcastCosmosTransaction,
+    broadcastEIP712Transaction,
+} from '../utils/blockchain/broadcast';
 
 export async function executeMsgSend(
     dest: string,
     amount: string,
     denom: string,
-    memo: string
+    memo: string,
+    feeAmount: string,
+    feeDenom: string,
+    feeGas: string
 ) {
     if (denom == '') {
-        denom = 'aphoton';
+        denom = 'aevmos';
+    }
+
+    if (feeAmount == '') {
+        feeAmount = '20';
+    }
+    if (Number(feeAmount) === NaN) {
+        fireError('Type error', 'Invalid feeAmount!');
+        return false;
+    }
+
+    if (feeDenom == '') {
+        feeDenom = 'aevmos';
+    }
+
+    if (feeGas == '') {
+        feeGas = '200000';
+    }
+    if (Number(feeGas) === NaN) {
+        fireError('Type error', 'Invalid feeGas!');
+        return false;
     }
 
     if (dest.split('evmos').length != 2) {
@@ -62,6 +88,12 @@ export async function executeMsgSend(
         return;
     }
 
+    const fee = {
+        amount: feeAmount,
+        denom: feeDenom,
+        gas: feeGas,
+    };
+
     // TODO: set fee here
     let res = await createMsgSendTransaction(
         dest,
@@ -69,113 +101,121 @@ export async function executeMsgSend(
         denom,
         memo,
         sender,
-        chain
-    );
-
-    // TODO: abstract this as metamask signing
-    if (isMetamask()) {
-        const ethWallet = getWalletEth();
-        if (ethWallet == null) {
-            return;
-        }
-        let signature = await window.ethereum.request({
-            method: 'eth_signTypedData_v4',
-            params: [ethWallet, JSON.stringify(res.eipToSign)],
-        });
-        console.log('signature');
-        console.log(signature);
-
-        await broadcastEIP712Transaction(chain, sender, signature, res);
-        return;
-    }
-}
-
-import { createTxIBCMsgTransfer } from '@tharsis/transactions';
-
-export async function executeIBC() {
-    const sender = await getAccount();
-    if (sender == null) {
-        return;
-    }
-
-    const fee = {
-        amount: '20',
-        denom: 'aevmos',
-        gas: '200000',
-    };
-
-    // export interface MessageIBCMsgTransfer {
-    //     // Channel
-    //     sourcePort: string,
-    //     sourceChannel: string,
-    //     // Token
-    //     amount: string,
-    //     denom: string,
-    //     // Addresses
-    //     receiver: string,
-    //     // Timeout
-    //     revisionNumber: number,
-    //     revisionHeight: number,
-    //     timeoutTimestamp: number,
-    //   }
-
-    //   export function createTxIBCMsgTransfer(
-    //     chain: Chain,
-    //     sender: Sender,
-    //     fee: Fee,
-    //     memo: string,
-    //     params: MessageIBCMsgTransfer,
-
-    // TODO: set fee here
-    let res = await createTxIBCMsgTransfer(
         chain,
-        sender,
-        fee,
-        'Hanchon IBC EIP712 transaction',
-        {
-            sourcePort: 'transfer',
-            sourceChannel: 'channel-0',
-            // Token
-            amount: '10000',
-            denom: 'aevmos',
-            // Addresses
-            receiver: 'osmo1pmk2r32ssqwps42y3c9d4clqlca403yd05x9ye',
-            // Timeout
-            revisionNumber: 1,
-            revisionHeight: 3441472,
-            timeoutTimestamp: '1646328911000000000',
-        }
+        fee
     );
-
-    console.dir(res.eipToSign);
-
-    console.log(JSON.stringify(res.eipToSign));
 
     // TODO: abstract this as metamask signing
     if (isMetamask()) {
         const ethWallet = getWalletEth();
+        console.log(ethWallet);
         if (ethWallet == null) {
             return;
         }
-        let signature = await window.ethereum.request({
-            method: 'eth_signTypedData_v4',
-            params: [ethWallet, JSON.stringify(res.eipToSign)],
-        });
-        console.log('signature');
-        console.log(signature);
+        let signature = '';
+        try {
+            signature = await window.ethereum.request({
+                method: 'eth_signTypedData_v4',
+                params: [ethWallet, JSON.stringify(res.eipToSign)],
+            });
+        } catch (e) {
+            fireError('Metamask', 'Metamask error!');
+            return;
+        }
 
         await broadcastEIP712Transaction(chain, sender, signature, res);
         return;
     }
+    // if (isKeplr()) {
+    //     let sign = await window.keplr.signDirect(
+    //         chain.cosmosChainId,
+    //         sender.accountAddress,
+    //         {
+    //             bodyBytes: res.signDirect.body.serializeBinary(),
+    //             authInfoBytes: res.signDirect.authInfo.serializeBinary(),
+    //             chainId: chain.cosmosChainId,
+    //             accountNumber: sender.accountNumber,
+    //         },
+    //         { isEthereum: true }
+    //     );
+
+    //     console.log(sign)
+    //     console.log(sign.signature.signature)
+    //     let converted = Buffer.from(sign.signature.signature, 'base64')
+    //     console.log(converted)
+
+    //     await broadcastCosmosTransaction(chain, sender, res.signDirect.body.serializeBinary(), res.signDirect.authInfo.serializeBinary(), Uint8Array.from(converted));
+    //     return;
+    // }
 }
+
+// import { createTxIBCMsgTransfer } from '@tharsis/transactions';
+
+// export async function executeIBC() {
+//     const sender = await getAccount();
+//     if (sender == null) {
+//         return;
+//     }
+
+//     const fee = {
+//         amount: '20',
+//         denom: 'aevmos',
+//         gas: '200000',
+//     };
+
+//     // TODO: set fee here
+//     let res = await createTxIBCMsgTransfer(
+//         chain,
+//         sender,
+//         fee,
+//         'Hanchon IBC EIP712 transaction',
+//         {
+//             sourcePort: 'transfer',
+//             sourceChannel: 'channel-0',
+//             // Token
+//             amount: '10000',
+//             denom: 'aevmos',
+//             // Addresses
+//             receiver: 'osmo1pmk2r32ssqwps42y3c9d4clqlca403yd05x9ye',
+//             // Timeout
+//             revisionNumber: 1,
+//             revisionHeight: 3441472,
+//             timeoutTimestamp: '1646328911000000000',
+//         }
+//     );
+
+//     console.dir(res.eipToSign);
+
+//     console.log(JSON.stringify(res.eipToSign));
+
+//     // TODO: abstract this as metamask signing
+//     if (isMetamask()) {
+//         const ethWallet = getWalletEth();
+//         if (ethWallet == null) {
+//             return;
+//         }
+//         let signature = await window.ethereum.request({
+//             method: 'eth_signTypedData_v4',
+//             params: [ethWallet, JSON.stringify(res.eipToSign)],
+//         });
+//         console.log('signature');
+//         console.log(signature);
+
+//         await broadcastEIP712Transaction(chain, sender, signature, res);
+//         return;
+//     }
+// }
 
 let transport: Transport;
 let appEth: AppEth;
 const MsgSend = () => {
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
-    const [denom, setDenom] = useState('aphoton');
+    const [denom, setDenom] = useState('');
     const [memo, setMemo] = useState('');
+    const [feeAmount, setFeeAmount] = useState('');
+    const [feeDenom, setFeeDenom] = useState('');
+    const [feeGas, setFeeGas] = useState('');
     return (
         <VStack>
             <VStack
@@ -187,6 +227,7 @@ const MsgSend = () => {
             >
                 <Heading size="md">Msg Send</Heading>
                 <Divider />
+                <h2>Params:</h2>
                 <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">
                     <GridItem colSpan={[1, 2]}>
                         <FormControl id="destSendControl">
@@ -212,7 +253,7 @@ const MsgSend = () => {
                         <FormControl id="denomSendControl">
                             <FormLabel id="denomSend">Coin(Optional)</FormLabel>
                             <Input
-                                placeholder="aphoton"
+                                placeholder="aevmos"
                                 type="text"
                                 onChange={(e) => setDenom(e.target.value)}
                             ></Input>
@@ -228,6 +269,45 @@ const MsgSend = () => {
                             />
                         </FormControl>
                     </GridItem>
+
+                    <h1>Fees:</h1>
+
+                    <GridItem colSpan={[1, 2]}>
+                        <FormControl id="memoSendControl">
+                            <FormLabel id="memoSend">
+                                Fee Amount(optional)
+                            </FormLabel>
+                            <Input
+                                placeholder="20"
+                                type="text"
+                                onChange={(e) => setFeeAmount(e.target.value)}
+                            />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={[1, 2]}>
+                        <FormControl id="memoSendControl">
+                            <FormLabel id="memoSend">
+                                Fee Denom(optional)
+                            </FormLabel>
+                            <Input
+                                placeholder="aevmos"
+                                type="text"
+                                onChange={(e) => setFeeDenom(e.target.value)}
+                            />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={[1, 2]}>
+                        <FormControl id="memoSendControl">
+                            <FormLabel id="memoSend">
+                                Fee Gas(optional)
+                            </FormLabel>
+                            <Input
+                                placeholder="200000"
+                                type="text"
+                                onChange={(e) => setFeeGas(e.target.value)}
+                            />
+                        </FormControl>
+                    </GridItem>
                     <GridItem colSpan={[1, 2]} h="full">
                         <Center w="full">
                             <FormControl id="buttonSendControl">
@@ -240,7 +320,10 @@ const MsgSend = () => {
                                             dest,
                                             amount,
                                             denom,
-                                            memo
+                                            memo,
+                                            feeAmount,
+                                            feeDenom,
+                                            feeGas
                                         );
                                     }}
                                 >
@@ -255,7 +338,7 @@ const MsgSend = () => {
 
             {/* IBC */}
 
-            <VStack
+            {/* <VStack
                 p={10}
                 alignItems="flex-start"
                 border="1px"
@@ -322,7 +405,7 @@ const MsgSend = () => {
                         </Center>
                     </GridItem>
                 </SimpleGrid>
-            </VStack>
+            </VStack> */}
         </VStack>
     );
 };

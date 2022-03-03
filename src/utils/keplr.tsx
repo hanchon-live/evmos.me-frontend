@@ -89,24 +89,25 @@ export async function connectKeplr(state: any) {
     if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
         fireError('Error with Keplr', 'Please install keplr extension');
         return;
-    } else {
-        if (window.keplr.experimentalSuggestChain) {
-            try {
-                await window.keplr.experimentalSuggestChain(chainConfig);
-            } catch (error) {
-                fireError('Error with Keplr', 'Failed to suggest the chain');
-            }
-        } else {
-            fireError(
-                'Error with Keplr',
-                'Please use the recent version of keplr extension'
-            );
-        }
     }
+    //  else {
+    //     if (window.keplr.experimentalSuggestChain) {
+    //         try {
+    //             await window.keplr.experimentalSuggestChain(chainConfig);
+    //         } catch (error) {
+    //             fireError('Error with Keplr', 'Failed to suggest the chain');
+    //         }
+    //     } else {
+    //         fireError(
+    //             'Error with Keplr',
+    //             'Please use the recent version of keplr extension'
+    //         );
+    //     }
+    // }
 
     if (window.keplr) {
-        await window.keplr.enable(chainId);
-        const offlineSigner = window.getOfflineSigner(chainId);
+        await window.keplr.enable('evmos_9001-1');
+        const offlineSigner = window.getOfflineSigner('evmos_9001-1');
         fireSuccess(
             'Logged in with Keplr',
             'You can now start using evmos.me!'
