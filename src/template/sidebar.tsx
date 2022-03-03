@@ -248,7 +248,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Send'}
                 </NavItem>
 
-                <NavItem
+                {/* <NavItem
                     id={'erc20'}
                     ml={10}
                     key={'erc20'}
@@ -264,7 +264,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                             src="./metamask-fox.svg"
                         />
                     </HStack>
-                </NavItem>
+                </NavItem> */}
 
                 <NavItem
                     id={'validator'}
@@ -277,11 +277,11 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Validator'}
                 </NavItem>
 
-                <HStack mx={5} my={2}>
+                {/* <HStack mx={5} my={2}>
                     <Divider />
-                </HStack>
+                </HStack> */}
 
-                <NavTitle
+                {/* <NavTitle
                     id={'irm'}
                     key={'IntraRelayer'}
                     icon={SiJfrogbintray}
@@ -310,7 +310,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'Proposals'}
-                </NavItem>
+                </NavItem> */}
 
                 <HStack mx={5} my={2}>
                     <Divider />

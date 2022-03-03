@@ -50,14 +50,6 @@ export async function queryBalances(store: GlobalState) {
         balance = await getAllBalances(wallet);
     }
     store.dispatch({ type: 'cosmosCoins', payload: balance });
-
-    const walletEth = getWalletEth();
-    let balanceERC20: BalanceERC20Item[] = [];
-    if (walletEth !== null) {
-        let resp = await getAllERC20Balances(walletEth);
-        balanceERC20 = resp.balances;
-    }
-    store.dispatch({ type: 'erc20Coins', payload: balanceERC20 });
 }
 
 export function WalletInitializer() {

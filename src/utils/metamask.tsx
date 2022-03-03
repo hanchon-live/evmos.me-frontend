@@ -1,7 +1,7 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
 import { fromHexString, signatureToPubkey } from '@hanchon/signature-to-pubkey';
 import { fireSuccess } from '../landing/alert';
-import { getPublicKey } from './backend';
+import { generatePublicKey, getPublicKey } from './backend';
 import { getAllBalances } from './blockchain/balances';
 import {
     getPubKey,
@@ -89,7 +89,7 @@ export async function handleAccountsChanged(
         }
     }
 
-    let pubkey = await getPublicKey(accounts[0]);
+    let pubkey = await generatePublicKey(accounts[0]);
     if (pubkey === '') {
         pubkey = await signRandomMessage(accounts[0]);
     }

@@ -46,7 +46,7 @@ function WalletGrid() {
 
     return (
         <SimpleGrid
-            columns={{ base: 1, xl: 2 }}
+            columns={{ base: 1, xl: 1 }}
             spacing={'20'}
             mt={16}
             mx={'auto'}
@@ -63,7 +63,7 @@ function WalletGrid() {
                     />,
                 ]}
             />
-            <GeneralCards
+            {/* <GeneralCards
                 key={'geterc20balance'}
                 name={'Query ERC20 balance'}
                 role={`Query the token owned by a given address.`}
@@ -74,7 +74,7 @@ function WalletGrid() {
                         icon={<AiOutlineSend size={'25'} />}
                     />,
                 ]}
-            />
+            /> */}
         </SimpleGrid>
     );
 }

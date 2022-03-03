@@ -143,19 +143,12 @@ export async function createERC20Transfer(
     return resp;
 }
 
-export async function getPublicKey(address: string) {
+export async function generatePublicKey(address: string) {
     if (address.split('0x').length == 2) {
         address = ethToEvmos(address);
     }
-    const pubresp = await fetch(`${REACT_APP_BACKEND_URL}/get_pubkey/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ value: address }),
-    });
-    let resp = await pubresp.json();
-    return resp.value;
+    const pubresp = await evmosPubKey(address);
+    return pubresp;
 }
 
 // export async function callDeployERC20(name: string, symbol: string) {
@@ -531,7 +524,9 @@ import {
     msgSendTypes,
 } from '@tharsis/eip712';
 
-import { accountEndpoint, getAccount } from '@tharsis/provider';
+import { accountEndpoint } from '@tharsis/provider';
+import { evmosPubKey, getAccount } from './blockchain/account';
+import { getAddress } from 'ethers/lib/utils';
 export async function callSendAphoton(
     dest: string,
     amount: string,

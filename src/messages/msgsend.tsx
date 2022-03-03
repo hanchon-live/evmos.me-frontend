@@ -88,26 +88,6 @@ export async function executeMsgSend(
         await broadcastEIP712Transaction(chain, sender, signature, res);
         return;
     }
-
-    // let signed = await signTransaction(res);
-    // if (signed === null || signed === undefined) {
-    //     return fireError('Msg Send', 'Could not sign the message');
-    // }
-    // let result = await broadcast(
-    //     signed.authBytes,
-    //     signed.bodyBytes,
-    //     signed.signature
-    // );
-    // if (result.res === true) {
-    //     return fireSuccess(
-    //         'Msg Send',
-    //         `Transaction sent with hash: ${result.msg}`
-    //     );
-    // }
-    // return fireError(
-    //     'Msg Send',
-    //     `Error sending the transaction: ${result.msg}`
-    // );
 }
 let transport: Transport;
 let appEth: AppEth;
@@ -125,51 +105,6 @@ const MsgSend = () => {
             borderRadius={25}
         >
             <Heading size="md">Msg Send</Heading>
-            <Button
-                onClick={async () => {
-                    console.log('hola');
-                    try {
-                        transport = await TransportWebHID.create();
-                        listen((log) => console.log(log));
-                        appEth = new AppEth(transport);
-                    } catch (e) {
-                        console.log(e);
-                    }
-
-                    const { publicKey, address, chainCode } =
-                        await appEth.getAddress("44'/60'/0'/0/0");
-                    console.log(publicKey);
-                    console.log(address);
-                    console.log(chainCode);
-                    console.log(appEth);
-                    console.log(
-                        Buffer.from(
-                            '0000000000000000000000000000000000000000000000000000000000000000',
-                            'hex'
-                        )
-                    );
-                    // let res = await transport.send(0xe0, 0x08, 0x00, 0x00, Buffer.from([0]))
-                    const data = Buffer.from(
-                        '0000000000000000000000000000000000000000000000000000000000000000',
-                        'hex'
-                    );
-                    const response = await transport.exchange(data);
-                    //     Buffer.concat([
-                    //         Buffer.from([data.length]),
-                    //         data,
-                    //     ])
-                    // );
-                    const sw = response.readUInt16BE(response.length - 2);
-                    console.log(sw);
-
-                    // let sig = await appEth.signPersonalMessage("44'/60'/0'/0/0", "0000000000000000000000000000000000000000000000000000000000000000")
-                    // console.log(sig)
-                    // let sig2 = await appEth.signTransaction("44'/60'/0'/0/0", "e1a00000000000000000000000000000000000000000000000000000000000000000", null)
-                    // let sig3 = await appEth.signEIP712HashedMessage("44'/60'/0'/0/0", "0000000000000000000000000000000000000000000000000000000000000000")
-                }}
-            >
-                Test
-            </Button>
             <Divider />
             <SimpleGrid columns={[1, 2]} columnGap={3} rowGap={6} w="full">
                 <GridItem colSpan={[1, 2]}>
