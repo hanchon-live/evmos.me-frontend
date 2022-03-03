@@ -1,7 +1,7 @@
 import { Heading, Text, SimpleGrid, Box } from '@chakra-ui/layout';
 import { useEffect, useState } from 'react';
 import { FaReact } from 'react-icons/fa';
-import { getAllBalances } from '../utils/backend';
+import { getAllBalances } from '../utils/blockchain/balances';
 import { getWalletEth } from '../utils/db';
 import Token from './token';
 

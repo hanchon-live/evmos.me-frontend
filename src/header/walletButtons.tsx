@@ -33,7 +33,7 @@ const WalletButtons = () => {
                         </HStack>
                     </Button>
                 </Box>
-                <Button
+                {/* <Button
                     variant="primary"
                     onClick={async () => {
                         await connectKeplr(globalState);
@@ -51,7 +51,7 @@ const WalletButtons = () => {
                             </>
                         )}
                     </HStack>
-                </Button>
+                </Button> */}
             </SimpleGrid>
         </Center>
     );

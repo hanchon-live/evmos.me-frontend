@@ -4,21 +4,24 @@ import { setKeplr, setPubKey, setWalletEth, setWalletEvmos } from './db';
 import { reconnectWallet } from './wallet';
 
 const config = {
-    RPC_URL: 'https://cosmos.rpc.evmos.dev',
-    REST_URL: 'https://rest.rpc.evmos.dev',
+    // RPC_URL: 'https://evmos-archive-testnet.api.bdnodes.net:26657',
+    // REST_URL: 'https://evmos-archive-testnet.api.bdnodes.net:1317',
+    RPC_URL: 'http://26657.evmos.me',
+    REST_URL: 'http://1317.evmos.me',
+
     EXPLORER_URL: 'https://explorer.evmos.org/',
     NETWORK_NAME: 'Evmos',
     NETWORK_TYPE: 'testnet',
-    CHAIN_ID: 'evmos_9000-2',
+    CHAIN_ID: 'evmos_9000-1',
     CHAIN_NAME: 'Evmos Testnet OM',
-    COIN_DENOM: 'PHOTON',
-    COIN_MINIMAL_DENOM: 'aphoton',
+    COIN_DENOM: 'EVMOS',
+    COIN_MINIMAL_DENOM: 'aevmos',
     COIN_DECIMALS: 18,
     PREFIX: 'evmos',
-    COIN_TYPE: 118,
-    GAS_PRICE_STEP_LOW: 0.005,
-    GAS_PRICE_STEP_AVERAGE: 0.025,
-    GAS_PRICE_STEP_HIGH: 0.04,
+    COIN_TYPE: 60,
+    GAS_PRICE_STEP_LOW: 0.05,
+    GAS_PRICE_STEP_AVERAGE: 0.25,
+    GAS_PRICE_STEP_HIGH: 0.4,
 };
 
 const REST_URL = config.REST_URL;
@@ -42,7 +45,7 @@ const chainConfig = {
         coinDecimals,
     },
     bip44: {
-        coinType: 118,
+        coinType: 60,
     },
     bech32Config: {
         bech32PrefixAccAddr: `${prefix}`,
@@ -66,12 +69,12 @@ const chainConfig = {
             coinDecimals,
         },
     ],
-    coinType: config.COIN_TYPE,
     gasPriceStep: {
         low: config.GAS_PRICE_STEP_LOW,
         average: config.GAS_PRICE_STEP_AVERAGE,
         high: config.GAS_PRICE_STEP_HIGH,
     },
+    coinType: 60,
 };
 
 declare global {
@@ -86,24 +89,25 @@ export async function connectKeplr(state: any) {
     if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
         fireError('Error with Keplr', 'Please install keplr extension');
         return;
-    } else {
-        if (window.keplr.experimentalSuggestChain) {
-            try {
-                await window.keplr.experimentalSuggestChain(chainConfig);
-            } catch (error) {
-                fireError('Error with Keplr', 'Failed to suggest the chain');
-            }
-        } else {
-            fireError(
-                'Error with Keplr',
-                'Please use the recent version of keplr extension'
-            );
-        }
     }
+    //  else {
+    //     if (window.keplr.experimentalSuggestChain) {
+    //         try {
+    //             await window.keplr.experimentalSuggestChain(chainConfig);
+    //         } catch (error) {
+    //             fireError('Error with Keplr', 'Failed to suggest the chain');
+    //         }
+    //     } else {
+    //         fireError(
+    //             'Error with Keplr',
+    //             'Please use the recent version of keplr extension'
+    //         );
+    //     }
+    // }
 
     if (window.keplr) {
-        await window.keplr.enable(chainId);
-        const offlineSigner = window.getOfflineSigner(chainId);
+        await window.keplr.enable('evmos_9001-1');
+        const offlineSigner = window.getOfflineSigner('evmos_9001-1');
         fireSuccess(
             'Logged in with Keplr',
             'You can now start using evmos.me!'
@@ -141,12 +145,17 @@ export async function signCosmosTransactionKeplr(wallet: string, res: any) {
     let chainId = res.chainId;
     let accountNumber = res.accountNumber;
 
-    let sign = await window.keplr.signDirect(chainId, wallet, {
-        bodyBytes,
-        authInfoBytes,
+    let sign = await window.keplr.signDirect(
         chainId,
-        accountNumber,
-    });
+        wallet,
+        {
+            bodyBytes,
+            authInfoBytes,
+            chainId,
+            accountNumber,
+        },
+        { isEthereum: true }
+    );
 
     // TODO: use Buffer to parse this insteaf of btoa
     return {

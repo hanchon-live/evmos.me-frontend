@@ -213,7 +213,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Cosmos'}
                 </NavItem>
 
-                <NavItem
+                {/* <NavItem
                     id={'erc20'}
                     ml={10}
                     key={'ERC20'}
@@ -222,7 +222,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'ERC20'}
-                </NavItem>
+                </NavItem> */}
 
                 <HStack mx={5} my={2}>
                     <Divider />
@@ -248,7 +248,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Send'}
                 </NavItem>
 
-                <NavItem
+                {/* <NavItem
                     id={'erc20'}
                     ml={10}
                     key={'erc20'}
@@ -264,9 +264,9 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                             src="./metamask-fox.svg"
                         />
                     </HStack>
-                </NavItem>
+                </NavItem> */}
 
-                <NavItem
+                {/* <NavItem
                     id={'validator'}
                     ml={10}
                     key={'Validator'}
@@ -275,13 +275,13 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'Validator'}
-                </NavItem>
+                </NavItem> */}
 
-                <HStack mx={5} my={2}>
+                {/* <HStack mx={5} my={2}>
                     <Divider />
-                </HStack>
+                </HStack> */}
 
-                <NavTitle
+                {/* <NavTitle
                     id={'irm'}
                     key={'IntraRelayer'}
                     icon={SiJfrogbintray}
@@ -310,7 +310,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'Proposals'}
-                </NavItem>
+                </NavItem> */}
 
                 <HStack mx={5} my={2}>
                     <Divider />
@@ -335,7 +335,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     <Divider />
                 </HStack>
 
-                <NavItem
+                {/* <NavItem
                     id={'faq'}
                     key={'FAQ'}
                     icon={BsWallet2}
@@ -347,7 +347,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
 
                 <HStack mx={5} my={2}>
                     <Divider />
-                </HStack>
+                </HStack> */}
 
                 <Spacer />
                 <NavItem
@@ -572,15 +572,25 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             <MenuItem id="mitemmetamask">
                                 <HStack
                                     id="mitemmetamaskhstack"
-                                    onClick={async () => {
-                                        await connectMetamask(globalState);
-                                    }}
+                                    // onClick={async () => {
+                                    //     await connectMetamask(globalState);
+                                    // }}
                                 >
-                                    <ArrowUpIcon />
-                                    <Text>Connect with Metamask</Text>
+                                    <ArrowUpIcon
+                                        onClick={async () => {
+                                            await connectMetamask(globalState);
+                                        }}
+                                    />
+                                    <Text
+                                        onClick={async () => {
+                                            await connectMetamask(globalState);
+                                        }}
+                                    >
+                                        Connect with Metamask
+                                    </Text>
                                 </HStack>
                             </MenuItem>
-                            <MenuItem id="mitemmetakeplr">
+                            {/* <MenuItem id="mitemmetakeplr">
                                 <HStack
                                     id="mitemmetakeplrhstack"
                                     onClick={async () => {
@@ -590,21 +600,30 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                     <ArrowUpIcon />
                                     <Text>Connect with Keplr</Text>
                                 </HStack>
-                            </MenuItem>
+                            </MenuItem> */}
                             <MenuDivider />
                             <MenuItem id="mitemlogout">
-                                <HStack
-                                    id="mitemlogouthstack"
-                                    onClick={() => {
-                                        disconnectWallet(globalState);
-                                        fireSuccess(
-                                            'Logout',
-                                            'Your credentials were removed from the app.'
-                                        );
-                                    }}
-                                >
-                                    <BiLogOut />
-                                    <Text>Disconnect</Text>
+                                <HStack id="mitemlogouthstack">
+                                    <BiLogOut
+                                        onClick={() => {
+                                            disconnectWallet(globalState);
+                                            fireSuccess(
+                                                'Logout',
+                                                'Your credentials were removed from the app.'
+                                            );
+                                        }}
+                                    />
+                                    <Text
+                                        onClick={() => {
+                                            disconnectWallet(globalState);
+                                            fireSuccess(
+                                                'Logout',
+                                                'Your credentials were removed from the app.'
+                                            );
+                                        }}
+                                    >
+                                        Disconnect
+                                    </Text>
                                 </HStack>
                             </MenuItem>
                         </MenuList>

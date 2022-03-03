@@ -79,10 +79,10 @@ function WalletGrid() {
         },
         {
             name: 'Balance',
-            role: '(Aphotons) Current evmos coin balance',
+            role: '(aevmos) Current evmos coin balance',
             content: [
                 <TextSpan
-                    content={`${globalState.state.aphoton} Aphotons`}
+                    content={`${globalState.state.aphoton} Aevmos`}
                     key="balancetext"
                 />,
             ],
