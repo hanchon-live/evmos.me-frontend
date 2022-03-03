@@ -31,7 +31,6 @@ import {
 import { evmosToEth } from '@tharsis/address-converter';
 import { getAccount } from '../utils/blockchain/account';
 import { chain } from '../utils/blockchain/chain';
-import { TxSentAlert } from '../alerts/alerts';
 import {
     broadcastCosmosTransaction,
     broadcastEIP712Transaction,

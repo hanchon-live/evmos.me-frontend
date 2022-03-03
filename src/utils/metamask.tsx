@@ -1,7 +1,7 @@
 import { ethToEvmos, evmosToEth } from '@hanchon/ethermint-address-converter';
 import { fromHexString, signatureToPubkey } from '@hanchon/signature-to-pubkey';
 import { fireSuccess } from '../landing/alert';
-import { generatePublicKey, getPublicKey } from './backend';
+import { generatePublicKey } from './backend';
 import { getAllBalances } from './blockchain/balances';
 import {
     getPubKey,

@@ -59,21 +59,21 @@ export async function executeRegisterERC20(
     if (signed === null || signed === undefined) {
         return fireError('Register ERC20', 'Could not sign the message');
     }
-    let result = await broadcast(
-        signed.authBytes,
-        signed.bodyBytes,
-        signed.signature
-    );
-    if (result.res === true) {
-        return fireSuccess(
-            'Register ERC20',
-            `Transaction sent with hash: ${result.msg}`
-        );
-    }
-    return fireError(
-        'Register ERC20',
-        `Error sending the transaction: ${result.msg}`
-    );
+    // let result = await broadcast(
+    //     signed.authBytes,
+    //     signed.bodyBytes,
+    //     signed.signature
+    // );
+    // if (result.res === true) {
+    //     return fireSuccess(
+    //         'Register ERC20',
+    //         `Transaction sent with hash: ${result.msg}`
+    //     );
+    // }
+    // return fireError(
+    //     'Register ERC20',
+    //     `Error sending the transaction: ${result.msg}`
+    // );
 }
 
 const RegisterERC20 = () => {

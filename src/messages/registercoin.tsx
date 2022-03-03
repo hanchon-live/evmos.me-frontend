@@ -74,21 +74,21 @@ export async function executeRegisterCoin(
     if (signed === null || signed === undefined) {
         return fireError('Register Coin', 'Could not sign the message');
     }
-    let result = await broadcast(
-        signed.authBytes,
-        signed.bodyBytes,
-        signed.signature
-    );
-    if (result.res === true) {
-        return fireSuccess(
-            'Register Coin',
-            `Transaction sent with hash: ${result.msg}`
-        );
-    }
-    return fireError(
-        'Register Coin',
-        `Error sending the transaction: ${result.msg}`
-    );
+    // let result = await broadcast(
+    //     signed.authBytes,
+    //     signed.bodyBytes,
+    //     signed.signature
+    // );
+    // if (result.res === true) {
+    //     return fireSuccess(
+    //         'Register Coin',
+    //         `Transaction sent with hash: ${result.msg}`
+    //     );
+    // }
+    // return fireError(
+    //     'Register Coin',
+    //     `Error sending the transaction: ${result.msg}`
+    // );
 }
 
 const RegisterCoin = () => {

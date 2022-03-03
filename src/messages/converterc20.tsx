@@ -70,21 +70,21 @@ export async function executeConvertERC20(
     if (signed === null || signed === undefined) {
         return fireError('Convert ERC20', 'Could not sign the message');
     }
-    let result = await broadcast(
-        signed.authBytes,
-        signed.bodyBytes,
-        signed.signature
-    );
-    if (result.res === true) {
-        return fireSuccess(
-            'Convert ERC20',
-            `Transaction sent with hash: ${result.msg}`
-        );
-    }
-    return fireError(
-        'Convert ERC20',
-        `Error sending the transaction: ${result.msg}`
-    );
+    // let result = await broadcast(
+    //     signed.authBytes,
+    //     signed.bodyBytes,
+    //     signed.signature
+    // );
+    // if (result.res === true) {
+    //     return fireSuccess(
+    //         'Convert ERC20',
+    //         `Transaction sent with hash: ${result.msg}`
+    //     );
+    // }
+    // return fireError(
+    //     'Convert ERC20',
+    //     `Error sending the transaction: ${result.msg}`
+    // );
 }
 
 const ConvertERC20 = () => {

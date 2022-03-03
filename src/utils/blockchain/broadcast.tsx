@@ -22,6 +22,7 @@ export async function broadcastEIP712Transaction(
     sender: Sender,
     signature: string,
     tx: TxGenerated
+    // tx: any
 ) {
     // The chain and sender objects are the same as the previous example
     let extension = signatureToWeb3Extension(chain, sender, signature);
