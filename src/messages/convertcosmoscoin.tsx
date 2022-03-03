@@ -72,21 +72,21 @@ export async function executeConvertCoin(
     if (signed === null || signed === undefined) {
         return fireError('Convert Coin', 'Could not sign the message');
     }
-    let result = await broadcast(
-        signed.authBytes,
-        signed.bodyBytes,
-        signed.signature
-    );
-    if (result.res === true) {
-        return fireSuccess(
-            'Convert Coin',
-            `Transaction sent with hash: ${result.msg}`
-        );
-    }
-    return fireError(
-        'Convert Coin',
-        `Error sending the transaction: ${result.msg}`
-    );
+    // let result = await broadcast(
+    //     signed.authBytes,
+    //     signed.bodyBytes,
+    //     signed.signature
+    // );
+    // if (result.res === true) {
+    //     return fireSuccess(
+    //         'Convert Coin',
+    //         `Transaction sent with hash: ${result.msg}`
+    //     );
+    // }
+    // return fireError(
+    //     'Convert Coin',
+    //     `Error sending the transaction: ${result.msg}`
+    // );
 }
 
 const ConvertCoin = () => {
