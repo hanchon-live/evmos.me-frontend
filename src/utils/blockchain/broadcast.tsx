@@ -7,6 +7,7 @@ import {
 } from '@tharsis/transactions';
 import { fireError, fireSuccess } from '../../landing/alert';
 import { broadcastEndpoint } from '@tharsis/provider';
+import { REACT_APP_NODE_URL } from '../contants';
 
 export function TxSentAlert(hash: string) {
     return fireSuccess(
@@ -41,7 +42,7 @@ export async function broadcastEIP712Transaction(
     };
 
     let broadcastPost = await fetch(
-        `http://localhost:1317${broadcastEndpoint}`,
+        `${REACT_APP_NODE_URL}${broadcastEndpoint}`,
         postOptions
     );
     console.log(broadcastPost);

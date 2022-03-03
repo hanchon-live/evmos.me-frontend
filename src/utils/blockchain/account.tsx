@@ -1,4 +1,5 @@
 import { accountEndpoint } from '@tharsis/provider';
+import { REACT_APP_NODE_URL } from '../contants';
 import { getPubKey, getWalletEvmos } from '../db';
 
 export async function evmosPubKey(address: string) {
@@ -10,7 +11,7 @@ export async function evmosPubKey(address: string) {
     let resp: any;
     try {
         let addr = await fetch(
-            `http://127.0.0.1:1317${accountEndpoint}${address}`,
+            `${REACT_APP_NODE_URL}${accountEndpoint}${address}`,
             get
         );
         // If error 400 wallet doesn't exists
@@ -49,7 +50,7 @@ export async function getAccount() {
     let resp;
     try {
         let addr = await fetch(
-            `http://127.0.0.1:1317${accountEndpoint}${userWallet}`,
+            `${REACT_APP_NODE_URL}${accountEndpoint}${userWallet}`,
             get
         );
         // If error 400 wallet doesn't exists

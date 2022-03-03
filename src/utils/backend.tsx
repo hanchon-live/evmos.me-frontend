@@ -549,7 +549,7 @@ export async function callSendAphoton(
     };
 
     let addr = await fetch(
-        `http://127.0.0.1:1317${accountEndpoint}/${sender}`,
+        `${REACT_APP_NODE_URL}${accountEndpoint}/${sender}`,
         get
     );
     // If error 400 wallet doesn't exists
