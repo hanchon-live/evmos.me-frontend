@@ -259,7 +259,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Validator'}
                 </NavItem>
 
-                {/* <NavItem
+                <NavItem
                     id={'ibc'}
                     ml={10}
                     key={'IBC'}
@@ -268,7 +268,7 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     currentselected={currentSection}
                 >
                     {'IBC'}
-                </NavItem> */}
+                </NavItem>
 
                 {/* <NavItem
                     id={'erc20'}

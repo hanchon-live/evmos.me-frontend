@@ -58,10 +58,9 @@ async function autocompleteOsmosis(
     channel('channel-0');
     number('1');
     height(Number(heightOsmosis) + 1000);
-    let offset = Number(Date.now().toString()) + 10 * 60000;
-    console.log(Date.now().toString());
-    console.log(offset);
-    timestamp(`${offset}000000`);
+    // Note: this is done like this because we need the last 9 chars to be 0
+    let offset = (Math.floor(Date.now() / 1000) + 10 * 60) * 1000000000;
+    timestamp(offset.toString(10));
     fireSuccess('Osmosis', 'Osmosis data fully loaded!');
     return;
 }
@@ -219,7 +218,7 @@ const IBCTransfer = () => {
                             );
                         }}
                     >
-                        Complete for Osmosis
+                        Prepare TX for Osmosis
                     </Button>
                 </Heading>
                 <Divider />
