@@ -15,42 +15,83 @@ import { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { fireError, fireSuccess } from '../landing/alert';
 import { signTransaction, delegateAphoton, broadcast } from '../utils/backend';
+import { getAccount } from '../utils/blockchain/account';
 
-async function execute(dest: string, amount: string) {
+import { createTxMsgDelegate } from '@tharsis/transactions';
+import { chain } from '../utils/blockchain/chain';
+import { signCosmosAndBroadcastWithMetamask } from '../utils/signers/metamask';
+
+async function execute(
+    dest: string,
+    amount: string,
+    memo: string,
+    feeAmount: string,
+    feeDenom: string,
+    feeGas: string
+) {
     if (dest.split('evmosvaloper1').length != 2) {
-        fireError('Delegate Aphotons', 'Invalid destination!');
+        fireError('Delegate Aevmos', 'Invalid destination!');
         return false;
     }
 
-    if (Number(amount) === NaN) {
-        fireError('Delegate Aphotons', 'Invalid amount!');
+    let parsedAmount = Number(amount);
+    if (parsedAmount === NaN) {
+        fireError('Delegate Aevmos', 'Invalid amount!');
         return false;
     }
-    let res = await delegateAphoton(dest, amount);
-    let signed = await signTransaction(res);
-    if (signed === null || signed === undefined) {
-        return fireError('Delegate Aphotons', 'Could not sign the message');
+
+    if (parsedAmount < 100000000000000) {
+        fireError(
+            'Delegate Aevmos',
+            'Invalid amount, minimum value is 100000000000000!'
+        );
+        return false;
     }
-    // let result = await broadcast(
-    //     signed.authBytes,
-    //     signed.bodyBytes,
-    //     signed.signature
-    // );
-    // if (result.res === true) {
-    //     return fireSuccess(
-    //         'Delegate Aphotons',
-    //         `Transaction sent with hash: ${result.msg}`
-    //     );
-    // }
-    // return fireError(
-    //     'Delegate Aphotons',
-    //     `Error sending the transaction: ${result.msg}`
-    // );
+
+    if (feeAmount == '') {
+        feeAmount = '20';
+    }
+    if (Number(feeAmount) === NaN) {
+        fireError('Type error', 'Invalid feeAmount!');
+        return false;
+    }
+
+    if (feeDenom == '') {
+        feeDenom = 'aevmos';
+    }
+
+    if (feeGas == '') {
+        feeGas = '200000';
+    }
+
+    const sender = await getAccount();
+    if (sender == null) {
+        return;
+    }
+
+    const fee = {
+        amount: feeAmount,
+        denom: feeDenom,
+        gas: feeGas,
+    };
+
+    let res = await createTxMsgDelegate(chain, sender, fee, memo, {
+        validatorAddress: dest,
+        amount: amount,
+        denom: 'aevmos',
+    });
+
+    return signCosmosAndBroadcastWithMetamask(chain, sender, res);
 }
 
 const DelegateAphotons = () => {
     const [dest, setDest] = useState('');
     const [amount, setAmount] = useState('');
+
+    const [memo, setMemo] = useState('');
+    const [feeAmount, setFeeAmount] = useState('');
+    const [feeDenom, setFeeDenom] = useState('');
+    const [feeGas, setFeeGas] = useState('');
     return (
         <VStack
             w="full"
@@ -60,10 +101,10 @@ const DelegateAphotons = () => {
             border="1px"
             borderRadius={25}
         >
-            <Heading size="md">Delegate Aphotons</Heading>
+            <Heading size="md">Delegate Aevmos</Heading>
             <Divider />
             <SimpleGrid columns={1} columnGap={3} rowGap={6} w="full">
-                <GridItem colSpan={1}>
+                <GridItem colSpan={[1, 2]}>
                     <FormControl id="destDelegateControl">
                         <FormLabel id="destDelegate">Destination</FormLabel>
                         <Input
@@ -73,10 +114,10 @@ const DelegateAphotons = () => {
                         />
                     </FormControl>
                 </GridItem>
-                <GridItem colSpan={1}>
+                <GridItem colSpan={[1, 2]}>
                     <FormControl id="amountDelegateControl">
                         <FormLabel id="amountDelegate">
-                            Amount (Aphoton)
+                            Amount (Aevmos)
                         </FormLabel>
                         <Input
                             placeholder="1000000000000"
@@ -85,6 +126,53 @@ const DelegateAphotons = () => {
                         ></Input>
                     </FormControl>
                 </GridItem>
+
+                <GridItem colSpan={[1, 2]}>
+                    <FormControl id="memoSendControl">
+                        <FormLabel id="memoSend">Memo</FormLabel>
+                        <Input
+                            placeholder=""
+                            type="text"
+                            onChange={(e) => setMemo(e.target.value)}
+                        />
+                    </FormControl>
+                </GridItem>
+
+                <h1>Fees:</h1>
+
+                <GridItem colSpan={[1, 2]}>
+                    <FormControl id="memoSendControl">
+                        <FormLabel id="memoSend">
+                            Fee Amount(optional)
+                        </FormLabel>
+                        <Input
+                            placeholder="20"
+                            type="text"
+                            onChange={(e) => setFeeAmount(e.target.value)}
+                        />
+                    </FormControl>
+                </GridItem>
+                <GridItem colSpan={[1, 2]}>
+                    <FormControl id="memoSendControl">
+                        <FormLabel id="memoSend">Fee Denom(optional)</FormLabel>
+                        <Input
+                            placeholder="aevmos"
+                            type="text"
+                            onChange={(e) => setFeeDenom(e.target.value)}
+                        />
+                    </FormControl>
+                </GridItem>
+                <GridItem colSpan={[1, 2]}>
+                    <FormControl id="memoSendControl">
+                        <FormLabel id="memoSend">Fee Gas(optional)</FormLabel>
+                        <Input
+                            placeholder="200000"
+                            type="text"
+                            onChange={(e) => setFeeGas(e.target.value)}
+                        />
+                    </FormControl>
+                </GridItem>
+
                 <GridItem colSpan={1} h="full">
                     <Center h="full">
                         <FormControl id="buttonDelegateControl">
@@ -93,7 +181,14 @@ const DelegateAphotons = () => {
                                 color="white"
                                 w="full"
                                 onClick={() => {
-                                    execute(dest, amount);
+                                    execute(
+                                        dest,
+                                        amount,
+                                        memo,
+                                        feeAmount,
+                                        feeDenom,
+                                        feeGas
+                                    );
                                 }}
                             >
                                 Delegate Coins{' '}

@@ -35,6 +35,7 @@ import {
     broadcastCosmosTransaction,
     broadcastEIP712Transaction,
 } from '../utils/blockchain/broadcast';
+import { signCosmosAndBroadcastWithMetamask } from '../utils/signers/metamask';
 
 export async function executeMsgSend(
     dest: string,
@@ -104,27 +105,8 @@ export async function executeMsgSend(
         fee
     );
 
-    // TODO: abstract this as metamask signing
-    if (isMetamask()) {
-        const ethWallet = getWalletEth();
-        console.log(ethWallet);
-        if (ethWallet == null) {
-            return;
-        }
-        let signature = '';
-        try {
-            signature = await window.ethereum.request({
-                method: 'eth_signTypedData_v4',
-                params: [ethWallet, JSON.stringify(res.eipToSign)],
-            });
-        } catch (e) {
-            fireError('Metamask', 'Metamask error!');
-            return;
-        }
+    return signCosmosAndBroadcastWithMetamask(chain, sender, res);
 
-        await broadcastEIP712Transaction(chain, sender, signature, res);
-        return;
-    }
     // if (isKeplr()) {
     //     let sign = await window.keplr.signDirect(
     //         chain.cosmosChainId,

@@ -27,8 +27,8 @@ function TransactionsSubtitle() {
                     <br />
                     {''}
                     <Strong content={'Delegate'} />
-                    {' and '}
-                    <Strong content={'undelegate'} />
+                    {/* {' and '}
+                    <Strong content={'undelegate'} /> */}
                     {' your coins.'}
                 </>
             }
@@ -50,7 +50,7 @@ function ValidatorGrid() {
             </chakra.h1>
 
             <SimpleGrid
-                columns={[1, 1, 1, 1, 2]}
+                columns={[1, 1, 1, 1, 1]}
                 spacing={'20'}
                 mt={16}
                 mx={'auto'}
@@ -68,7 +68,7 @@ function ValidatorGrid() {
                     ]}
                 />
 
-                <GeneralCards
+                {/* <GeneralCards
                     key={'undelegate'}
                     name={'Undelegate'}
                     role="Undelegate your aphotons."
@@ -84,7 +84,7 @@ function ValidatorGrid() {
                             }
                         />,
                     ]}
-                />
+                /> */}
             </SimpleGrid>
         </VStack>
     );

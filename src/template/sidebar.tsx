@@ -248,6 +248,28 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     {'Send'}
                 </NavItem>
 
+                <NavItem
+                    id={'validator'}
+                    ml={10}
+                    key={'Validator'}
+                    icon={RiSecurePaymentLine}
+                    link={'/validator'}
+                    currentselected={currentSection}
+                >
+                    {'Validator'}
+                </NavItem>
+
+                <NavItem
+                    id={'ibc'}
+                    ml={10}
+                    key={'IBC'}
+                    icon={AiOutlineTransaction}
+                    link={'/ibc'}
+                    currentselected={currentSection}
+                >
+                    {'IBC'}
+                </NavItem>
+
                 {/* <NavItem
                     id={'erc20'}
                     ml={10}
