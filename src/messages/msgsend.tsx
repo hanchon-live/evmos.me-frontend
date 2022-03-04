@@ -30,7 +30,7 @@ import {
 } from '@tharsis/transactions';
 import { evmosToEth } from '@tharsis/address-converter';
 import { getAccount } from '../utils/blockchain/account';
-import { chain } from '../utils/blockchain/chain';
+import { BaseFee, chain } from '../utils/blockchain/chain';
 import {
     broadcastCosmosTransaction,
     broadcastEIP712Transaction,
@@ -51,7 +51,7 @@ export async function executeMsgSend(
     }
 
     if (feeAmount == '') {
-        feeAmount = '20';
+        feeAmount = BaseFee;
     }
     if (Number(feeAmount) === NaN) {
         fireError('Type error', 'Invalid feeAmount!');
@@ -259,7 +259,7 @@ const MsgSend = () => {
                                 Fee Amount(optional)
                             </FormLabel>
                             <Input
-                                placeholder="20"
+                                placeholder={BaseFee}
                                 type="text"
                                 onChange={(e) => setFeeAmount(e.target.value)}
                             />

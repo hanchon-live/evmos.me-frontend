@@ -5,3 +5,5 @@ export const chain: Chain = {
     chainId: 9001,
     cosmosChainId: 'evmos_9001-1',
 };
+
+export const BaseFee: string = '50000';

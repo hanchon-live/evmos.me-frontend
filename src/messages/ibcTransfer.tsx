@@ -31,7 +31,7 @@ import {
 } from '@tharsis/transactions';
 import { evmosToEth } from '@tharsis/address-converter';
 import { getAccount } from '../utils/blockchain/account';
-import { chain } from '../utils/blockchain/chain';
+import { BaseFee, chain } from '../utils/blockchain/chain';
 import {
     broadcastCosmosTransaction,
     broadcastEIP712Transaction,
@@ -99,7 +99,7 @@ export async function executeIBCTransfer(
     }
 
     if (feeAmount == '') {
-        feeAmount = '20';
+        feeAmount = BaseFee;
     }
     if (Number(feeAmount) === NaN) {
         fireError('Type error', 'Invalid feeAmount!');
@@ -126,7 +126,7 @@ export async function executeIBCTransfer(
         return false;
     }
     if (sourceChannel === 'channel-0') {
-        if (receiver.split('osmos').length != 2) {
+        if (receiver.split('osmo1').length != 2) {
             fireError(
                 'IBC',
                 'Make sure you are using the osmosis address as receiver!'
@@ -165,8 +165,7 @@ export async function executeIBCTransfer(
         timeoutTimestamp,
     });
 
-    console.log(res);
-    // return signCosmosAndBroadcastWithMetamask(chain, sender, res)
+    return signCosmosAndBroadcastWithMetamask(chain, sender, res);
 }
 
 let transport: Transport;
@@ -224,7 +223,7 @@ const IBCTransfer = () => {
                         <FormControl id="destSendControl">
                             <FormLabel id="destSend">Receiver</FormLabel>
                             <Input
-                                placeholder="osmos1..."
+                                placeholder="osmo1..."
                                 type="text"
                                 value={receiver}
                                 onChange={(e) => setReceiver(e.target.value)}
@@ -347,7 +346,7 @@ const IBCTransfer = () => {
                                 Fee Amount(optional)
                             </FormLabel>
                             <Input
-                                placeholder="20"
+                                placeholder={BaseFee}
                                 type="text"
                                 onChange={(e) => setFeeAmount(e.target.value)}
                             />

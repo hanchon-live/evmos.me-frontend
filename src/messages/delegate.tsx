@@ -18,7 +18,7 @@ import { signTransaction, delegateAphoton, broadcast } from '../utils/backend';
 import { getAccount } from '../utils/blockchain/account';
 
 import { createTxMsgDelegate } from '@tharsis/transactions';
-import { chain } from '../utils/blockchain/chain';
+import { BaseFee, chain } from '../utils/blockchain/chain';
 import { signCosmosAndBroadcastWithMetamask } from '../utils/signers/metamask';
 
 async function execute(
@@ -49,7 +49,7 @@ async function execute(
     }
 
     if (feeAmount == '') {
-        feeAmount = '20';
+        feeAmount = BaseFee;
     }
     if (Number(feeAmount) === NaN) {
         fireError('Type error', 'Invalid feeAmount!');
@@ -146,7 +146,7 @@ const DelegateAphotons = () => {
                             Fee Amount(optional)
                         </FormLabel>
                         <Input
-                            placeholder="20"
+                            placeholder={BaseFee}
                             type="text"
                             onChange={(e) => setFeeAmount(e.target.value)}
                         />
