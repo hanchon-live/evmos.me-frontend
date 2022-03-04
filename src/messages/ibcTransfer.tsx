@@ -39,7 +39,13 @@ import {
 import { createTxIBCMsgTransfer } from '@tharsis/transactions';
 import { signCosmosAndBroadcastWithMetamask } from '../utils/signers/metamask';
 
-async function autocompleteOsmosis(port, channel, number, height, timestamp) {
+async function autocompleteOsmosis(
+    port: any,
+    channel: any,
+    number: any,
+    height: any,
+    timestamp: any
+) {
     try {
         let osmosis = await fetch('https://rpc-osmosis.keplr.app/status');
         let values = await osmosis.json();
