@@ -46,7 +46,7 @@ function ValidatorGrid() {
                 fontWeight={'bold'}
                 color={useColorModeValue('gray.700', 'gray.50')}
             >
-                Validator
+                Staking
             </chakra.h1>
 
             <SimpleGrid

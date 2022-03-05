@@ -45,7 +45,7 @@ import { Image } from '@chakra-ui/image';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { BiLogOut, BiUpArrow, BiWallet } from 'react-icons/bi';
-import { FaEthereum, FaFirefox, FaReact } from 'react-icons/fa';
+import { FaEthereum, FaFirefox, FaReact, FaVoteYea } from 'react-icons/fa';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import { AiFillAppstore, AiOutlineTransaction } from 'react-icons/ai';
 import { connectMetamask } from '../utils/metamask';
@@ -256,14 +256,25 @@ const SidebarContent = ({ onClose, currentSection, ...rest }: SidebarProps) => {
                     link={'/validator'}
                     currentselected={currentSection}
                 >
-                    {'Validator'}
+                    {'Stake'}
+                </NavItem>
+
+                <NavItem
+                    id={'voting'}
+                    ml={10}
+                    key={'voting'}
+                    icon={FaVoteYea}
+                    link={'/voting'}
+                    currentselected={currentSection}
+                >
+                    {'Vote'}
                 </NavItem>
 
                 <NavItem
                     id={'ibc'}
                     ml={10}
                     key={'IBC'}
-                    icon={AiOutlineTransaction}
+                    icon={FaReact}
                     link={'/ibc'}
                     currentselected={currentSection}
                 >

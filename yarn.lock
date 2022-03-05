@@ -1502,18 +1502,18 @@
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/eip712@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@tharsis/eip712/-/eip712-0.1.7.tgz#b2718e0a24cceea7f5c415bf6c6655b50e5f00d2"
-  integrity sha512-tW1ZfGnFIiBywbg9sBpcJkbSRcdW44SV8iB4tqrp2mHoaDifJwYR8TK8jEeTT7wIoxW6ZPpa9BQMKQDsCsbYZg==
+"@tharsis/eip712@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@tharsis/eip712/-/eip712-0.1.9.tgz#3c3144521b8d51dfa272be86f7b08b4e53aa015a"
+  integrity sha512-Rm33Rul3HMEIWZ0b2ABUHRHXsrWmIcWMMz9qdPUXcNOxP0ZGAbQaNIRg+KyLbwZwsjj2R2iuisqufOxGd6xXZw==
   dependencies:
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/proto@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@tharsis/proto/-/proto-0.1.8.tgz#35e7bd2897e1644ae437828855d33c4547d4eee0"
-  integrity sha512-hNrsutbDwQB0z3m2TToXciLNwf8uRacOYKo25GcO/c/PuI17dO82B6vVMs0zyafdDl+YpMOwU87/cNKvUFtw7A==
+"@tharsis/proto@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@tharsis/proto/-/proto-0.1.10.tgz#a40575ced5ca6dc9b80d1504e31256a63454a54c"
+  integrity sha512-bn61exP/dcvcwbtE7dKbzLxnvqOtMVJcGro6n6zHSLAcBXicdI3AXQYp7vBijUCs+Shmk44pU7en0uYtAJillQ==
   dependencies:
     "@types/google-protobuf" "^3.15.5"
     "@types/node" "^17.0.21"
@@ -1522,22 +1522,22 @@
     sha3 "^2.1.4"
     shx "^0.3.4"
 
-"@tharsis/provider@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@tharsis/provider/-/provider-0.1.7.tgz#cc5e63f6b27ee3b800ae99203100fa1ee9c40c06"
-  integrity sha512-OMvW3QA5oXlWYOSneR6EYQR6AFJ+tKoWIPZHhhDNbARItbZouryEIXHuTFC1IVIRwxiR+A9/dJPsDNl9Bszd2w==
+"@tharsis/provider@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@tharsis/provider/-/provider-0.1.8.tgz#b1ae4485a3975e593ff5550aa428a71496432b24"
+  integrity sha512-i2FUV0FKUyYwgRnooJ8HH92nfi335tMschTuHS7pVUPUoen0vKNsycnU6YvvmR8WTc0CJjn1AlcKzwM2PRj2gg==
   dependencies:
     "@types/node" "^17.0.21"
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@tharsis/transactions@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@tharsis/transactions/-/transactions-0.1.4.tgz#142ecece7fb97b6d55eedfb2b937900f04109c9d"
-  integrity sha512-mpPR77XHVefX4Dwas2NQ/T8jlXOLIRKx8YysiT7dyR8d5B08y1SzdAHpNP4pVOqpqRA4A/PELPNEdYZQCrDhWg==
+"@tharsis/transactions@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@tharsis/transactions/-/transactions-0.1.7.tgz#c9aeee7134e06a87e4a073ca320c7a004781bc00"
+  integrity sha512-EEH6mgSSUNcG36ozC6ls7VcRT+FXc4nQtsR/JIKmZ3blI1mjAezjPYJA/kMXJb7I3zF95lHj6aLE6M960DcUPA==
   dependencies:
-    "@tharsis/eip712" "^0.1.7"
-    "@tharsis/proto" "^0.1.8"
+    "@tharsis/eip712" "^0.1.9"
+    "@tharsis/proto" "^0.1.10"
     "@types/node" "^17.0.21"
     link-module-alias "^1.2.0"
     shx "^0.3.4"
