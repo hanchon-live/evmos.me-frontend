@@ -1,0 +1,13 @@
+@import 'compass/css3';
+
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+body {
+    background-color: #eee;
+    min-height: 100%;
+    color: #fff;
+    //@include background-image(radial-gradient(center, #eee 0%,#bbb 100%));
+    background-image: url('http://isaacsuttell.com/img/justine.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Raleway, sans-serif;
+}
